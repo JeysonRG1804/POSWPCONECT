@@ -1,0 +1,13 @@
+"Entiendo que tu consulta no encaja en las categorías anteriores. ¿Qué tipo de ayuda necesitas?"
+
+Opciones:
+
+🧑‍🏫 Quiero hablar con un asesor académico
+
+📋 Necesito ayuda con un trámite específico
+
+🖥 Tengo problemas con la plataforma o el sitio web
+
+📞 Deseo que me contacten directamente
+
+📝 Otra consulta (escríbela)

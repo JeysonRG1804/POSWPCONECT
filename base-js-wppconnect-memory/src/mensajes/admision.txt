@@ -1,0 +1,9 @@
+🔹 Proceso de Admisión 🔹
+
+Digite el número para seleccionar una opción:
+
+1️⃣ Requisitos de Admisión 📜
+2️⃣ Fechas del proceso de admisión 📅
+3️⃣ Guía paso a paso para aplicar 📝
+4️⃣ Costos y formas de pago 💳
+0️⃣ Regresar al punto anterior 🔙

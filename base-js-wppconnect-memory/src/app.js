@@ -825,6 +825,21 @@ const main = async () => {
     // Portal web para escanear QR
     QRPortalWeb({ port: 3001 })
 
+    // ============= MIDDLEWARE CORS =============
+    // Permitir peticiones desde cualquier origen (para pruebas)
+    adapterProvider.server.use((req, res, next) => {
+        res.setHeader('Access-Control-Allow-Origin', '*')
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+
+        // Manejar preflight requests
+        if (req.method === 'OPTIONS') {
+            res.writeHead(204)
+            return res.end()
+        }
+        next()
+    })
+
     // ============= ENDPOINTS API =============
 
     // Enviar mensaje
@@ -899,15 +914,18 @@ const main = async () => {
                 // Determinar precio y duración
                 let precio = ''
                 let duracion = ''
-                let enlace = 'https://chat.whatsapp.com/JX1bl242RLLBslRmG54RjV'
+                let enlace = 'https://chat.whatsapp.com/IKNzlJiO6El6Ns8k4bixjF'
                 const p = programa.toLowerCase()
 
-                if (p.includes('maestría')) {
+                if (p.includes('maestría') || p.includes('maestria')) {
                     precio = 'S/ 200'
                     duracion = '3 semestres académicos'
                 } else if (p.includes('doctorado')) {
                     precio = 'S/ 250'
                     duracion = '6 semestres académicos'
+                } else if (p.includes('especialidad')) {
+                    precio = 'S/ 150'
+                    duracion = '2 semestres académicos'
                 }
 
                 const texto2 = `💥 ¡Quiero contarte sobre nuestro programa de posgrado y los increíbles beneficios que puedes obtener! 🎓
@@ -936,10 +954,117 @@ N° Cta. Cte.: 000-3747336 (Scotiabank)
 
                 await bot.sendMessage(numero, texto2, {})
 
-                // Brochures por facultad
-                const brochures = {
+                // Función para normalizar texto (quitar acentos, caracteres especiales y espacios extra)
+                const normalizarTexto = (txt) => {
+                    if (!txt) return ''
+                    // Primero quitar acentos usando NFD
+                    let normalizado = txt.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                    // Reemplazar caracteres corruptos comunes (encoding issues)
+                    normalizado = normalizado.replace(/[�]/g, '')
+                    // Convertir a minúsculas
+                    normalizado = normalizado.toLowerCase()
+                    // Reemplazar múltiples espacios por uno solo
+                    normalizado = normalizado.replace(/\s+/g, ' ').trim()
+                    return normalizado
+                }
+
+                // Función para extraer palabras clave de un texto
+                const extraerPalabrasClave = (txt) => {
+                    const normalizado = normalizarTexto(txt)
+                    // Palabras a ignorar
+                    const stopWords = ['en', 'de', 'del', 'la', 'el', 'con', 'y', 'para', 'los', 'las', 'por', 'mencion', 'mención']
+                    return normalizado.split(' ').filter(p => p.length > 2 && !stopWords.includes(p))
+                }
+
+                // Cargar programas.json para obtener el brochure específico del programa
+                let brochurePrograma = null
+                const programaNormalizado = normalizarTexto(programa)
+                const palabrasClaveBusqueda = extraerPalabrasClave(programa)
+                console.log(`🔍 Buscando programa: "${programa}"`)
+                console.log(`🔍 Programa normalizado: "${programaNormalizado}"`)
+                console.log(`🔍 Palabras clave: [${palabrasClaveBusqueda.join(', ')}]`)
+
+                try {
+                    const programasPath = join(__dirname, 'programas.json')
+
+                    if (existsSync(programasPath)) {
+                        const programasData = JSON.parse(readFileSync(programasPath, 'utf-8'))
+
+                        // Buscar el programa en todas las facultades
+                        if (programasData.facultades) {
+                            let totalProgramasRevisados = 0
+                            let mejorCoincidencia = null
+                            let mejorPuntaje = 0
+
+                            for (const codigoFacultad of Object.keys(programasData.facultades)) {
+                                const fac = programasData.facultades[codigoFacultad]
+
+                                if (fac.programas && Array.isArray(fac.programas)) {
+                                    for (const prog of fac.programas) {
+                                        totalProgramasRevisados++
+                                        if (!prog.nombre) continue
+
+                                        const nombreNormalizado = normalizarTexto(prog.nombre)
+                                        const palabrasClavePrograma = extraerPalabrasClave(prog.nombre)
+
+                                        // Verificar coincidencia exacta primero
+                                        if (nombreNormalizado === programaNormalizado) {
+                                            if (prog.brochure && prog.brochure.length > 0) {
+                                                brochurePrograma = prog.brochure
+                                                console.log(`✅ ¡Coincidencia exacta! Programa: "${prog.nombre}"`)
+                                                console.log(`✅ Facultad: ${fac.nombre}`)
+                                                console.log(`✅ Brochure: ${brochurePrograma}`)
+                                                break
+                                            }
+                                        }
+
+                                        // Búsqueda por palabras clave
+                                        let puntaje = 0
+                                        for (const palabra of palabrasClaveBusqueda) {
+                                            if (palabrasClavePrograma.some(p => p.includes(palabra) || palabra.includes(p))) {
+                                                puntaje++
+                                            }
+                                        }
+
+                                        // Si encuentra suficientes palabras clave (al menos 2 o el 50%)
+                                        const umbral = Math.max(2, Math.floor(palabrasClaveBusqueda.length * 0.5))
+                                        if (puntaje >= umbral && puntaje > mejorPuntaje && prog.brochure && prog.brochure.length > 0) {
+                                            mejorPuntaje = puntaje
+                                            mejorCoincidencia = { prog, fac }
+                                        }
+                                    }
+
+                                    if (brochurePrograma) break
+                                }
+                            }
+
+                            // Si no hubo coincidencia exacta, usar la mejor por palabras clave
+                            if (!brochurePrograma && mejorCoincidencia) {
+                                brochurePrograma = mejorCoincidencia.prog.brochure
+                                console.log(`✅ ¡Encontrado por palabras clave! Programa: "${mejorCoincidencia.prog.nombre}"`)
+                                console.log(`✅ Facultad: ${mejorCoincidencia.fac.nombre}`)
+                                console.log(`✅ Puntaje: ${mejorPuntaje}/${palabrasClaveBusqueda.length}`)
+                                console.log(`✅ Brochure: ${brochurePrograma}`)
+                            }
+
+                            console.log(`📊 Total programas revisados: ${totalProgramasRevisados}`)
+                        }
+
+                        if (!brochurePrograma) {
+                            console.log(`❌ No se encontró brochure para: "${programa}"`)
+                        }
+                    } else {
+                        console.error('❌ Archivo programas.json no existe')
+                    }
+                } catch (jsonError) {
+                    console.error('⚠️ Error al leer programas.json:', jsonError.message)
+                }
+
+                // Brochures de fallback por facultad (si no se encuentra el programa específico)
+                const brochuresFacultad = {
                     'Facultad de Ciencias de la Salud': 'https://github.com/JeysonRG1804/brochure/raw/main/brochure%20fcs_compressed.pdf',
                     'Facultad en Ciencias Económicas': 'https://github.com/JeysonRG1804/brochure/raw/main/brochure%20fce_compressed.pdf',
+                    'Facultad de Ciencias Económicas': 'https://github.com/JeysonRG1804/brochure/raw/main/brochure%20fce_compressed.pdf',
                     'Facultad de Ingeniería Industrial y de Sistemas': 'https://github.com/JeysonRG1804/brochure/raw/main/brochure%20fiis_compressed.pdf',
                     'Facultad de Ingeniería Química': 'https://github.com/JeysonRG1804/brochure/raw/main/brochure%20fiq_compressed.pdf',
                     'Facultad de Ingeniería Eléctrica y Electrónica': 'https://github.com/JeysonRG1804/brochure/raw/main/brochure%20fiee_compressed.pdf',
@@ -952,9 +1077,15 @@ N° Cta. Cte.: 000-3747336 (Scotiabank)
                     'Facultad de Ciencias de la Educación': 'https://github.com/JeysonRG1804/brochure/raw/main/brochure%20fced_compressed.pdf'
                 }
 
-                const pdfUrl = brochures[facultad]
+                // Enviar el brochure del programa específico (prioridad) o el de facultad (fallback)
+                const pdfUrl = brochurePrograma || brochuresFacultad[facultad]
                 if (pdfUrl) {
-                    await bot.sendMessage(numero, '📄 Aquí está su brochure', { media: pdfUrl })
+                    const mensajeBrochure = brochurePrograma
+                        ? `📄 Aquí está el brochure de *${programa}*:`
+                        : '📄 Aquí está el brochure de su facultad:'
+                    await bot.sendMessage(numero, mensajeBrochure, { media: pdfUrl })
+                } else {
+                    console.warn(`⚠️ No se encontró brochure para programa "${programa}" ni facultad "${facultad}"`)
                 }
 
                 // Último mensaje
@@ -970,7 +1101,10 @@ ${enlace}
                 await bot.sendMessage(numero, text4, {})
 
                 res.writeHead(200, { 'Content-Type': 'application/json' })
-                return res.end(JSON.stringify({ status: 'Mensaje y PDF enviados' }))
+                return res.end(JSON.stringify({
+                    status: 'Mensaje y PDF enviados',
+                    brochureEnviado: pdfUrl ? (brochurePrograma ? 'programa' : 'facultad') : 'ninguno'
+                }))
 
             } catch (err) {
                 console.error('❌ Error enviando mensaje:', err)

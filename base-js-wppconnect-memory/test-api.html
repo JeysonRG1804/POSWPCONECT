@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Probar API Enviar Mensaje</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { 
+            background: linear-gradient(135deg, #1a1a2e, #16213e); 
+            min-height: 100vh; 
+            padding: 20px;
+            color: white;
+        }
+        .container { max-width: 600px; margin: 0 auto; }
+        h1 { text-align: center; color: #00d9ff; margin-bottom: 30px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #a0a0a0; font-size: 14px; }
+        input, select { 
+            width: 100%; 
+            padding: 12px 15px; 
+            border: 2px solid #333; 
+            border-radius: 8px; 
+            background: #0f0f23; 
+            color: white;
+            font-size: 16px;
+        }
+        input:focus, select:focus { border-color: #00d9ff; outline: none; }
+        button { 
+            width: 100%; 
+            padding: 15px; 
+            background: linear-gradient(135deg, #00d9ff, #0099cc);
+            border: none; 
+            border-radius: 8px; 
+            color: white; 
+            font-size: 18px; 
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover { transform: scale(1.02); }
+        button:disabled { background: #555; cursor: not-allowed; }
+        .response { 
+            margin-top: 30px; 
+            padding: 20px; 
+            background: #0f0f23; 
+            border-radius: 8px; 
+            border: 2px solid #333;
+        }
+        .response.success { border-color: #00ff88; }
+        .response.error { border-color: #ff4444; }
+        pre { white-space: pre-wrap; word-wrap: break-word; margin: 0; }
+        .loading { text-align: center; color: #00d9ff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Probar API Enviar Mensaje</h1>
+        
+        <div class="form-group">
+            <label>Número de WhatsApp (con código de país)</label>
+            <input type="text" id="numero" placeholder="51987654321" value="51910266264">
+        </div>
+        
+        <div class="form-group">
+            <label>Nombre del contacto</label>
+            <input type="text" id="mensaje" placeholder="Juan Pérez" value="María García">
+        </div>
+        
+        <div class="form-group">
+            <label>Facultad</label>
+            <select id="facultad">
+                <option value="Facultad de Ciencias de la Salud">Facultad de Ciencias de la Salud</option>
+                <option value="Facultad de Ingeniería Industrial y de Sistemas">Facultad de Ingeniería Industrial y de Sistemas</option>
+                <option value="Facultad de Ciencias Económicas">Facultad de Ciencias Económicas</option>
+                <option value="Facultad de Ciencias Administrativas">Facultad de Ciencias Administrativas</option>
+                <option value="Facultad de Ciencias Contables" selected>Facultad de Ciencias Contables</option>
+                <option value="Facultad de Ingeniería Química">Facultad de Ingeniería Química</option>
+                <option value="Facultad de Ciencias Naturales y Matemáticas">Facultad de Ciencias Naturales y Matemáticas</option>
+                <option value="Facultad de Ingeniería Pesquera y Alimentos">Facultad de Ingeniería Pesquera y Alimentos</option>
+                <option value="Facultad de Ingeniería Mecánica y Energía">Facultad de Ingeniería Mecánica y Energía</option>
+                <option value="Facultad de Ingeniería Eléctrica y Electrónica">Facultad de Ingeniería Eléctrica y Electrónica</option>
+                <option value="Facultad de Ingeniería Ambiental y Recursos Naturales">Facultad de Ingeniería Ambiental y Recursos Naturales</option>
+                <option value="Facultad de Ciencias de la Educación">Facultad de Ciencias de la Educación</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Programa</label>
+            <input type="text" id="programa" placeholder="Maestría en..." value="Maestría en Tributación">
+        </div>
+        
+        <button id="btnEnviar" onclick="enviarMensaje()">📤 Enviar Mensaje</button>
+        
+        <div id="response" class="response" style="display: none;">
+            <h3>Respuesta:</h3>
+            <pre id="responseContent"></pre>
+        </div>
+    </div>
+
+    <script>
+        async function enviarMensaje() {
+            const btn = document.getElementById('btnEnviar');
+            const responseDiv = document.getElementById('response');
+            const responseContent = document.getElementById('responseContent');
+            
+            btn.disabled = true;
+            btn.textContent = '⏳ Enviando...';
+            responseDiv.style.display = 'block';
+            responseDiv.className = 'response';
+            responseContent.textContent = 'Procesando solicitud...';
+            
+            const data = {
+                numero: document.getElementById('numero').value,
+                mensaje: document.getElementById('mensaje').value,
+                facultad: document.getElementById('facultad').value,
+                programa: document.getElementById('programa').value
+            };
+            
+            try {
+                const response = await fetch('http://localhost:3008/v1/enviar-mensaje', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                responseDiv.className = 'response success';
+                responseContent.textContent = JSON.stringify(result, null, 2);
+            } catch (error) {
+                responseDiv.className = 'response error';
+                responseContent.textContent = 'Error: ' + error.message + '\n\nAsegúrate de que el bot esté corriendo en http://localhost:3008';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '📤 Enviar Mensaje';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+# Ignorar archivos de sesión del bot (generados automáticamente)
+bot_sessions/
+node_modules/
+dist/
+build/

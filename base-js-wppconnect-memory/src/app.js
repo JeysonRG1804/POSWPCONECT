@@ -914,18 +914,26 @@ const main = async () => {
                 // Determinar precio y duración
                 let precio = ''
                 let duracion = ''
+                let cuenta = ''
+                let cci = ''
                 let enlace = 'https://chat.whatsapp.com/IKNzlJiO6El6Ns8k4bixjF'
                 const p = programa.toLowerCase()
 
                 if (p.includes('maestría') || p.includes('maestria')) {
                     precio = 'S/ 200'
                     duracion = '3 semestres académicos'
+                    cuenta = '000-3747336'
+                    cci = '009-100-000003747336-90'
                 } else if (p.includes('doctorado')) {
                     precio = 'S/ 250'
                     duracion = '6 semestres académicos'
+                    cuenta = '000-3747336'
+                    cci = '009-100-000003747336-90'
                 } else if (p.includes('especialidad')) {
-                    precio = 'S/ 150'
+                    precio = 'S/ 120'
                     duracion = '2 semestres académicos'
+                    cuenta = '000-1797042'
+                    cci = '009-100-000001797042-97'
                 }
 
                 const texto2 = `💥 ¡Quiero contarte sobre nuestro programa de posgrado y los increíbles beneficios que puedes obtener! 🎓
@@ -936,11 +944,11 @@ Por solo ${precio} recibirás:
 📝 Derecho de Inscripción
 
 🏦 Medios de Pago:
-CCI: 009-100-000003747336-90
-N° Cta. Cte.: 000-3747336 (Scotiabank)
+CCI: ${cci}
+N° Cta. Cte.: ${cuenta} (Scotiabank)
 
 📅 Fechas importantes:
-🖋 Inscripciones: Hasta marzo del 2026
+🖋 Inscripciones: Hasta el 18 de marzo del 2026
 📹 Entrevista virtual: última semana de Marzo del 2026
 📃 Resultados: 1-2 días después del examen
 🎒 Inicio de clases: Primera semana de Abril

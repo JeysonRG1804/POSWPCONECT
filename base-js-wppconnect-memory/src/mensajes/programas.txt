@@ -6,4 +6,7 @@
 🎓 2️⃣ *Doctorados*:
     Información detellada sobre los 10 doctorados.
 
+📚 3️⃣ *Especialidades*:
+    Información detallada sobre las 12 especialidades.
+
 0️⃣ Regresar al flujo anterior 🔙

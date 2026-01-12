@@ -1,0 +1,405 @@
+{
+    "1": {
+        "nombre": "Facultad de Ciencias de la Salud",
+        "maestrias": {
+            "1": {
+                "nombre": "Maestría en Salud Pública",
+                "descripcion": "El programa de Maestría en Salud Pública de la UNAC responde a los principales problemas sanitarios del país. Pretende formar expertos de distintas disciplinas en el amplio campo de acción, capaces de afrontar los desafíos poblacionales.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/MAESTRIA/BROCHURE_MAESTRIA_EN_SALUD_PUBLICA.pdf"
+            },
+            "2": {
+                "nombre": "Maestría en Salud Ocupacional y Ambiental",
+                "descripcion": "La Maestría en Salud Ocupacional y Ambiental forma profesionales competentes para prevenir y resolver problemas de salud individual y colectiva en esta área. Promueve la producción científica, enseñanza y difusión de nuevo conocimiento.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/MAESTRIA/BROCHURE_MAESTRIA_EN_SALUD_OCUPACIONAL_Y_AMBIENTAL.pdf"
+            },
+            "3": {
+                "nombre": "Maestría en Gerencia en Salud",
+                "descripcion": "La Maestría en Gerencia en Salud forma investigadores, docentes universitarios y especialistas en Ciencias de la Salud. El programa responde a los retos del mundo moderno, preparando líderes para la gestión eficiente de los servicios sanitarios.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/MAESTRIA/BROCHURE_MAESTRIA_EN_GERENCIA_EN_SALUD.pdf"
+            },
+            "4": {
+                "nombre": "Maestría en Enfermería",
+                "descripcion": "La Maestría en Enfermería de la UNAC forma profesionales especializados para la gestión del cuidado integral de la persona, familia y comunidad. Capacita para planificar, desarrollar, evaluar y gerenciar programas proactivos de salud.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/MAESTRIA/BROCHURE_MAESTRIA_EN_ENFERMERIA.pdf"
+            },
+            "5": {
+                "nombre": "Maestría en Enfermería Familiar y Comunitaria",
+                "descripcion": "La Maestría en Enfermería Familiar y Comunitaria forma profesionales competentes para atender problemas de salud en individuos, familias y comunidades mediante acciones integrales de promoción, prevención, curación y rehabilitación.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/MAESTRIA/BROCHURE_MAESTRIA_EN_ENFERMERIA_FAMILIAR_Y_COMUNITARIA.pdf"
+            },
+            "6": {
+                "nombre": "Maestría en Ciencias de Salud con Mención en Educación para la Salud",
+                "descripcion": "La Maestría en Ciencias de la Salud con Mención en Educación para la Salud forma profesionales competentes para enfrentar los retos de la globalización, enfocándose en el desarrollo, la investigación y la docencia.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/MAESTRIA/BROCHURE_MAESTRIA_EN_CIENCIAS_DE_SALUD_CON_MENCION_EN_EDUCACION_PARA_SALUD.pdf"
+            }
+        },
+        "doctorados": {
+            "1": {
+                "nombre": "Doctorado en Salud Pública",
+                "descripcion": "El Doctorado en Salud Pública forma líderes capaces de abordar desafíos sanitarios globales complejos. Este programa de vanguardia desarrolla habilidades avanzadas de investigación y análisis para generar evidencia científica robusta.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/DOCTORADO/BROCHURE_DOCTORADO_EN_SALUD_PUBLICA.pdf"
+            },
+            "2": {
+                "nombre": "Doctorado en Enfermería",
+                "descripcion": "El Doctorado en Enfermería está diseñado para formar investigadores y académicos de vanguardia. Adquirirás las competencias metodológicas y teóricas para generar conocimiento innovador que transforme la práctica clínica.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/DOCTORADO/BROCHURE_DOCTORADO_EN_ENFERMERIA.pdf"
+            },
+            "3": {
+                "nombre": "Doctorado en Ciencias de la Salud",
+                "descripcion": "Nuestro Doctorado en Ciencias de la Salud impulsa la excelencia investigativa y la innovación. Formamos científicos de alto nivel, capaces de generar conocimiento de frontera para resolver problemas cruciales en salud.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/DOCTORADO/BROCHURE_DOCTORADO_EN_CIENCIAS_DE_SALUD.pdf"
+            },
+            "4": {
+                "nombre": "Doctorado en Administración en Salud",
+                "descripcion": "El Doctorado en Administración en Salud forma líderes estratégicos capaces de investigar y transformar sistemas de salud complejos. Este programa de élite desarrolla habilidades gerenciales y analíticas avanzadas.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/DOCTORADO/BROCHURE_DOCTORADO_EN_ADMINISTRACION_EN_SALUD.pdf"
+            }
+        },
+        "especialidades": {
+            "1": {
+                "nombre": "Especialidad en Salud Pública y Comunitaria",
+                "descripcion": "La Especialidad en Salud Pública y Comunitaria forma profesionales capaces de diseñar e implementar estrategias efectivas para mejorar la salud colectiva. El programa se enfoca en la prevención, promoción y participación comunitaria.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/ESPECIALIDAD/BROCHURE_ESPECIALIDAD_EN_SALUD_PUBLICA_Y_COMUNITARIA.pdf"
+            },
+            "2": {
+                "nombre": "Especialidad en Salud Familiar y Comunitaria",
+                "descripcion": "La Especialidad en Salud Familiar y Comunitaria prepara profesionales para la atención integral de familias y comunidades, enfocándose en la promoción de la salud y la prevención.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/ESPECIALIDAD/BROCHURE_ESPECIALIDAD_EN_SALUD_FAMILIAR_Y_COMUNITARIA.pdf"
+            },
+            "3": {
+                "nombre": "Especialidad en Política y Gestión de Salud en Enfermería",
+                "descripcion": "La Especialidad en Política y Gestión de Salud en Enfermería forma líderes con capacidad para diseñar, implementar y evaluar políticas de salud, además de gestionar servicios y programas.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/ESPECIALIDAD/BROCHURE_ESPECIALIDAD_EN_POLITICA_Y_GESTION_DE_SALUD_EN_ENFERMERIA.pdf"
+            },
+            "4": {
+                "nombre": "Especialidad en Enfermería Pediátrica",
+                "descripcion": "La Especialidad en Enfermería Pediátrica forma expertos en el cuidado integral del niño, desde el nacimiento hasta la adolescencia, enfocándose en el crecimiento, el desarrollo saludable y la prevención de enfermedades.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/ESPECIALIDAD/BROCHURE_ESPECIALIDAD_EN_ENFERMERIA_PEDIATRICA.pdf"
+            },
+            "5": {
+                "nombre": "Especialidad en Enfermería Neonatología",
+                "descripcion": "La Especialidad en Enfermería Neonatología se dedica al cuidado integral del recién nacido de alto riesgo y prematuros. Forma expertos en el manejo de unidades intensivas, reanimación y monitorización avanzada.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/ESPECIALIDAD/BROCHURE_ESPECIALIDAD_EN_ENFERMERIA_NEONATOLOGIA.pdf"
+            },
+            "6": {
+                "nombre": "Especialidad en Enfermería Intensiva",
+                "descripcion": "La Especialidad en Enfermería Intensiva forma profesionales altamente capacitados para el cuidado avanzado de pacientes críticos en unidades de terapia, enfatizando el monitoreo hemodinámico y el soporte vital avanzado.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/ESPECIALIDAD/BROCHURE_ESPECIALIDAD_EN_ENFERMERIA_INTENSIVA.pdf"
+            },
+            "7": {
+                "nombre": "Especialidad en Enfermería en Salud Mental",
+                "descripcion": "La Especialidad en Enfermería en Salud Mental forma profesionales esenciales en la promoción, prevención y atención del bienestar mental y emocional. Desarrollará habilidades para intervenir eficazmente en trastornos mentales.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/ESPECIALIDAD/BROCHURE_ESPECIALIDAD_EN_ENFERMERIA_EN_SALUD_MENTAL.pdf"
+            },
+            "8": {
+                "nombre": "Especialidad en Enfermería en Salud del Niño y Adolescente",
+                "descripcion": "La Especialidad capacita para brindar atención integral, enfocada en el desarrollo físico, emocional y social del niño y adolescente, con enfoque familiar y comunitario.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/ESPECIALIDAD/BROCHURE_ESPECIALIDAD_EN_ENFERMERIA_EN_SALUD_DEL_NIÑO_Y_ADOLESCENTE.pdf"
+            },
+            "9": {
+                "nombre": "Especialidad en Enfermería en Oncología",
+                "descripcion": "La Especialidad en Enfermería en Oncología se enfoca en el cuidado integral y compasivo del paciente con cáncer en todas sus etapas, con competencias en manejo clínico, apoyo emocional, y cuidados paliativos avanzados.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/ESPECIALIDAD/BROCHURE_ESPECIALIDAD_EN_ENFERMERIA_EN_ONCOLOGIA.pdf"
+            },
+            "10": {
+                "nombre": "Especialidad en Enfermería en Gerontología y Geriátrica",
+                "descripcion": "La Especialidad ofrece formación para la atención integral del adulto mayor, capacitando para promover el envejecimiento activo, identificar riesgos y prevenir enfermedades crónicas.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/ESPECIALIDAD/BROCHURE_ESPECIALIDAD_EN_ENFERMERIA_EN_GERONTOLOGIA_Y_GERIATRICA.pdf"
+            },
+            "11": {
+                "nombre": "Especialidad en Enfermería en Epidemiología",
+                "descripcion": "La Especialidad forma profesionales clave para el análisis y control de patrones de salud y enfermedad en la población, capacitando en vigilancia epidemiológica, investigación y gestión de brotes.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/ESPECIALIDAD/BROCHURE_ESPECIALIDAD_EN_EPIDEMIOLOGIA.pdf"
+            },
+            "12": {
+                "nombre": "Especialidad en Enfermería en Emergencias y Desastres",
+                "descripcion": "Forma profesionales esenciales en salud pública para actuar con rapidez y eficacia ante situaciones críticas, emergencias médicas y desastres naturales.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/ESPECIALIDAD/BROCHURE_ESPECIALIDAD_EN_ENFERMERIA_EN_EMERGENCIAS_Y_DESASTRES.pdf"
+            },
+            "13": {
+                "nombre": "Especialidad en Enfermería en Cuidado Quirúrgico",
+                "descripcion": "Capacita para brindar cuidados especializados y humanizados al paciente quirúrgico, con énfasis en manejo clínico, prevención de complicaciones y la recuperación postoperatoria segura.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/ESPECIALIDAD/BROCHURE_ESPECIALIDAD_EN_ENFERMERIA_EN_CUIDADO_QUIRURGICO.pdf"
+            },
+            "14": {
+                "nombre": "Especialidad en Enfermería en Crecimiento, Desarrollo del Niño y Estimulación de Primera Infancia",
+                "descripcion": "Forma expertos en el acompañamiento integral del niño, enfocándose en vigilar el desarrollo, detectar alteraciones tempranas y aplicar estrategias de estimulación adecuada.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/ESPECIALIDAD/BROCHURE_ESPECIALIDAD_EN_ENFERMERIA_CDN_Y_EPI.pdf"
+            },
+            "15": {
+                "nombre": "Especialidad en Enfermería en Centro Quirúrgico",
+                "descripcion": "Forma profesionales con competencias avanzadas para la atención integral del paciente quirúrgico en sus fases preoperatoria, transoperatoria y postoperatoria.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/ESPECIALIDAD/BROCHURE_ESPECIALIDAD_EN_ENFERMERIA_EN_CENTRO_QUIRURGICO.pdf"
+            },
+            "16": {
+                "nombre": "Especialidad en Administración en Salud",
+                "descripcion": "Forma profesionales líderes en gestión estratégica, enfocados en la salud pública. Desarrolla competencias gerenciales esenciales para optimizar la planificación, dirección y toma de decisiones en instituciones sanitarias.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCS/ESPECIALIDAD/BROCHURE_ESPECIALIDAD_EN_ADMINISTRACION_EN_SALUD.pdf"
+            }
+        }
+    },
+    "2": {
+        "nombre": "Facultad de Ingeniería Industrial y de Sistemas",
+        "maestrias": {
+            "1": {
+                "nombre": "Maestría en Ingeniería Industrial con Mención en Gerencia en Logística",
+                "descripcion": "Forma líderes con competencias para diseñar estrategias logísticas competitivas, fomentar la investigación en desarrollo industrial y aplicar tecnologías emergentes en la gestión logística.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIIS/MAESTRIA/BROCHURE_MAESTRIA_EN_INGENIERIA_INDUSTRIAL_CON_MENCION_EN_GERENCIA_EN_LOGISTICA.pdf"
+            },
+            "2": {
+                "nombre": "Maestría en Ingeniería Industrial con Mención en Gerencia de Calidad y Productividad",
+                "descripcion": "Forma líderes capaces de transformar empresas mediante estrategias innovadoras, investigación aplicada y el uso de tecnologías emergentes.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIIS/MAESTRIA/BROCHURE_MAESTRIA_EN_INGENIERIA_INDUSTRIAL_CON_MENCION_EN_GERENCIA_DE_CALIDAD_Y_PRODUCTIVIDAD.pdf"
+            },
+            "3": {
+                "nombre": "Maestría en Ingeniería de Sistemas",
+                "descripcion": "Desarrolla competencias avanzadas en la gestión de sistemas complejos, optimización de procesos y liderazgo tecnológico, formando profesionales capaces de innovar y transformar organizaciones.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIIS/MAESTRIA/BROCHURE_MAESTRIA_EN_INGENIERIA_DE_SISTEMAS.pdf"
+            }
+        },
+        "doctorados": {
+            "1": {
+                "nombre": "Doctorado en Ingeniería Industrial",
+                "descripcion": "Forma investigadores autónomos que generan conocimientos innovadores, publican en alto impacto, participan en eventos académicos y aplican tecnología para soluciones empresariales.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIIS/DOCTORADO/BROCHURE_DOCTORADO_EN_INGENIERIA_INDUSTRIAL.pdf"
+            },
+            "2": {
+                "nombre": "Doctorado en Ingeniería de Sistemas",
+                "descripcion": "Forma doctores especializados en investigación científica de alto nivel, enfocada en las áreas clave de la disciplina, promoviendo el desarrollo de proyectos innovadores.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIIS/DOCTORADO/BROCHURE_DOCTORADO_EN_INGENIERIA_DE_SISTEMAS.pdf"
+            }
+        }
+    },
+    "3": {
+        "nombre": "Facultad de Ciencias Económicas",
+        "maestrias": {
+            "1": {
+                "nombre": "Maestría en Proyectos de Inversión",
+                "descripcion": "Forma expertos altamente calificados, con conocimientos teóricos y prácticos de Economía y Finanzas, capaces de dirigir y conducir la identificación, formulación, evaluación, ejecución y control de proyectos de inversión.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCE/MAESTRIA/BROCHURE_MAESTRIA_EN_PROYECTOS_DE_INVERSION.pdf"
+            },
+            "2": {
+                "nombre": "Maestría en Investigación y Docencia Universitaria",
+                "descripcion": "Forma investigadores y docentes para estudiar los problemas que impiden el desarrollo individual y social. Los resultados inciden en la producción teórica y los procedimientos didácticos de enseñanza-aprendizaje.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCE/MAESTRIA/BROCHURE_MAESTRIA_EN_INVESTIGACION_Y_DOCENCIA_UNIVERSITARIA.pdf"
+            },
+            "3": {
+                "nombre": "Maestría en Finanzas",
+                "descripcion": "Programa científico-práctico que forma personas con sólidos conocimientos teórico-prácticos, valores éticos y pensamiento crítico, capacitados en el manejo de modelos y técnicas de análisis financiero.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCE/MAESTRIA/BROCHURE_MAESTRIA_EN_FINANZAS.pdf"
+            },
+            "4": {
+                "nombre": "Maestría en Comercio y Negociaciones Internacionales",
+                "descripcion": "Responde a la ubicación de la UNAC en el Callao, centro neurálgico del comercio exterior. La globalización exige profesionales con estándares internacionales de eficiencia.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCE/MAESTRIA/BROCHURE_MAESTRIA_EN_COMERCIO_Y_NEGOCIACIONES_INTERNACIONALES.pdf"
+            }
+        }
+    },
+    "4": {
+        "nombre": "Facultad de Ciencias Administrativas",
+        "maestrias": {
+            "1": {
+                "nombre": "Maestría en Gerencia Educativa",
+                "descripcion": "La Gerencia Educativa es una herramienta fundamental para el funcionamiento efectivo de la estructura organizativa. El gerente educativo debe dirigir el equipo hacia el logro de los objetivos.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCA/MAESTRIA/BROCHURE_MAESTRIA_EN_GERENCIA_EDUCATIVA.pdf"
+            },
+            "2": {
+                "nombre": "Maestría en Administración Marítima y Portuaria",
+                "descripcion": "Proporciona conocimientos científicos y humanísticos para el manejo de herramientas tecnológicas de sistemas gerenciales. Desarrolla capacidades de análisis y criterio para asumir desafíos en el entorno Marítimo Portuario.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCA/MAESTRIA/BROCHURE_MAESTRIA_EN_ADMINISTRACION_MARITIMA_Y_PORTUARIA.pdf"
+            },
+            "3": {
+                "nombre": "Maestría en Administración Estratégica de Empresas",
+                "descripcion": "Ante el pujante crecimiento económico del Perú, la maestría otorga oportunidades a los profesionales para implementar nuevos negocios o gerenciar puestos estratégicos.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCA/MAESTRIA/BROCHURE_MAESTRIA_EN_ADMINISTRACION_ESTRATEGICA_DE_EMPRESAS.pdf"
+            }
+        },
+        "doctorados": {
+            "1": {
+                "nombre": "Doctorado en Administración",
+                "descripcion": "Brinda una sólida formación integral con conocimientos científicos y humanísticos derivados de la investigación, capacitado para realizar investigaciones científicas y tecnológicas.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCA/DOCTORADO/BROCHURE_DOCTORADO_EN_ADMINISTRACION.pdf"
+            }
+        }
+    },
+    "5": {
+        "nombre": "Facultad de Ciencias Contables",
+        "maestrias": {
+            "1": {
+                "nombre": "Maestría en Tributación",
+                "descripcion": "Este programa especializado en contabilidad y auditoría responde a los constantes cambios en la ciencia contable y tributaria, adaptándose al crecimiento económico y la globalización.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCC/MAESTRIA/BROCHURE_MAESTRIA_EN_TRIBUTACION.pdf"
+            },
+            "2": {
+                "nombre": "Maestría en Gestión Pública",
+                "descripcion": "Ofrece un programa innovador con un plan de estudios actualizado y alineado con estándares internacionales, aprovechando la experiencia de docentes nacionales e internacionales.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCC/MAESTRIA/BROCHURE_MAESTRIA_EN_GESTION_PUBLICA.pdf"
+            },
+            "3": {
+                "nombre": "Maestría en Ciencias Fiscalizadoras con Mención en Auditoría Integral Empresarial",
+                "descripcion": "Prepara profesionales capaces de enfrentar las demandas del sector público y la sociedad, respondiendo a las reformas de la contabilidad fiscalizadora.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCC/MAESTRIA/BROCHURE_MAESTRIA_EN_CIENCIAS_FISCALIZADORAS_CON_MENCION_EN_AUDITORIA_INTEGRAL_EMPRESARIAL.pdf"
+            },
+            "4": {
+                "nombre": "Maestría en Ciencias Fiscalizadoras con Mención en Auditoría Gubernamental",
+                "descripcion": "Le convertirá en un profesional capacitado para evaluar y mejorar la gestión financiera, operativa y administrativa de organizaciones públicas y privadas.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCC/MAESTRIA/BROCHURE_MAESTRIA_EN_CIENCIAS_FISCALIZADORAS_CON_MENCION_EN_AUDITORIA_GUBERNAMENTAL.pdf"
+            }
+        },
+        "doctorados": {
+            "1": {
+                "nombre": "Doctorado en Ciencias Contables",
+                "descripcion": "El Doctorado en Ciencias Contables cubre las demandas profesionales del mundo contable-financiero, formando profesionales académicos e investigadores capaces de solucionar los nuevos problemas.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCC/DOCTORADO/BROCHURE_DOCTORADO_EN_CIENCIAS_CONTABLES.pdf"
+            }
+        }
+    },
+    "6": {
+        "nombre": "Facultad de Ingeniería Química",
+        "maestrias": {
+            "1": {
+                "nombre": "Maestría en Ingeniería Química",
+                "descripcion": "Especializa al ingeniero en la generación de nuevo conocimiento y solución de problemas complejos del sector industrial y ambiental, enfocándose en el diseño, simulación y optimización de procesos.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIQ/MAESTRIA/BROCHURE_MAESTRIA_EN_INGENIERIA_QUIMICA.pdf"
+            },
+            "2": {
+                "nombre": "Maestría en Gerencia de Calidad y Desarrollo Humano",
+                "descripcion": "Forma líderes capaces de gestionar sistemas de calidad total, productividad e innovación con una perspectiva de desarrollo humano y ética.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIQ/MAESTRIA/BROCHURE_MAESTRIA_EN_GERENCIA_DE_CALIDAD_Y_DESARROLLO_HUMANO.pdf"
+            },
+            "3": {
+                "nombre": "Maestría en Ciencia y Tecnología de Alimentos",
+                "descripcion": "El programa forma expertos para investigar, innovar y optimizar la cadena agroalimentaria, enfocándose en el diseño de nuevos productos y la garantía de la inocuidad y calidad nutricional.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIQ/MAESTRIA/BROCHURE_MAESTRIA_EN_CIENCIA_Y_TECNOLOGIA_ALIMENTOS.pdf"
+            }
+        }
+    },
+    "7": {
+        "nombre": "Facultad de Ciencias Naturales y Matemática",
+        "maestrias": {
+            "1": {
+                "nombre": "Maestría en Didáctica de la Enseñanza de Física y Matemática",
+                "descripcion": "Forma Maestros de elevado nivel académico y científico en Didáctica de la Enseñanza en Física y Matemática, dotados de las competencias necesarias para desarrollar en forma eficaz su labor de docente.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCNM/MAESTRIA/BROCHURE_MAESTRIA_EN_DIDACTICA_DE_ENSENANZA_DE_FISICA_Y_MATEMATICA.pdf"
+            }
+        }
+    },
+    "8": {
+        "nombre": "Facultad de Ingeniería Pesquera y de Alimentos",
+        "maestrias": {
+            "1": {
+                "nombre": "Maestría en Ingeniería de Alimentos",
+                "descripcion": "Forma profesionales de alto nivel, contribuyendo a fortalecer la capacidad investigativa y de innovación del país, orientada a la profundización del conocimiento en Ingeniería de Alimentos.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIPA/MAESTRIA/BROCHURE_MAESTRIA_INGENIERIA_DE_ALIMENTOS.pdf"
+            },
+            "2": {
+                "nombre": "Maestría en Gestión Pesquera",
+                "descripcion": "Programa dirigido a enfrentar los requisitos para acceder a cargos gerenciales o directivos en el sector, favoreciendo el intercambio de alto nivel entre la industria, el gobierno y la comunidad.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIPA/MAESTRIA/BROCHURE_MAESTRIA_GESTION_PESQUERA.pdf"
+            },
+            "3": {
+                "nombre": "Maestría en Sistemas Integrados de Gestión",
+                "descripcion": "Forma expertos en calidad, ambiente, seguridad y responsabilidad social, integrando normativas internacionales y herramientas modernas para optimizar procesos y garantizar sostenibilidad.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIPA/MAESTRIA/MAESTRIA_EN_SISTEMAS_INTEGRADOS_DE_GESTION.pdf"
+            },
+            "4": {
+                "nombre": "Maestría en Nutrición y Biotecnología Alimentaria",
+                "descripcion": "Forma profesionales capaces de innovar en el desarrollo de alimentos funcionales, aplicar biotecnología avanzada y promover la seguridad alimentaria.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIPA/MAESTRIA/MAESTRIA_EN_NUTRICION_Y_BIOTECNOLOGIA_ALIMENTARIA.pdf"
+            }
+        },
+        "doctorados": {
+            "1": {
+                "nombre": "Doctorado en Ciencias, Tecnologías Acuícolas y Pesqueras",
+                "descripcion": "Programa académico de alto nivel que forma investigadores capaces de afrontar los desafíos científicos y tecnológicos en un entorno globalizado.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIPA/DOCTORADO/DOCTORADO_EN_CIENCIAS,_TECNOLOGIAS_ACUICOLAS_Y_PESQUERAS.pdf"
+            },
+            "2": {
+                "nombre": "Doctorado en Ingeniería de Alimentos",
+                "descripcion": "Programa académico de alto nivel que forma investigadores capaces de afrontar los desafíos científicos y tecnológicos, respondiendo a las exigencias de innovación y actualización constante.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIPA/DOCTORADO/DOCTORADO_EN_INGENIERIA_DE_ALIMENTOS.pdf"
+            }
+        }
+    },
+    "9": {
+        "nombre": "Facultad de Ingeniería Mecánica y Energía",
+        "maestrias": {
+            "1": {
+                "nombre": "Maestría en Gerencia del Mantenimiento",
+                "descripcion": "Forma líderes para gestionar estratégicamente los activos físicos y la función de mantenimiento, optimizando la confiabilidad, disponibilidad y eficiencia operacional.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIME/MAESTRIA/BROCHURE_MAESTRIA_EN_GERENCIA_DEL_MANTENIMIENTO.pdf"
+            }
+        }
+    },
+    "10": {
+        "nombre": "Facultad de Ingeniería Eléctrica y Electrónica",
+        "maestrias": {
+            "1": {
+                "nombre": "Maestría en Ingeniería Eléctrica con Mención en Gestión de Sistemas de Energía Eléctrica",
+                "descripcion": "El programa forma expertos en la planificación, operación y gestión de sistemas eléctricos complejos, enfatizando el uso eficiente de la energía y la integración de energías renovables.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIEE/MAESTRIA/BROCHURE_MAESTRIA_EN_INGENIERIA_ELECTRICA_CON_MENCION_EN_GESTION_DE_SISTEMAS_ENERGIA_ELECTRICA.pdf"
+            },
+            "2": {
+                "nombre": "Maestría en Ingeniería Eléctrica con Mención en Gerencia de Proyectos de Ingeniería",
+                "descripcion": "Dirigida a profesionales que deseen liderar proyectos de ingeniería eléctrica, combinando habilidades técnicas con herramientas de gestión.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIEE/MAESTRIA/BROCHURE_MAESTRIA_EN_INGENIERIA_ELECTRICA_CON_MENCION_EN_GERENCIA_DE_PROYECTOS_INGENIERIA.pdf"
+            },
+            "3": {
+                "nombre": "Maestría en Ciencias de Electrónica con Mención en Telecomunicaciones",
+                "descripcion": "Capacita a profesionales para diseñar, analizar y optimizar sistemas de comunicación avanzados, incluyendo redes digitales, inalámbricas y de transmisión de datos.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIEE/MAESTRIA/BROCHURE_MAESTRIA_EN_CIENCIAS_DE_ELECTRONICA_CON_MENCION_TELECOMUNICACIONES.pdf"
+            },
+            "4": {
+                "nombre": "Maestría en Ciencias de Electrónica con Mención en Ingeniería Biomédica",
+                "descripcion": "Forma profesionales capaces de integrar la electrónica con la medicina para diseñar, implementar y optimizar dispositivos y sistemas biomédicos.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIEE/MAESTRIA/BROCHURE_MAESTRIA_EN_CIENCIAS_DE_ELECTRONICA_CON_MENCION_INGENIERIA_BIOMEDICA.pdf"
+            },
+            "5": {
+                "nombre": "Maestría en Ciencias de Electrónica con Mención en Control y Automatización",
+                "descripcion": "Prepara profesionales especializados en la automatización de procesos y el control de sistemas electrónicos industriales mediante tecnologías inteligentes.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIEE/MAESTRIA/BROCHURE_MAESTRIA_EN_CIENCIAS_DE_ELECTRONICA_CON_MENCION_EN_CONTROL_Y_AUTOMATIZACION.pdf"
+            }
+        },
+        "doctorados": {
+            "1": {
+                "nombre": "Doctorado en Ingeniería Eléctrica",
+                "descripcion": "Programa académico de alto nivel que forma investigadores capaces de afrontar los desafíos científicos y tecnológicos en un entorno globalizado.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIEE/DOCTORADO/BROCHURE_DOCTORADO_EN_INGENIERIA_ELECTRICA.pdf"
+            }
+        }
+    },
+    "11": {
+        "nombre": "Facultad de Ingeniería Ambiental y de Recursos Naturales",
+        "maestrias": {
+            "1": {
+                "nombre": "Maestría en Gestión Ambiental para el Desarrollo Sostenible",
+                "descripcion": "Forma profesionales capaces de diseñar e implementar estrategias y proyectos de desarrollo sostenible, enfocándose en la gestión integral de los recursos naturales.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FIARN/MAESTRIA/BROCHURE_MAESTRIA_EN_GESTION_AMBIENTAL_PARA_DESARROLLO_SOSTENIBLE.pdf"
+            }
+        }
+    },
+    "12": {
+        "nombre": "Facultad de Ciencias de la Educación",
+        "maestrias": {
+            "1": {
+                "nombre": "Maestría en Gerencia del Desarrollo Humano",
+                "descripcion": "Forma líderes en gestión estratégica del talento humano, enfocándose en el desarrollo de competencias gerenciales y la gestión del cambio organizacional.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCED/MAESTRIA/BROCHURE_MAESTRIA_EN_GERENCIA_DEL_DESARROLLO_HUMANO.pdf"
+            }
+        },
+        "doctorados": {
+            "1": {
+                "nombre": "Doctorado en Educación",
+                "descripcion": "Forma investigadores y docentes de alto nivel en el campo de la educación, capaces de generar conocimiento innovador y contribuir a la transformación del sistema educativo.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCED/DOCTORADO/BROCHURE_DOCTORADO_EN_EDUCACION.pdf"
+            }
+        },
+        "especialidades": {
+            "1": {
+                "nombre": "Especialidad en Educación Física y Mención en Actividad Física para la Salud",
+                "descripcion": "Forma profesionales especializados en la promoción de la actividad física como herramienta para el bienestar y la salud integral de las personas.",
+                "brochure": "https://posgrado.unac.edu.pe/brochure/FCED/ESPECIALIDAD/BROCHURE_ESPECIALIDAD_EN_EDUCACION_FISICA.pdf"
+            }
+        }
+    }
+}

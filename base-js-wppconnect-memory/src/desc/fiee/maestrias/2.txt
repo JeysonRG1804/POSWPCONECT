@@ -1,5 +1,0 @@
-📘 *Maestría en Ciencias de la Electrónica con mención en Control y Automatización*
-
-Es un programa de posgrado orientado a formar especialistas capaces de diseñar, implementar y optimizar sistemas de control automatizado aplicados a procesos industriales, tecnológicos y de servicios 🏭🤖. Su enfoque combina fundamentos de electrónica, programación, inteligencia artificial y robótica para impulsar soluciones innovadoras en el contexto de la Industria 4.0 🔧📡.
-
-Ofrece formación avanzada en control de procesos, sistemas embebidos, instrumentación industrial, redes de comunicación, simulación y automatización inteligente. Los egresados están preparados para liderar proyectos de modernización tecnológica, desarrollar sistemas de control eficientes y contribuir al aumento de la productividad, la seguridad y la sostenibilidad en distintos entornos industriales 🌍📈.

@@ -13,6 +13,9 @@ const __dirname = path.dirname(__filename)
 
 const PORT = process.env.PORT ?? 3008
 
+// Número del administrador para recibir solicitudes de contacto
+const ADMIN_NUMBER = '51900969591@c.us'
+
 // ============= MANEJADORES DE ERRORES GLOBALES =============
 process.on('uncaughtException', (err) => {
     console.error('🔴 Uncaught Exception:', err.message)
@@ -159,124 +162,20 @@ const fechasadmision = leerArchivo('mensajes/fechasadmision.txt')
 const infoplus = leerArchivo('desc/info.txt')
 
 // ============= FACULTADES =============
-const facultades = {
-    '1': {
-        nombre: 'Facultad de Ciencias de la Salud',
-        maestrias: {
-            '1': { nombre: 'Maestría en Gerencia en Salud', descripcion: leerArchivo('desc/fcs/maestrias/1.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCS/MAESTRIA/BROCHURE_MAESTRIA_EN_GERENCIA_EN_SALUD.pdf' },
-            '2': { nombre: 'Maestría en Salud Pública', descripcion: leerArchivo('desc/fcs/maestrias/2.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCS/MAESTRIA/BROCHURE_MAESTRIA_EN_SALUD_PUBLICA.pdf' },
-            '3': { nombre: 'Maestría en Ciencias de la Salud con Mención en Educación para la Salud', descripcion: leerArchivo('desc/fcs/maestrias/3.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCS/MAESTRIA/BROCHURE_MAESTRIA_EN_CIENCIAS_DE_SALUD_CON_MENCION_EN_EDUCACION_PARA_SALUD.pdf' },
-            '4': { nombre: 'Maestría en Enfermería', descripcion: leerArchivo('desc/fcs/maestrias/4.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCS/MAESTRIA/BROCHURE_MAESTRIA_EN_ENFERMERIA.pdf' },
-            '5': { nombre: 'Maestría en Enfermería Familiar y Comunitaria', descripcion: leerArchivo('desc/fcs/maestrias/5.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCS/MAESTRIA/BROCHURE_MAESTRIA_EN_ENFERMERIA_FAMILIAR_Y_COMUNITARIA.pdf' },
-            '6': { nombre: 'Maestría en Salud Ocupacional y Ambiental', descripcion: leerArchivo('desc/fcs/maestrias/6.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCS/MAESTRIA/BROCHURE_MAESTRIA_EN_SALUD_OCUPACIONAL_Y_AMBIENTAL.pdf' }
-        },
-        doctorados: {
-            '1': { nombre: 'Doctorado en Salud Pública', descripcion: leerArchivo('desc/fcs/doctorados/1.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCS/DOCTORADO/BROCHURE_DOCTORADO_EN_SALUD_PUBLICA.pdf' },
-            '2': { nombre: 'Doctorado en Ciencias de la Salud', descripcion: leerArchivo('desc/fcs/doctorados/2.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCS/DOCTORADO/BROCHURE_DOCTORADO_EN_CIENCIAS_DE_SALUD.pdf' },
-            '3': { nombre: 'Doctorado en Administración en Salud', descripcion: leerArchivo('desc/fcs/doctorados/1.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCS/DOCTORADO/BROCHURE_DOCTORADO_EN_ADMINISTRACION_EN_SALUD.pdf' },
-            '4': { nombre: 'Doctorado en Enfermería', descripcion: leerArchivo('desc/fcs/doctorados/1.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCS/DOCTORADO/BROCHURE_DOCTORADO_EN_ENFERMERIA.pdf' }
-        }
-    },
-    '2': {
-        nombre: 'Facultad de Ciencias Administrativas',
-        maestrias: {
-            '1': { nombre: 'Maestría en Administración Estratégica de Empresas', descripcion: leerArchivo('desc/fca/maestrias/1.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCA/MAESTRIA/BROCHURE_MAESTRIA_EN_ADMINISTRACION_ESTRATEGICA_DE_EMPRESAS.pdf' },
-            '2': { nombre: 'Maestría en Gerencia Educativa', descripcion: leerArchivo('desc/fca/maestrias/2.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCA/MAESTRIA/BROCHURE_MAESTRIA_EN_GERENCIA_EDUCATIVA.pdf' },
-            '3': { nombre: 'Maestría en Administración Marítima y Portuaria', descripcion: leerArchivo('desc/fca/maestrias/3.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCA/MAESTRIA/BROCHURE_MAESTRIA_EN_ADMINISTRACION_MARITIMA_Y_PORTUARIA.pdf' }
-        },
-        doctorados: {
-            '1': { nombre: 'Doctorado en Administración', descripcion: leerArchivo('desc/fca/doctorados/1.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCA/DOCTORADO/BROCHURE_DOCTORADO_EN_ADMINISTRACION.pdf' }
-        }
-    },
-    '3': {
-        nombre: 'Facultad de Ingeniería Industrial y de Sistemas',
-        maestrias: {
-            '1': { nombre: 'Maestría en Ingeniería Industrial con mención en Gerencia de la Calidad y Productividad', descripcion: leerArchivo('desc/fiis/maestrias/1.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FIIS/MAESTRIA/BROCHURE_MAESTRIA_EN_INGENIERIA_INDUSTRIAL_CON_MENCION_EN_GERENCIA_DE_CALIDAD_Y_PRODUCTIVIDAD.pdf' },
-            '2': { nombre: 'Maestría en Ingeniería Industrial con mención en Gerencia en Logística', descripcion: leerArchivo('desc/fiis/maestrias/2.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FIIS/MAESTRIA/BROCHURE_MAESTRIA_EN_INGENIERIA_INDUSTRIAL_CON_MENCION_EN_GERENCIA_EN_LOGISTICA.pdf' },
-            '3': { nombre: 'Maestría en Ingeniería de Sistemas', descripcion: leerArchivo('desc/fiis/maestrias/3.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FIIS/MAESTRIA/BROCHURE_MAESTRIA_EN_INGENIERIA_DE_SISTEMAS.pdf' }
-        },
-        doctorados: {
-            '1': { nombre: 'Doctorado en Ingeniería de Sistemas', descripcion: leerArchivo('desc/fiis/doctorados/1.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FIIS/DOCTORADO/DOCTORADO_EN_INGENIERIA_DE_SISTEMAS.pdf' },
-            '2': { nombre: 'Doctorado en Ingeniería Industrial', descripcion: leerArchivo('desc/fiis/doctorados/2.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FIIS/DOCTORADO/DOCTORADO_EN_INGENIERIA_INDUSTRIAL.pdf' }
-        }
-    },
-    '4': {
-        nombre: 'Facultad de Ciencias Contables',
-        maestrias: {
-            '1': { nombre: 'Maestría en Tributación', descripcion: leerArchivo('desc/fcc/maestrias/1.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCC/MAESTRIA/BROCHURE_MAESTRIA_EN_TRIBUTACION.pdf' },
-            '2': { nombre: 'Maestría en Ciencias Fiscalizadoras con Mención en Auditoría Gubernamental', descripcion: leerArchivo('desc/fcc/maestrias/2.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCC/MAESTRIA/BROCHURE_MAESTRIA_EN_CIENCIAS_FISCALIZADORAS_CON_MENCION_EN_AUDITORIA_GUBERNAMENTAL.pdf' },
-            '3': { nombre: 'Maestría en Ciencias Fiscalizadoras con Mención en Auditoría Integral Empresarial', descripcion: leerArchivo('desc/fcc/maestrias/3.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCC/MAESTRIA/BROCHURE_MAESTRIA_EN_CIENCIAS_FISCALIZADORAS_CON_MENCION_EN_AUDITORIA_INTEGRAL_EMPRESARIAL.pdf' },
-            '4': { nombre: 'Maestría en Gestión Pública', descripcion: leerArchivo('desc/fcc/maestrias/4.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCC/MAESTRIA/BROCHURE_MAESTRIA_EN_GESTION_PUBLICA.pdf' }
-        },
-        doctorados: {
-            '1': { nombre: 'Doctorado en Ciencias Contables', descripcion: leerArchivo('desc/fcc/doctorados/1.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCC/DOCTORADO/BROCHURE_DOCTORADO_EN_CIENCIAS_CONTABLES.pdf' }
-        }
-    },
-    '5': {
-        nombre: 'Facultad de Ingeniería Eléctrica y Electrónica',
-        maestrias: {
-            '1': { nombre: 'Maestría en Ciencias de la Electrónica con Mención en Ingeniería Biomédica', descripcion: leerArchivo('desc/fiee/maestrias/1.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FIEE/MAESTRIA/BROCHURE_MAESTRIA_EN_CIENCIAS_DE_ELECTRONICA_CON_MENCION_EN_INGENIERIA_BIOMEDICA.pdf' },
-            '2': { nombre: 'Maestría en Ciencias de la Electrónica con mención en Control y Automatización', descripcion: leerArchivo('desc/fiee/maestrias/2.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FIEE/MAESTRIA/BROCHURE_MAESTRIA_EN_CIENCIAS_DE_ELECTRONICA_CON_MENCION_EN_CONTROL_Y_AUTOMATIZACION.pdf' },
-            '3': { nombre: 'Maestría en Ciencias de la Electrónica con mención en Telecomunicaciones', descripcion: leerArchivo('desc/fiee/maestrias/3.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FIEE/MAESTRIA/BROCHURE_MAESTRIA_EN_CIENCIAS_DE_ELECTRONICA_CON_MENCION_EN_TELECOMUNICACIONES.pdf' },
-            '4': { nombre: 'Maestría en Ingeniería Eléctrica con mención en Gestión de Sistemas de Energía Eléctrica', descripcion: leerArchivo('desc/fiee/maestrias/4.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FIEE/MAESTRIA/BROCHURE_MAESTRIA_EN_INGENIERIA_ELECTRICA_CON_MENCION_EN_GESTION_DE_SISTEMAS_DE_ENERGIA_ELECTRICA.pdf' },
-            '5': { nombre: 'Maestría en Ingeniería Eléctrica con mención en Gerencia de Proyectos de Ingeniería', descripcion: leerArchivo('desc/fiee/maestrias/5.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FIEE/MAESTRIA/BROCHURE_MAESTRIA_EN_INGENIERIA_ELECTRICA_CON_MENCION_EN_GERENCIA_DE_PROYECTOS_DE_INGENIERIA.pdf' }
-        },
-        doctorados: {
-            '1': { nombre: 'Doctorado en Ingeniería Eléctrica', descripcion: leerArchivo('desc/fiee/doctorados/1.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FIEE/DOCTORADO/BROCHURE_DOCTORADO_EN_INGENIERIA_ELECTRICA.pdf' }
-        }
-    },
-    '6': {
-        nombre: 'Facultad de Ingeniería Pesquera y de Alimentos',
-        maestrias: {
-            '1': { nombre: 'Maestría en Gestión Pesquera', descripcion: leerArchivo('desc/fipa/maestrias/1.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FIPA/MAESTRIA/BROCHURE_MAESTRIA_EN_GESTION_PESQUERA.pdf' },
-            '2': { nombre: 'Maestría en Ingeniería de Alimentos', descripcion: leerArchivo('desc/fipa/maestrias/2.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FIPA/MAESTRIA/BROCHURE_MAESTRIA_EN_INGENIERIA_DE_ALIMENTOS.pdf' }
-        }
-    },
-    '7': {
-        nombre: 'Facultad de Ingeniería Mecánica y Energía',
-        maestrias: {
-            '1': { nombre: 'Maestría en Gerencia del Mantenimiento', descripcion: leerArchivo('desc/fime/maestrias/1.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FIME/MAESTRIA/BROCHURE_MAESTRIA_EN_GERENCIA_DEL_MANTENIMIENTO.pdf' }
-        }
-    },
-    '8': {
-        nombre: 'Facultad de Ciencias Naturales y Matemática',
-        maestrias: {
-            '1': { nombre: 'Maestría en Didáctica de las Enseñanza de la Física y Matemática', descripcion: leerArchivo('desc/fcnm/maestrias/1.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCNM/MAESTRIA/BROCHURE_MAESTRIA_EN_DIDACTICA_DE_ENSENANZA_DE_FISICA_Y_MATEMATICA.pdf' }
-        }
-    },
-    '9': {
-        nombre: 'Facultad de Ingeniería Ambiental y de Recursos Naturales',
-        maestrias: {
-            '1': { nombre: 'Maestría en Gestión Ambiental para el Desarrollo Sostenible', descripcion: leerArchivo('desc/fiarn/maestrias/1.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FIARN/MAESTRIA/BROCHURE_MAESTRIA_EN_GESTION_AMBIENTAL_PARA_DESARROLLO_SOSTENIBLE.pdf' }
-        }
-    },
-    '10': {
-        nombre: 'Facultad de Ciencias Económicas',
-        maestrias: {
-            '1': { nombre: 'Maestría en Comercio y Negociaciones Internacionales', descripcion: leerArchivo('desc/fce/maestrias/1.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCE/MAESTRIA/BROCHURE_MAESTRIA_EN_COMERCIO_Y_NEGOCIACIONES_INTERNACIONALES.pdf' },
-            '2': { nombre: 'Maestría en Finanzas', descripcion: leerArchivo('desc/fce/maestrias/2.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCE/MAESTRIA/BROCHURE_MAESTRIA_EN_FINANZAS.pdf' },
-            '3': { nombre: 'Maestría en Investigación y Docencia Universitaria', descripcion: leerArchivo('desc/fce/maestrias/3.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCE/MAESTRIA/BROCHURE_MAESTRIA_EN_INVESTIGACION_Y_DOCENCIA_UNIVERSITARIA.pdf' },
-            '4': { nombre: 'Maestría en Proyectos de Inversión', descripcion: leerArchivo('desc/fce/maestrias/4.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCE/MAESTRIA/BROCHURE_MAESTRIA_EN_PROYECTOS_DE_INVERSION.pdf' }
-        }
-    },
-    '11': {
-        nombre: 'Facultad de Ingeniería Química',
-        maestrias: {
-            '1': { nombre: 'Maestría en Gerencia de la Calidad y Desarrollo Humano', descripcion: leerArchivo('desc/fiq/maestrias/1.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FIQ/MAESTRIA/BROCHURE_MAESTRIA_EN_GERENCIA_DE_CALIDAD_Y_DESARROLLO_HUMANO.pdf' },
-            '2': { nombre: 'Maestría en Ciencia y Tecnología de los Alimentos', descripcion: leerArchivo('desc/fiq/maestrias/2.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FIQ/MAESTRIA/BROCHURE_MAESTRIA_EN_CIENCIA_Y_TECNOLOGIA_ALIMENTOS.pdf' },
-            '3': { nombre: 'Maestría en Ingeniería Química', descripcion: leerArchivo('desc/fiq/maestrias/3.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FIQ/MAESTRIA/BROCHURE_MAESTRIA_EN_INGENIERIA_QUIMICA.pdf' }
-        }
-    },
-    '12': {
-        nombre: 'Facultad de Ciencias de la Educación',
-        maestrias: {
-            '1': { nombre: 'Maestría en Gerencia de la Calidad y Desarrollo Humano', descripcion: leerArchivo('desc/fiq/maestrias/1.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCED/MAESTRIA/BROCHURE_MAESTRIA_EN_GERENCIA_DEL_DESARROLLO_HUMANO.pdf' }
-        },
-        doctorados: {
-            '1': { nombre: 'Doctorado en Educación', descripcion: leerArchivo('desc/fced/doctorados/1.txt'), brochure: 'https://posgrado.unac.edu.pe/brochure/FCED/DOCTORADO/BROCHURE_DOCTORADO_EN_EDUCACION.pdf' }
-        }
+// ============= CARGAR FACULTADES DESDE JSON =============
+function cargarFacultades() {
+    try {
+        const facultadesPath = join(__dirname, 'facultades.json')
+        const data = JSON.parse(readFileSync(facultadesPath, 'utf-8'))
+        console.log('✅ Facultades cargadas correctamente')
+        return data
+    } catch (error) {
+        console.error('❌ Error al cargar facultades.json:', error.message)
+        return {}
     }
 }
+
+const facultades = cargarFacultades()
 
 // ============= FLUJOS =============
 
@@ -309,9 +208,26 @@ const flowContacto = addKeyword(utils.setEvent('CONTACTO_FLOW'))
     .addAnswer('📱 Tu *número de teléfono*:', { capture: true }, async (ctx, { state }) => {
         await state.update({ telefono: ctx.body })
     })
-    .addAnswer('✍️ Por último, escribe un *mensaje o detalle de tu consulta*:', { capture: true }, async (ctx, { state, flowDynamic }) => {
+    .addAnswer('✍️ Por último, escribe un *mensaje o detalle de tu consulta*:', { capture: true }, async (ctx, { state, flowDynamic, provider }) => {
         try {
             const myState = state.getMyState() || {}
+
+            // Mapear tipos de consulta
+            const tiposConsulta = {
+                '1': 'Información académica',
+                '2': 'Admisiones y becas',
+                '3': 'Proceso de inscripción',
+                '4': 'Documentación',
+                '5': 'Otro'
+            }
+
+            // Mapear canales
+            const canales = {
+                '1': 'WhatsApp',
+                '2': 'Correo',
+                '3': 'Teléfono',
+                '4': 'Videollamada'
+            }
 
             const solicitud = {
                 usuarioId: ctx.from,
@@ -326,6 +242,26 @@ const flowContacto = addKeyword(utils.setEvent('CONTACTO_FLOW'))
             // Guardar en la base de datos local
             await guardarSolicitudContacto(solicitud)
             contadorSolicitudes++
+
+            // Enviar notificación al administrador
+            const mensajeAdmin = `📩 *NUEVA SOLICITUD DE CONTACTO #${contadorSolicitudes}*
+
+👤 *Nombre:* ${solicitud.nombre}
+📞 *Teléfono:* ${solicitud.telefono}
+📧 *Correo:* ${solicitud.correo}
+📋 *Tipo de consulta:* ${tiposConsulta[solicitud.tipoConsulta] || solicitud.tipoConsulta}
+📱 *Canal preferido:* ${canales[solicitud.canal] || solicitud.canal}
+💬 *Mensaje:* ${solicitud.mensaje}
+
+🔗 *WhatsApp del usuario:* wa.me/${ctx.from.replace('@c.us', '').replace('51', '')}
+📅 *Fecha:* ${new Date().toLocaleString('es-PE', { timeZone: 'America/Lima' })}`
+
+            try {
+                await provider.sendMessage(ADMIN_NUMBER, mensajeAdmin, {})
+                console.log('✅ Solicitud enviada al administrador:', ADMIN_NUMBER)
+            } catch (sendError) {
+                console.error('❌ Error al enviar al administrador:', sendError.message)
+            }
 
             // Confirmación al usuario
             await flowDynamic('✅ Gracias. Tu solicitud fue registrada y un asesor te contactará pronto.\nSu ID de solicitud es: ' + contadorSolicitudes)
@@ -348,8 +284,8 @@ const flowExit = addKeyword(['adios', 'bye', 'chau'])
 // Flujo Calendario
 const flowCalendario = addKeyword(utils.setEvent('CALENDARIO_FLOW'))
     .addAnswer([
-        'Este es nuestro nuevo calendario académico para el 2025-II, puede visitar nuestra página web:',
-        'https://posgrado.unac.edu.pe/admision/cronograma-academico-2025-i.html'
+        'Este es nuestro nuevo calendario académico para el 2026-I, puede visitar nuestra página web:',
+        'https://posgrado.unac.edu.pe/admision/cronograma.html'
     ])
 
 // ============= FLUJOS DE DOCTORADOS =============
@@ -635,13 +571,146 @@ const flowFacultadMaestrias = addKeyword(utils.setEvent('FACULTAD_MAESTRIAS'))
         }
     })
 
+// ============= FLUJOS DE ESPECIALIDADES =============
+
+const flowNuevaEspecialidad = addKeyword(utils.setEvent('NUEVA_ESPECIALIDAD'))
+    .addAnswer(
+        ['¿Necesita consultar otra especialidad?, digite el número de la acción a realizar', '1️⃣ *SI* 📜', '2️⃣ *NO*'],
+        { capture: true },
+        async (ctx, { flowDynamic, gotoFlow }) => {
+            const entrada = quitarAcentos(ctx.body.trim().toLowerCase())
+
+            if (RESP_SI.has(entrada)) {
+                return gotoFlow(flowFacultadEspecialidades)
+            }
+            if (RESP_NO.has(entrada)) {
+                return gotoFlow(flowExit)
+            }
+
+            await flowDynamic('❌ Respuesta no válida, selecciona una de las opciones.')
+            return gotoFlow(flowNuevaEspecialidad)
+        }
+    )
+
+const flowSeleccionEspecialidad = addKeyword(utils.setEvent('SELECCION_ESPECIALIDAD'))
+    .addAnswer('📩 Seleccione una Especialidad:', { capture: true },
+        async (ctx, { flowDynamic, gotoFlow }) => {
+            const usuarioId = ctx.from
+            const input = ctx.body.trim()
+
+            try {
+                const currentState = await obtenerEstado(usuarioId)
+                const facultadId = currentState?.facultadId
+
+                if (!facultadId || !facultades[facultadId]) {
+                    await flowDynamic('❌ Error: Información de facultad perdida. Regresando al menú.')
+                    return gotoFlow(flowFacultadEspecialidades)
+                }
+
+                if (input === '0') {
+                    await borrarEstado(usuarioId)
+                    return gotoFlow(flowFacultadEspecialidades)
+                }
+
+                const facultad = facultades[facultadId]
+                const especialidadKeys = Object.keys(facultad.especialidades || {})
+                const selectedIndex = parseInt(input) - 1
+
+                if (selectedIndex < 0 || selectedIndex >= especialidadKeys.length) {
+                    await flowDynamic('❌ Opción inválida. Intente de nuevo.')
+                    return gotoFlow(flowSeleccionEspecialidad)
+                }
+
+                const selectedKey = especialidadKeys[selectedIndex]
+                const especialidad = facultad.especialidades[selectedKey]
+
+                const descripcion = typeof especialidad.descripcion === 'function'
+                    ? especialidad.descripcion()
+                    : especialidad.descripcion
+
+                await flowDynamic([
+                    `🎓 *${especialidad.nombre || 'Especialidad'}*`,
+                    descripcion || 'Descripción no disponible',
+                    infoplus || ''
+                ])
+
+                if (especialidad.brochure) {
+                    await enviarMediaSeguro(flowDynamic, '📄 Aquí tienes el brochure:', especialidad.brochure)
+                } else {
+                    await flowDynamic('📄 Brochure no disponible para esta especialidad.')
+                }
+
+                await borrarEstado(usuarioId)
+                return gotoFlow(flowNuevaEspecialidad)
+
+            } catch (error) {
+                console.error('❌ Error en flowSeleccionEspecialidad:', error)
+                await flowDynamic('❌ Ocurrió un error. Regresando al menú de facultades.')
+                await borrarEstado(usuarioId)
+                return gotoFlow(flowFacultadEspecialidades)
+            }
+        })
+
+const flowFacultadEspecialidades = addKeyword(utils.setEvent('FACULTAD_ESPECIALIDADES'))
+    .addAnswer('*ESPECIALIDADES DE LA UNIVERSIDAD NACIONAL DEL CALLAO*')
+    .addAnswer('Estas son nuestras facultades con especialidades:', {
+        media: 'https://posgrado.unac.edu.pe/img/escuela.jpg'
+    })
+    .addAnswer([
+        '1️⃣ Facultad de Ciencias de la Salud',
+        '0️⃣ Volver al menú principal'
+    ], { capture: true }, async (ctx, { gotoFlow, flowDynamic }) => {
+        const facultadId = ctx.body.trim()
+        const usuarioId = ctx.from
+
+        if (!['1', '0'].includes(facultadId)) {
+            await flowDynamic('❌ Opción inválida. Intente de nuevo.')
+            return gotoFlow(flowFacultadEspecialidades)
+        }
+
+        if (facultadId === '0') {
+            return gotoFlow(programasFlow)
+        }
+
+
+        const facultad = facultades[facultadId]
+        if (!facultad || !facultad.especialidades) {
+            await flowDynamic('❌ Facultad no encontrada o sin especialidades.')
+            return gotoFlow(flowFacultadEspecialidades)
+        }
+
+        try {
+            await guardarEstado(usuarioId, { facultadId })
+
+            const especialidadEntries = Object.entries(facultad.especialidades)
+            const opciones = especialidadEntries
+                .map(([especialidadId, especialidad], index) =>
+                    `${index + 1}️⃣ ${especialidad.nombre || 'Especialidad ' + especialidadId}`
+                )
+                .join('\n')
+
+            await flowDynamic([
+                `📚 *${facultad.nombre}*`,
+                'Seleccione una especialidad para ver más detalles:',
+                opciones,
+                '0️⃣ Volver al listado de facultades'
+            ])
+
+            return gotoFlow(flowSeleccionEspecialidad)
+        } catch (error) {
+            console.error('❌ Error al guardar estado:', error)
+            await flowDynamic('❌ Error interno. Intente de nuevo más tarde.')
+            return gotoFlow(flowFacultadEspecialidades)
+        }
+    })
+
 // Flujo Programas
 const programasFlow = addKeyword(utils.setEvent('PROGRAMAS_FLOW'))
     .addAnswer(
-        [programas || '📚 *PROGRAMAS DE POSGRADO*\n1️⃣ Maestrías\n2️⃣ Doctorados\n0️⃣ Volver al menú'],
+        [programas || '📚 *PROGRAMAS DE POSGRADO*\n1️⃣ Maestrías\n2️⃣ Doctorados\n3️⃣ Especialidades\n0️⃣ Volver al menú'],
         { capture: true },
         async (ctx, { flowDynamic, gotoFlow }) => {
-            if (!['1', '2', '0'].includes(ctx.body)) {
+            if (!['1', '2', '3', '0'].includes(ctx.body)) {
                 await flowDynamic('❌ Respuesta no válida, selecciona una de las opciones.')
                 return gotoFlow(programasFlow)
             }
@@ -650,6 +719,8 @@ const programasFlow = addKeyword(utils.setEvent('PROGRAMAS_FLOW'))
                     return gotoFlow(flowFacultadMaestrias)
                 case '2':
                     return gotoFlow(flowFacultadDoctorados)
+                case '3':
+                    return gotoFlow(flowFacultadEspecialidades)
                 case '0':
                     return gotoFlow(menuFlow)
             }
@@ -801,6 +872,9 @@ const main = async () => {
         flowFacultadDoctorados,
         flowSeleccionDoctorado,
         flowNuevoDoctorado,
+        flowFacultadEspecialidades,
+        flowSeleccionEspecialidad,
+        flowNuevaEspecialidad,
         flowAdmision,
         flowRequisitos,
         flowCostos,

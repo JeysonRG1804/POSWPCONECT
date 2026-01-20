@@ -1170,14 +1170,14 @@ N° Cta. Cte.: ${cuenta} (Scotiabank)
                     'Facultad de Ciencias Económicas': 'https://chat.whatsapp.com/GwqF5Qe5wGr5ueyI0k1Sxl',
                     'Facultad de Ingeniería Industrial y de Sistemas': 'https://chat.whatsapp.com/EwRf65gMmwe9zyCrsM1gks',
                     'Facultad de Ciencias Administrativas': 'https://chat.whatsapp.com/HNKqywmtrBLER8l8lvaoCM',
-                    'Facultad de Ciencias Contables': 'https://chat.whatsapp.com/DkrzEJ6uV6nBfYUvraebzC',
+                    'Facultad de Ciencias Contables': 'https://chat.whatsapp.com/IKDHLVEa6bS0ZQ0319d17x',
                     'Facultad de Ingeniería Química': 'https://chat.whatsapp.com/C1cgM6wqzQrKZGPJiHYMvJ',
                     'Facultad de Ciencias Naturales y Matemática': 'https://chat.whatsapp.com/HW7YC2eFeEx6K7tFL9Kf04',
                     'Facultad de Ingeniería Pesquera y de Alimentos': 'https://chat.whatsapp.com/IKNzlJiO6El6Ns8k4bixjF',
                     'Facultad de Ingeniería Mecánica y Energía': 'https://chat.whatsapp.com/IAAsZWNRocL5pOv6tJQqZY',
                     'Facultad de Ingeniería Eléctrica y Electrónica': 'https://chat.whatsapp.com/DkrzEJ6uV6nBfYUvraebzC',
                     'Facultad de Ingeniería Ambiental y de Recursos Naturales': 'https://chat.whatsapp.com/BKySJFFEKNeK40LZ4tAxOv',
-                    'Facultad de Ciencias de la Educación': 'https://chat.whatsapp.com/DkrzEJ6uV6nBfYUvraebzC'
+                    'Facultad de Ciencias de la Educación': 'https://chat.whatsapp.com/JAKU1zp1U6ZIuDLUAas7Xp'
                 }
 
                 // Links de grupos de WhatsApp por PROGRAMA para FIEE (REEMPLAZAR CON LINKS REALES)

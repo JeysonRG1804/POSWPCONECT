@@ -157,6 +157,22 @@ async function enviarMediaSeguro(flowDynamic, texto, mediaUrl) {
     }
 }
 
+// ============= BROCHURES POR FACULTAD (FALLBACK) =============
+const brochuresFacultad = {
+    'Facultad de Ciencias de la Salud': 'https://github.com/JeysonRG1804/brochure/raw/main/FCS.pdf',
+    'Facultad de Ciencias Administrativas': 'https://github.com/JeysonRG1804/brochure/raw/main/FCA.pdf',
+    'Facultad de Ingeniería Industrial y de Sistemas': 'https://github.com/JeysonRG1804/brochure/raw/main/FIIS.pdf',
+    'Facultad de Ciencias Contables': 'https://github.com/JeysonRG1804/brochure/raw/main/FCC.pdf',
+    'Facultad de Ingeniería Eléctrica y Electrónica': 'https://github.com/JeysonRG1804/brochure/raw/main/FIEE.pdf',
+    'Facultad de Ingeniería Pesquera y de Alimentos': 'https://github.com/JeysonRG1804/brochure/raw/main/FIPA.pdf',
+    'Facultad de Ingeniería Mecánica y Energía': 'https://github.com/JeysonRG1804/brochure/raw/main/FIME.pdf',
+    'Facultad de Ciencias Naturales y Matemática': 'https://github.com/JeysonRG1804/brochure/raw/main/FCNM.pdf',
+    'Facultad de Ingeniería Ambiental y de Recursos Naturales': 'https://github.com/JeysonRG1804/brochure/raw/main/FIARN.pdf',
+    'Facultad de Ciencias Económicas': 'https://github.com/JeysonRG1804/brochure/raw/main/FCE.pdf',
+    'Facultad de Ingeniería Química': 'https://github.com/JeysonRG1804/brochure/raw/main/FIQ.pdf',
+    'Facultad de Ciencias de la Educación': 'https://github.com/JeysonRG1804/brochure/raw/main/FCED.pdf'
+}
+
 // ============= MENSAJES =============
 const menu = leerArchivo('mensajes/menu.txt')
 const programas = leerArchivo('mensajes/programas.txt')

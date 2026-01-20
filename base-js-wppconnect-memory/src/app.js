@@ -1167,14 +1167,14 @@ N° Cta. Cte.: ${cuenta} (Scotiabank)
 
                 // Links de grupos de WhatsApp por facultad (REEMPLAZAR CON LINKS REALES)
                 const gruposWhatsApp = {
-                    'Facultad de Ciencias Económicas': 'https://chat.whatsapp.com/DkrzEJ6uV6nBfYUvraebzC',
+                    'Facultad de Ciencias Económicas': 'https://chat.whatsapp.com/GwqF5Qe5wGr5ueyI0k1Sxl',
                     'Facultad de Ingeniería Industrial y de Sistemas': 'https://chat.whatsapp.com/EwRf65gMmwe9zyCrsM1gks',
                     'Facultad de Ciencias Administrativas': 'https://chat.whatsapp.com/HNKqywmtrBLER8l8lvaoCM',
                     'Facultad de Ciencias Contables': 'https://chat.whatsapp.com/DkrzEJ6uV6nBfYUvraebzC',
-                    'Facultad de Ingeniería Química': 'https://chat.whatsapp.com/DkrzEJ6uV6nBfYUvraebzC',
+                    'Facultad de Ingeniería Química': 'https://chat.whatsapp.com/C1cgM6wqzQrKZGPJiHYMvJ',
                     'Facultad de Ciencias Naturales y Matemática': 'https://chat.whatsapp.com/HW7YC2eFeEx6K7tFL9Kf04',
                     'Facultad de Ingeniería Pesquera y de Alimentos': 'https://chat.whatsapp.com/IKNzlJiO6El6Ns8k4bixjF',
-                    'Facultad de Ingeniería Mecánica y Energía': 'https://chat.whatsapp.com/DkrzEJ6uV6nBfYUvraebzC',
+                    'Facultad de Ingeniería Mecánica y Energía': 'https://chat.whatsapp.com/IAAsZWNRocL5pOv6tJQqZY',
                     'Facultad de Ingeniería Eléctrica y Electrónica': 'https://chat.whatsapp.com/DkrzEJ6uV6nBfYUvraebzC',
                     'Facultad de Ingeniería Ambiental y de Recursos Naturales': 'https://chat.whatsapp.com/BKySJFFEKNeK40LZ4tAxOv',
                     'Facultad de Ciencias de la Educación': 'https://chat.whatsapp.com/DkrzEJ6uV6nBfYUvraebzC'
@@ -1183,13 +1183,13 @@ N° Cta. Cte.: ${cuenta} (Scotiabank)
                 // Links de grupos de WhatsApp por PROGRAMA para FIEE (REEMPLAZAR CON LINKS REALES)
                 const gruposProgramasFIEE = {
                     // Maestrías
-                    'Maestría en Ingeniería Eléctrica con Mención en Gestión de Sistemas de Energía Eléctrica': 'https://chat.whatsapp.com/FIEE_MAESTRIA_GSEE_EJEMPLO',
-                    'Maestría en Ingeniería Eléctrica con Mención en Gerencia de Proyectos de Ingeniería': 'https://chat.whatsapp.com/FIEE_MAESTRIA_GPI_EJEMPLO',
-                    'Maestría en Ciencias de Electrónica con Mención en Telecomunicaciones': 'https://chat.whatsapp.com/FIEE_MAESTRIA_TELECOM_EJEMPLO',
-                    'Maestría en Ciencias de Electrónica con Mención en Ingeniería Biomédica': 'https://chat.whatsapp.com/FIEE_MAESTRIA_BIOMEDICA_EJEMPLO',
-                    'Maestría en Ciencias de Electrónica con Mención en Control y Automatización': 'https://chat.whatsapp.com/FIEE_MAESTRIA_CONTROL_EJEMPLO',
+                    'Maestría en Ingeniería Eléctrica con Mención en Gestión de Sistemas de Energía Eléctrica': 'https://chat.whatsapp.com/EnAssprLnsW6AcLa6DkTu5',
+                    'Maestría en Ingeniería Eléctrica con Mención en Gerencia de Proyectos de Ingeniería': 'https://chat.whatsapp.com/HCYIX2KS7MmIm0YxOWKwxK',
+                    'Maestría en Ciencias de Electrónica con Mención en Telecomunicaciones': 'https://chat.whatsapp.com/BeiBgdH4c3PLNE2dgPj4jq',
+                    'Maestría en Ciencias de Electrónica con Mención en Ingeniería Biomédica': 'https://chat.whatsapp.com/LDJglqpAxQ3HOZMMObnk8p',
+                    'Maestría en Ciencias de Electrónica con Mención en Control y Automatización': 'https://chat.whatsapp.com/Cqq9GRvHIq8FWEMGz10coY',
                     // Doctorado
-                    'Doctorado en Ingeniería Eléctrica': 'https://chat.whatsapp.com/FIEE_DOCTORADO_ELECTRICA_EJEMPLO'
+                    'Doctorado en Ingeniería Eléctrica': 'https://chat.whatsapp.com/LvTWe7G5F4hLZbFdgnPkRv'
                 }
 
                 // Determinar el link del grupo de WhatsApp (prioridad: programa FIEE > facultad > general)

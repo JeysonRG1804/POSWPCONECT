@@ -140,7 +140,13 @@ function leerArchivo(relPath, porDefecto = 'No disponible.') {
 async function enviarMediaSeguro(flowDynamic, texto, mediaUrl) {
     try {
         if (mediaUrl && mediaUrl.startsWith('http')) {
-            await flowDynamic([{ body: texto, media: mediaUrl }])
+            // Extraer nombre del archivo de la URL y decodificarlo
+            const fileName = decodeURIComponent(mediaUrl.split('/').pop())
+            await flowDynamic([{
+                body: texto,
+                media: mediaUrl,
+                fileName: fileName // Especificar nombre con extensión para que WhatsApp lo reconozca correctamente
+            }])
         } else {
             console.warn(`⚠️ URL de media inválida: ${mediaUrl}`)
             await flowDynamic(texto + '\n(Documento no disponible)')
@@ -990,6 +996,7 @@ const main = async () => {
                 let duracion = ''
                 let cuenta = ''
                 let cci = ''
+                let costo = ''
                 let enlace = 'https://chat.whatsapp.com/IKNzlJiO6El6Ns8k4bixjF'
                 const p = programa.toLowerCase()
 
@@ -998,16 +1005,19 @@ const main = async () => {
                     duracion = '3 semestres académicos'
                     cuenta = '000-3747336'
                     cci = '009-100-000003747336-90'
+                    costo = '~S/ 2500~ *S/ 2100*'
                 } else if (p.includes('doctorado')) {
                     precio = 'S/ 250'
                     duracion = '6 semestres académicos'
                     cuenta = '000-3747336'
                     cci = '009-100-000003747336-90'
+                    costo = '~S/ 2500~ *S/ 2100*'
                 } else if (p.includes('especialidad')) {
                     precio = 'S/ 120'
                     duracion = '2 semestres académicos'
                     cuenta = '000-1797042'
                     cci = '009-100-000001797042-97'
+                    costo = '~S/ 1500~ *S/ 1200*'
                 }
 
                 const texto2 = `💥 ¡Quiero contarte sobre nuestro programa de posgrado y los increíbles beneficios que puedes obtener! 🎓
@@ -1028,7 +1038,7 @@ N° Cta. Cte.: ${cuenta} (Scotiabank)
 🎒 Inicio de clases: Primera semana de Abril
 
 ⏳ Duración del programa: ${duracion}
-💵 Costo por semestre: ~S/ 2500~ *S/ 2100*
+💵 Costo por semestre: ${costo}
 
 📲 Contáctanos ahora:
 📩 posgrado.admision@unac.edu.pe
@@ -1142,38 +1152,92 @@ N° Cta. Cte.: ${cuenta} (Scotiabank)
                     console.error('⚠️ Error al leer programas.json:', jsonError.message)
                 }
 
-                // Brochures de fallback por facultad (si no se encuentra el programa específico)
-                const brochuresFacultad = {
-                    'Facultad de Ciencias de la Salud': 'https://github.com/JeysonRG1804/brochure/raw/main/brochure%20fcs_compressed.pdf',
-                    'Facultad en Ciencias Económicas': 'https://github.com/JeysonRG1804/brochure/raw/main/brochure%20fce_compressed.pdf',
-                    'Facultad de Ciencias Económicas': 'https://github.com/JeysonRG1804/brochure/raw/main/brochure%20fce_compressed.pdf',
-                    'Facultad de Ingeniería Industrial y de Sistemas': 'https://github.com/JeysonRG1804/brochure/raw/main/brochure%20fiis_compressed.pdf',
-                    'Facultad de Ingeniería Química': 'https://github.com/JeysonRG1804/brochure/raw/main/brochure%20fiq_compressed.pdf',
-                    'Facultad de Ingeniería Eléctrica y Electrónica': 'https://github.com/JeysonRG1804/brochure/raw/main/brochure%20fiee_compressed.pdf',
-                    'Facultad de Ingeniería Pesquera y de Alimentos': 'https://github.com/JeysonRG1804/brochure/raw/main/brochure%20fipa_compressed.pdf',
-                    'Facultad de Ingeniería Mecánica y Energía': 'https://github.com/JeysonRG1804/brochure/raw/main/brochure%20fime_compressed.pdf',
-                    'Facultad de Ciencias Contables': 'https://github.com/JeysonRG1804/brochure/raw/main/brochure%20fcc_compressed.pdf',
-                    'Facultad de Ciencias Administrativas': 'https://github.com/JeysonRG1804/brochure/raw/main/brochure%20fca_compressed.pdf',
-                    'Facultad de Ingeniería Ambiental y de Recursos Naturales': 'https://github.com/JeysonRG1804/brochure/raw/main/brochure%20fiarn_compressed.pdf',
-                    'Facultad de Ciencias Naturales y Matemática': 'https://github.com/JeysonRG1804/brochure/raw/main/brochure%20fcnm_compressed.pdf',
-                    'Facultad de Ciencias de la Educación': 'https://github.com/JeysonRG1804/brochure/raw/main/brochure%20fced_compressed.pdf'
-                }
-
                 // Enviar el brochure del programa específico (prioridad) o el de facultad (fallback)
                 const pdfUrl = brochurePrograma || brochuresFacultad[facultad]
                 if (pdfUrl) {
                     const mensajeBrochure = brochurePrograma
                         ? `📄 Aquí está el brochure de *${programa}*:`
                         : '📄 Aquí está el brochure de su facultad:'
-                    await bot.sendMessage(numero, mensajeBrochure, { media: pdfUrl })
+                    // Extraer nombre del archivo y especificarlo para que WhatsApp lo reconozca como PDF
+                    const fileName = decodeURIComponent(pdfUrl.split('/').pop())
+                    await bot.sendMessage(numero, mensajeBrochure, { media: pdfUrl, fileName: fileName })
                 } else {
                     console.warn(`⚠️ No se encontró brochure para programa "${programa}" ni facultad "${facultad}"`)
                 }
 
+                // Links de grupos de WhatsApp por facultad (REEMPLAZAR CON LINKS REALES)
+                const gruposWhatsApp = {
+                    'Facultad de Ciencias Económicas': 'https://chat.whatsapp.com/DkrzEJ6uV6nBfYUvraebzC',
+                    'Facultad de Ingeniería Industrial y de Sistemas': 'https://chat.whatsapp.com/EwRf65gMmwe9zyCrsM1gks',
+                    'Facultad de Ciencias Administrativas': 'https://chat.whatsapp.com/HNKqywmtrBLER8l8lvaoCM',
+                    'Facultad de Ciencias Contables': 'https://chat.whatsapp.com/DkrzEJ6uV6nBfYUvraebzC',
+                    'Facultad de Ingeniería Química': 'https://chat.whatsapp.com/DkrzEJ6uV6nBfYUvraebzC',
+                    'Facultad de Ciencias Naturales y Matemática': 'https://chat.whatsapp.com/HW7YC2eFeEx6K7tFL9Kf04',
+                    'Facultad de Ingeniería Pesquera y de Alimentos': 'https://chat.whatsapp.com/IKNzlJiO6El6Ns8k4bixjF',
+                    'Facultad de Ingeniería Mecánica y Energía': 'https://chat.whatsapp.com/DkrzEJ6uV6nBfYUvraebzC',
+                    'Facultad de Ingeniería Eléctrica y Electrónica': 'https://chat.whatsapp.com/DkrzEJ6uV6nBfYUvraebzC',
+                    'Facultad de Ingeniería Ambiental y de Recursos Naturales': 'https://chat.whatsapp.com/BKySJFFEKNeK40LZ4tAxOv',
+                    'Facultad de Ciencias de la Educación': 'https://chat.whatsapp.com/DkrzEJ6uV6nBfYUvraebzC'
+                }
+
+                // Links de grupos de WhatsApp por PROGRAMA para FIEE (REEMPLAZAR CON LINKS REALES)
+                const gruposProgramasFIEE = {
+                    // Maestrías
+                    'Maestría en Ingeniería Eléctrica con Mención en Gestión de Sistemas de Energía Eléctrica': 'https://chat.whatsapp.com/FIEE_MAESTRIA_GSEE_EJEMPLO',
+                    'Maestría en Ingeniería Eléctrica con Mención en Gerencia de Proyectos de Ingeniería': 'https://chat.whatsapp.com/FIEE_MAESTRIA_GPI_EJEMPLO',
+                    'Maestría en Ciencias de Electrónica con Mención en Telecomunicaciones': 'https://chat.whatsapp.com/FIEE_MAESTRIA_TELECOM_EJEMPLO',
+                    'Maestría en Ciencias de Electrónica con Mención en Ingeniería Biomédica': 'https://chat.whatsapp.com/FIEE_MAESTRIA_BIOMEDICA_EJEMPLO',
+                    'Maestría en Ciencias de Electrónica con Mención en Control y Automatización': 'https://chat.whatsapp.com/FIEE_MAESTRIA_CONTROL_EJEMPLO',
+                    // Doctorado
+                    'Doctorado en Ingeniería Eléctrica': 'https://chat.whatsapp.com/FIEE_DOCTORADO_ELECTRICA_EJEMPLO'
+                }
+
+                // Determinar el link del grupo de WhatsApp (prioridad: programa FIEE > facultad > general)
+                let grupoLink = null
+                let grupoNombre = facultad
+
+                // Links especiales para Facultad de Ciencias de la Salud (REEMPLAZAR CON LINKS REALES)
+                const gruposFCS = {
+                    especialidades: 'https://chat.whatsapp.com/Dq2jT7AzCsO660QtCbV0bG',
+                    maestriasDoctorados: 'https://chat.whatsapp.com/KoTYdWaGPFu7Onzu1UlXmj'
+                }
+
+                // Si es Facultad de Ciencias de la Salud, diferenciar entre especialidades y maestrías/doctorados
+                if (facultad === 'Facultad de Ciencias de la Salud') {
+                    const programaLower = programa.toLowerCase()
+                    if (programaLower.includes('especialidad') || programaLower.includes('especialización')) {
+                        grupoLink = gruposFCS.especialidades
+                        grupoNombre = 'Especialidades - Facultad de Ciencias de la Salud'
+                        console.log('✅ Link de grupo FCS: Especialidades')
+                    } else {
+                        grupoLink = gruposFCS.maestriasDoctorados
+                        grupoNombre = 'Maestrías y Doctorados - Facultad de Ciencias de la Salud'
+                        console.log('✅ Link de grupo FCS: Maestrías y Doctorados')
+                    }
+                }
+                // Si es FIEE, buscar primero el link específico del programa
+                else if (facultad === 'Facultad de Ingeniería Eléctrica y Electrónica') {
+                    // Buscar coincidencia por programa
+                    const programaNorm = normalizarTexto(programa)
+                    for (const [nombreProg, link] of Object.entries(gruposProgramasFIEE)) {
+                        if (normalizarTexto(nombreProg) === programaNorm) {
+                            grupoLink = link
+                            grupoNombre = nombreProg
+                            console.log(`✅ Link de grupo encontrado para programa FIEE: ${nombreProg}`)
+                            break
+                        }
+                    }
+                }
+
+                // Si no se encontró link de programa, usar el de facultad
+                if (!grupoLink) {
+                    grupoLink = gruposWhatsApp[facultad] || enlace
+                }
+
                 // Último mensaje
                 const text4 = `📌 Estoy disponible para resolver cualquier duda y acompañarte en tu proceso de inscripción.
-O puedes unirte al grupo de WhatsApp POSGRADO UNAC 2026-A:
-${enlace}
+O puedes unirte al grupo de WhatsApp de *${grupoNombre}*:
+${grupoLink}
 
 📩 Correo: posgrado.admision@unac.edu.pe
 📞 WhatsApp: 900969591

@@ -157,22 +157,6 @@ async function enviarMediaSeguro(flowDynamic, texto, mediaUrl) {
     }
 }
 
-// ============= BROCHURES POR FACULTAD (FALLBACK) =============
-const brochuresFacultad = {
-    'Facultad de Ciencias de la Salud': 'https://github.com/JeysonRG1804/brochure/raw/main/FCS.pdf',
-    'Facultad de Ciencias Administrativas': 'https://github.com/JeysonRG1804/brochure/raw/main/FCA.pdf',
-    'Facultad de Ingeniería Industrial y de Sistemas': 'https://github.com/JeysonRG1804/brochure/raw/main/FIIS.pdf',
-    'Facultad de Ciencias Contables': 'https://github.com/JeysonRG1804/brochure/raw/main/FCC.pdf',
-    'Facultad de Ingeniería Eléctrica y Electrónica': 'https://github.com/JeysonRG1804/brochure/raw/main/FIEE.pdf',
-    'Facultad de Ingeniería Pesquera y de Alimentos': 'https://github.com/JeysonRG1804/brochure/raw/main/FIPA.pdf',
-    'Facultad de Ingeniería Mecánica y Energía': 'https://github.com/JeysonRG1804/brochure/raw/main/FIME.pdf',
-    'Facultad de Ciencias Naturales y Matemática': 'https://github.com/JeysonRG1804/brochure/raw/main/FCNM.pdf',
-    'Facultad de Ingeniería Ambiental y de Recursos Naturales': 'https://github.com/JeysonRG1804/brochure/raw/main/FIARN.pdf',
-    'Facultad de Ciencias Económicas': 'https://github.com/JeysonRG1804/brochure/raw/main/FCE.pdf',
-    'Facultad de Ingeniería Química': 'https://github.com/JeysonRG1804/brochure/raw/main/FIQ.pdf',
-    'Facultad de Ciencias de la Educación': 'https://github.com/JeysonRG1804/brochure/raw/main/FCED.pdf'
-}
-
 // ============= MENSAJES =============
 const menu = leerArchivo('mensajes/menu.txt')
 const programas = leerArchivo('mensajes/programas.txt')
@@ -1155,11 +1139,39 @@ N° Cta. Cte.: ${cuenta} (Scotiabank)
                                 console.log(`✅ Brochure: ${brochurePrograma}`)
                             }
 
+                            // Si no se encontró programa específico, buscar brochure de la facultad en programas.json
+                            if (!brochurePrograma) {
+                                console.log(`⚠️ Buscando brochure de facultad como fallback para: "${facultad}"`)
+                                const facultadNorm = normalizarTexto(facultad)
+
+                                for (const codigoFacultad of Object.keys(programasData.facultades)) {
+                                    const fac = programasData.facultades[codigoFacultad]
+                                    const facNombreNorm = normalizarTexto(fac.nombre || '')
+
+                                    // Buscar la facultad por nombre normalizado
+                                    if (facultadNorm.includes(facNombreNorm) || facNombreNorm.includes(facultadNorm)) {
+                                        // Buscar el primer programa con brochure válido
+                                        if (fac.programas && Array.isArray(fac.programas)) {
+                                            for (const prog of fac.programas) {
+                                                if (prog.brochure && prog.brochure.length > 0) {
+                                                    brochurePrograma = prog.brochure
+                                                    console.log(`✅ Brochure de facultad encontrado: ${fac.nombre}`)
+                                                    console.log(`✅ Usando brochure de: ${prog.nombre}`)
+                                                    console.log(`✅ URL: ${brochurePrograma}`)
+                                                    break
+                                                }
+                                            }
+                                        }
+                                        break
+                                    }
+                                }
+                            }
+
                             console.log(`📊 Total programas revisados: ${totalProgramasRevisados}`)
                         }
 
                         if (!brochurePrograma) {
-                            console.log(`❌ No se encontró brochure para: "${programa}"`)
+                            console.log(`❌ No se encontró brochure para: "${programa}" ni para facultad "${facultad}"`)
                         }
                     } else {
                         console.error('❌ Archivo programas.json no existe')
@@ -1168,17 +1180,14 @@ N° Cta. Cte.: ${cuenta} (Scotiabank)
                     console.error('⚠️ Error al leer programas.json:', jsonError.message)
                 }
 
-                // Enviar el brochure del programa específico (prioridad) o el de facultad (fallback)
-                const pdfUrl = brochurePrograma || brochuresFacultad[facultad]
-                if (pdfUrl) {
-                    const mensajeBrochure = brochurePrograma
-                        ? `📄 Aquí está el brochure de *${programa}*:`
-                        : '📄 Aquí está el brochure de su facultad:'
+                // Enviar el brochure encontrado (programa específico o de facultad)
+                if (brochurePrograma) {
+                    const mensajeBrochure = `📄 Aquí está el brochure de *${programa}*:`
                     // Extraer nombre del archivo y especificarlo para que WhatsApp lo reconozca como PDF
-                    const fileName = decodeURIComponent(pdfUrl.split('/').pop())
-                    await bot.sendMessage(numero, mensajeBrochure, { media: pdfUrl, fileName: fileName })
+                    const fileName = decodeURIComponent(brochurePrograma.split('/').pop())
+                    await bot.sendMessage(numero, mensajeBrochure, { media: brochurePrograma, fileName: fileName })
                 } else {
-                    console.warn(`⚠️ No se encontró brochure para programa "${programa}" ni facultad "${facultad}"`)
+                    console.warn(`⚠️ No se encontró ningún brochure para programa "${programa}" ni facultad "${facultad}"`)
                 }
 
                 // Links de grupos de WhatsApp por facultad (REEMPLAZAR CON LINKS REALES)
@@ -1195,6 +1204,7 @@ N° Cta. Cte.: ${cuenta} (Scotiabank)
                     'Facultad de Ingeniería Ambiental y de Recursos Naturales': 'https://chat.whatsapp.com/BKySJFFEKNeK40LZ4tAxOv',
                     'Facultad de Ciencias de la Educación': 'https://chat.whatsapp.com/JAKU1zp1U6ZIuDLUAas7Xp'
                 }
+
 
                 // Links de grupos de WhatsApp por PROGRAMA para FIEE (REEMPLAZAR CON LINKS REALES)
                 const gruposProgramasFIEE = {
@@ -1233,15 +1243,56 @@ N° Cta. Cte.: ${cuenta} (Scotiabank)
                 }
                 // Si es FIEE, buscar primero el link específico del programa
                 else if (facultad === 'Facultad de Ingeniería Eléctrica y Electrónica') {
-                    // Buscar coincidencia por programa
+                    // Buscar coincidencia por programa usando palabras clave
                     const programaNorm = normalizarTexto(programa)
+                    console.log(`🔍 Buscando grupo FIEE para: "${programa}"`)
+                    console.log(`🔍 Programa normalizado: "${programaNorm}"`)
+
+                    let mejorCoincidenciaGrupo = null
+                    let mejorPuntajeGrupo = 0
+
                     for (const [nombreProg, link] of Object.entries(gruposProgramasFIEE)) {
-                        if (normalizarTexto(nombreProg) === programaNorm) {
+                        const nombreProgNorm = normalizarTexto(nombreProg)
+
+                        // Coincidencia exacta
+                        if (nombreProgNorm === programaNorm) {
                             grupoLink = link
                             grupoNombre = nombreProg
-                            console.log(`✅ Link de grupo encontrado para programa FIEE: ${nombreProg}`)
+                            console.log(`✅ Coincidencia exacta de grupo FIEE: ${nombreProg}`)
                             break
                         }
+
+                        // Búsqueda por palabras clave
+                        const palabrasPrograma = programaNorm.split(' ').filter(p => p.length > 3)
+                        const palabrasNombreProg = nombreProgNorm.split(' ').filter(p => p.length > 3)
+
+                        let puntaje = 0
+                        for (const palabra of palabrasPrograma) {
+                            if (palabrasNombreProg.some(p => p.includes(palabra) || palabra.includes(p))) {
+                                puntaje++
+                            }
+                        }
+
+                        // Al menos 3 palabras en común o 50% de coincidencia
+                        const umbral = Math.max(3, Math.floor(palabrasPrograma.length * 0.5))
+                        if (puntaje >= umbral && puntaje > mejorPuntajeGrupo) {
+                            mejorPuntajeGrupo = puntaje
+                            mejorCoincidenciaGrupo = { nombre: nombreProg, link }
+                        }
+                    }
+
+                    // Si no hubo coincidencia exacta, usar la mejor por palabras clave
+                    if (!grupoLink && mejorCoincidenciaGrupo) {
+                        grupoLink = mejorCoincidenciaGrupo.link
+                        grupoNombre = mejorCoincidenciaGrupo.nombre
+                        console.log(`✅ Grupo FIEE por palabras clave: ${grupoNombre} (puntaje: ${mejorPuntajeGrupo})`)
+                    }
+
+                    // Si aún no se encontró, usar el link general de FIEE
+                    if (!grupoLink) {
+                        grupoLink = gruposWhatsApp[facultad]
+                        grupoNombre = facultad
+                        console.log(`⚠️ Usando grupo general FIEE: ${grupoLink}`)
                     }
                 }
 

@@ -1316,7 +1316,7 @@ ${grupoLink}
                 res.writeHead(200, { 'Content-Type': 'application/json' })
                 return res.end(JSON.stringify({
                     status: 'Mensaje y PDF enviados',
-                    brochureEnviado: pdfUrl ? (brochurePrograma ? 'programa' : 'facultad') : 'ninguno'
+                    brochureEnviado: brochurePrograma ? 'programa' : 'ninguno'
                 }))
 
             } catch (err) {

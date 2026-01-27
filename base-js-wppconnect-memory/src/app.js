@@ -411,22 +411,29 @@ const flowFacultadDoctorados = addKeyword(utils.setEvent('FACULTAD_DOCTORADOS'))
         '6️⃣ Facultad de Ciencias de la Educación',
         '0️⃣ Volver al menú principal'
     ], { capture: true }, async (ctx, { gotoFlow, flowDynamic }) => {
-        let facultadId = ctx.body.trim()
+        const opcionMenu = ctx.body.trim()
         const usuarioId = ctx.from
 
-        if (!['1', '2', '3', '4', '5', '6', '0'].includes(facultadId)) {
+        if (!['1', '2', '3', '4', '5', '6', '0'].includes(opcionMenu)) {
             await flowDynamic('❌ Opción inválida. Intente de nuevo.')
             return gotoFlow(flowFacultadDoctorados)
         }
 
-        if (facultadId === '6') {
-            facultadId = '12'
-        }
-
-        if (facultadId === '0') {
+        if (opcionMenu === '0') {
             return gotoFlow(programasFlow)
         }
 
+        // Mapeo de número de menú a ID real en facultades.json (solo facultades con doctorados)
+        const mapeoDoctorados = {
+            '1': '1',   // Ciencias de la Salud
+            '2': '4',   // Ciencias Administrativas
+            '3': '2',   // Ingeniería Industrial y de Sistemas
+            '4': '5',   // Ciencias Contables
+            '5': '10',  // Ingeniería Eléctrica y Electrónica
+            '6': '12'   // Ciencias de la Educación
+        }
+
+        const facultadId = mapeoDoctorados[opcionMenu]
         const facultad = facultades[facultadId]
         if (!facultad || !facultad.doctorados) {
             await flowDynamic('❌ Facultad no encontrada o sin doctorados.')
@@ -557,18 +564,35 @@ const flowFacultadMaestrias = addKeyword(utils.setEvent('FACULTAD_MAESTRIAS'))
         '1️2️⃣ Facultad de Ciencias de la Educación',
         '0️⃣ Volver al menú principal'
     ], { capture: true }, async (ctx, { gotoFlow, flowDynamic }) => {
-        const facultadId = ctx.body.trim()
+        const opcionMenu = ctx.body.trim()
         const usuarioId = ctx.from
 
-        if (!['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '0'].includes(facultadId)) {
+        if (!['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '0'].includes(opcionMenu)) {
             await flowDynamic('❌ Opción inválida. Intente de nuevo.')
             return gotoFlow(flowFacultadMaestrias)
         }
 
-        if (facultadId === '0') {
+        if (opcionMenu === '0') {
             return gotoFlow(programasFlow)
         }
 
+        // Mapeo de número de menú a ID real en facultades.json
+        const mapeoFacultades = {
+            '1': '1',   // Ciencias de la Salud
+            '2': '4',   // Ciencias Administrativas
+            '3': '2',   // Ingeniería Industrial y de Sistemas
+            '4': '5',   // Ciencias Contables
+            '5': '10',  // Ingeniería Eléctrica y Electrónica
+            '6': '8',   // Ingeniería Pesquera y de Alimentos
+            '7': '9',   // Ingeniería Mecánica y Energía
+            '8': '7',   // Ciencias Naturales y Matemática
+            '9': '11',  // Ingeniería Ambiental y Recursos Naturales
+            '10': '3',  // Ciencias Económicas
+            '11': '6',  // Ingeniería Química
+            '12': '12'  // Ciencias de la Educación
+        }
+
+        const facultadId = mapeoFacultades[opcionMenu]
         const facultad = facultades[facultadId]
         if (!facultad) {
             await flowDynamic('❌ Facultad no encontrada.')

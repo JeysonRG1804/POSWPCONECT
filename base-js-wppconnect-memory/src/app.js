@@ -29,6 +29,16 @@ process.on('unhandledRejection', (reason, promise) => {
 
 // ============= UTILIDADES =============
 
+// Función de delay simple
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+
+// Función de delay aleatorio entre min y max milisegundos
+const delayAleatorio = (minMs = 2000, maxMs = 4000) => {
+    const tiempo = Math.floor(Math.random() * (maxMs - minMs + 1)) + minMs
+    console.log(`⏳ Esperando ${tiempo}ms antes del siguiente mensaje...`)
+    return delay(tiempo)
+}
+
 // Quitar acentos para normalizar respuestas
 const quitarAcentos = (txt) =>
     txt.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -136,24 +146,37 @@ function leerArchivo(relPath, porDefecto = 'No disponible.') {
     }
 }
 
-// Función para enviar media de forma segura
-async function enviarMediaSeguro(flowDynamic, texto, mediaUrl) {
-    try {
-        if (mediaUrl && mediaUrl.startsWith('http')) {
-            // Extraer nombre del archivo de la URL y decodificarlo
-            const fileName = decodeURIComponent(mediaUrl.split('/').pop())
+// Función para enviar media de forma segura con reintentos
+async function enviarMediaSeguro(flowDynamic, texto, mediaUrl, maxReintentos = 3) {
+    if (!mediaUrl || !mediaUrl.startsWith('http')) {
+        console.warn(`⚠️ URL de media inválida: ${mediaUrl}`)
+        await flowDynamic(texto + '\n(Documento no disponible)')
+        return
+    }
+
+    const fileName = decodeURIComponent(mediaUrl.split('/').pop())
+
+    for (let intento = 1; intento <= maxReintentos; intento++) {
+        try {
+            console.log(`📤 Intento ${intento}/${maxReintentos} enviando media: ${fileName}`)
             await flowDynamic([{
                 body: texto,
                 media: mediaUrl,
-                fileName: fileName // Especificar nombre con extensión para que WhatsApp lo reconozca correctamente
+                fileName: fileName
             }])
-        } else {
-            console.warn(`⚠️ URL de media inválida: ${mediaUrl}`)
-            await flowDynamic(texto + '\n(Documento no disponible)')
+            console.log(`✅ Media enviada exitosamente: ${fileName}`)
+            return // Éxito, salir de la función
+        } catch (error) {
+            console.warn(`⚠️ Intento ${intento}/${maxReintentos} falló: ${error.message}`)
+
+            if (intento < maxReintentos) {
+                console.log(`🔄 Reintentando en 3 segundos...`)
+                await delay(3000) // Esperar 3 segundos antes de reintentar
+            } else {
+                console.error(`❌ Error al enviar media después de ${maxReintentos} intentos:`, error.message)
+                await flowDynamic(texto + '\n(Error al cargar documento, intente más tarde)')
+            }
         }
-    } catch (error) {
-        console.error('❌ Error al enviar media:', error.message)
-        await flowDynamic(texto + '\n(Error al cargar documento)')
     }
 }
 
@@ -893,7 +916,9 @@ const main = async () => {
         flowExit
     ])
 
-    const adapterProvider = createProvider(Provider)
+    const adapterProvider = createProvider(Provider, {
+        protocolTimeout: 120000, // 120 segundos de timeout para operaciones de WhatsApp
+    })
     const adapterDB = new Database()
 
     const { handleCtx, httpServer } = await createBot({
@@ -990,6 +1015,7 @@ const main = async () => {
                 // Texto inicial
                 const texto = `👋 Felicidades ${mensaje}\n*Somos de la Escuela de Posgrado de la UNAC*\n🚀 Ya se encuentra registrado para nuestros programas de Posgrado!`
                 await bot.sendMessage(numero, texto, {})
+                await delayAleatorio(2000, 4000) // Delay aleatorio de 2-4 segundos
 
                 // Determinar precio y duración
                 let precio = ''
@@ -1045,6 +1071,7 @@ N° Cta. Cte.: ${cuenta} (Scotiabank)
 📞 900969591`
 
                 await bot.sendMessage(numero, texto2, {})
+                await delayAleatorio(2000, 4000) // Delay aleatorio de 2-4 segundos
 
                 // Función para normalizar texto (quitar acentos, caracteres especiales y espacios extra)
                 const normalizarTexto = (txt) => {
@@ -1186,6 +1213,7 @@ N° Cta. Cte.: ${cuenta} (Scotiabank)
                     // Extraer nombre del archivo y especificarlo para que WhatsApp lo reconozca como PDF
                     const fileName = decodeURIComponent(brochurePrograma.split('/').pop())
                     await bot.sendMessage(numero, mensajeBrochure, { media: brochurePrograma, fileName: fileName })
+                    await delayAleatorio(2000, 4000) // Delay aleatorio de 2-4 segundos
                 } else {
                     console.warn(`⚠️ No se encontró ningún brochure para programa "${programa}" ni facultad "${facultad}"`)
                 }

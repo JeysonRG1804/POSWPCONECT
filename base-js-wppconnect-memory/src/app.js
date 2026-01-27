@@ -399,8 +399,8 @@ const flowSeleccionDoctorado = addKeyword(utils.setEvent('SELECCION_DOCTORADO'))
 
 const flowFacultadDoctorados = addKeyword(utils.setEvent('FACULTAD_DOCTORADOS'))
     .addAnswer('*DOCTORADOS DE LA UNIVERSIDAD NACIONAL DEL CALLAO*')
-    .addAnswer('Estas son nuestras facultades:', {
-        media: 'https://posgrado.unac.edu.pe/img/escuela.jpg'
+    .addAnswer('Estas son nuestros doctorados:', {
+        media: 'https://posgrado.unac.edu.pe/img/DOCTORADO20026A.png'
     })
     .addAnswer([
         '1️⃣ Facultad de Ciencias de la Salud',
@@ -546,8 +546,8 @@ const flowSeleccionMaestria = addKeyword(utils.setEvent('SELECCION_MAESTRIA'))
 
 const flowFacultadMaestrias = addKeyword(utils.setEvent('FACULTAD_MAESTRIAS'))
     .addAnswer('*MAESTRÍAS DE LA UNIVERSIDAD NACIONAL DEL CALLAO*')
-    .addAnswer('Estas son nuestras facultades:', {
-        media: 'https://posgrado.unac.edu.pe/img/escuela.jpg'
+    .addAnswer('Estas son nuestras maestrías:', {
+        media: 'https://posgrado.unac.edu.pe/img/MAESTRIAS2026A.png'
     })
     .addAnswer([
         '1️⃣ Facultad de Ciencias de la Salud',
@@ -707,7 +707,7 @@ const flowSeleccionEspecialidad = addKeyword(utils.setEvent('SELECCION_ESPECIALI
 const flowFacultadEspecialidades = addKeyword(utils.setEvent('FACULTAD_ESPECIALIDADES'))
     .addAnswer('*ESPECIALIDADES DE LA UNIVERSIDAD NACIONAL DEL CALLAO*')
     .addAnswer('Estas son nuestras facultades con especialidades:', {
-        media: 'https://posgrado.unac.edu.pe/img/escuela.jpg'
+        media: 'https://posgrado.unac.edu.pe/img/ESPECIALIDADES2026A.png'
     })
     .addAnswer([
         '1️⃣ Facultad de Ciencias de la Salud',

@@ -20,11 +20,30 @@ const ADMIN_NUMBER = '51900969591@c.us'
 process.on('uncaughtException', (err) => {
     console.error('🔴 Uncaught Exception:', err.message)
     console.error(err.stack)
+
+    // Detectar errores específicos de Puppeteer/WPPConnect
+    if (err.message.includes('detached Frame') ||
+        err.message.includes('Protocol error') ||
+        err.message.includes('Target closed') ||
+        err.message.includes('Session closed')) {
+        console.error('⚠️ Error de sesión de WhatsApp detectado. La sesión puede necesitar reiniciarse.')
+        console.error('💡 Sugerencia: Reinicia el bot con PM2: pm2 restart <app-name>')
+    }
 })
 
 process.on('unhandledRejection', (reason, promise) => {
     console.error('🔴 Unhandled Rejection at:', promise)
     console.error('Reason:', reason)
+
+    // Detectar errores específicos de Puppeteer/WPPConnect en promesas
+    const reasonStr = String(reason)
+    if (reasonStr.includes('detached Frame') ||
+        reasonStr.includes('Protocol error') ||
+        reasonStr.includes('Target closed') ||
+        reasonStr.includes('Session closed')) {
+        console.error('⚠️ Error de sesión de WhatsApp detectado en promesa.')
+        console.error('💡 Sugerencia: Reinicia el bot con PM2: pm2 restart <app-name>')
+    }
 })
 
 // ============= UTILIDADES =============
@@ -941,7 +960,34 @@ const main = async () => {
     ])
 
     const adapterProvider = createProvider(Provider, {
-        protocolTimeout: 120000, // 120 segundos de timeout para operaciones de WhatsApp
+        name: 'bot',
+        protocolTimeout: 180000, // 180 segundos de timeout para operaciones de WhatsApp
+        // Opciones de Puppeteer optimizadas para VPS con poca RAM (< 2GB)
+        puppeteerOptions: {
+            headless: true,
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',           // Evita usar /dev/shm limitado en VPS
+                '--disable-accelerated-2d-canvas',    // Reduce uso de GPU/memoria
+                '--disable-gpu',                      // No hay GPU en VPS
+                '--single-process',                   // Reduce procesos de Chrome
+                '--no-zygote',                        // Reduce uso de memoria
+                '--disable-extensions',               // Sin extensiones
+                '--disable-background-timer-throttling',
+                '--disable-backgrounding-occluded-windows',
+                '--disable-renderer-backgrounding',
+                '--disable-features=TranslateUI',
+                '--disable-ipc-flooding-protection',
+                '--memory-pressure-off',              // Desactiva vigilancia de memoria
+                '--max-old-space-size=512',           // Limita memoria de V8
+                '--js-flags=--max-old-space-size=512'
+            ]
+        },
+        // Opciones de WPPConnect para mejor estabilidad
+        session: 'bot-session',
+        autoClose: 0, // Nunca cerrar automáticamente
+        disableWelcome: true
     })
     const adapterDB = new Database()
 

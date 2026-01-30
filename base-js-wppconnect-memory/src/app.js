@@ -1398,7 +1398,10 @@ N° Cta. Cte.: ${cuenta} (Scotiabank)
                 if (!grupoLink) {
                     grupoLink = gruposWhatsApp[facultad] || enlace
                 }
-
+                const text3 = `📌 Recuerda ahora debes seguir los pasos de nuestra pagina web para que puedas llenar tu carpeta de postulante y concluir con el proceso.
+                Este es el link por el cual puedes acceder a la pagina web: 
+                https://posgrado.unac.edu.pe/admision/Proceso_admision.html`
+                await bot.sendMessage(numero, text3, {})
                 // Último mensaje
                 const text4 = `📌 Estoy disponible para resolver cualquier duda y acompañarte en tu proceso de inscripción.
 O puedes unirte al grupo de WhatsApp de *${grupoNombre}*:

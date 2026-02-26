@@ -1444,7 +1444,7 @@ ${grupoLink}
                 const bloqueNormalizado = bloque.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
                 const esIngenieria = bloqueNormalizado.includes('ingenieria')
 
-                const diaEvento = esIngenieria ? 'Jueves 6 de marzo' : 'Domingo 9 de marzo'
+                const diaEvento = esIngenieria ? 'Viernes 6 de marzo' : 'Lunes 9 de marzo'
                 const bloqueTexto = esIngenieria ? 'Ingeniería' : 'Ciencias'
 
                 // Imágenes por bloque (archivos locales)
@@ -1459,11 +1459,12 @@ ${grupoLink}
                 const imagenes = esIngenieria ? imagenesIngenieria : imagenesCiencias
 
                 const texto = `🎉 *Mensaje de Confirmación y Acceso: Taller ADN EPG UNAC*\n` +
-                    `¡Registro Exitoso! ✅ *BIENVENIDO(A) *${nombre}* AL TALLER ADN EPG UNAC* 🏛️🎓\n\n` +
+                    `¡Registro Exitoso! ✅ *BIENVENIDO(A) ${nombre} AL TALLER ADN EPG UNAC* 🏛️🎓\n\n` +
                     `Ya tienes tu lugar asegurado para conocer todo sobre el Proceso de Admisión de la Universidad Nacional del Callao. Prepárate para resolver tus dudas y participar por los *PREMIOS* que sortearemos en vivo entre los asistentes. 🎁✨\n\n` +
                     `📌 *DATOS DEL EVENTO:*\n` +
                     `📋 Bloque: *${bloqueTexto}*\n` +
                     `🗓️ Fecha: *${diaEvento}*\n` +
+                    `🗓️ Hora: *7:00 PM*\n` +
                     `💻 Modalidad: Virtual (Vía Zoom/Google Meet).\n\n` +
                     `🚀 *BLOQUE ESPECIAL:*\n` +
                     `Presentación detallada del Bloque de *${bloque}*, donde conocerás a fondo nuestras facultades y su oferta académica. 🧪🧬\n\n` +

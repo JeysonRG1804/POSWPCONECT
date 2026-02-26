@@ -1459,7 +1459,7 @@ ${grupoLink}
                 const imagenes = esIngenieria ? imagenesIngenieria : imagenesCiencias
 
                 const texto = `🎉 *Mensaje de Confirmación y Acceso: Taller ADN EPG UNAC*\n` +
-                    `¡Registro Exitoso! ✅ *BIENVENIDO(A) AL TALLER ADN EPG UNAC* 🏛️🎓\n\n` +
+                    `¡Registro Exitoso! ✅ *BIENVENIDO(A) *${nombre}* AL TALLER ADN EPG UNAC* 🏛️🎓\n\n` +
                     `Ya tienes tu lugar asegurado para conocer todo sobre el Proceso de Admisión de la Universidad Nacional del Callao. Prepárate para resolver tus dudas y participar por los *PREMIOS* que sortearemos en vivo entre los asistentes. 🎁✨\n\n` +
                     `📌 *DATOS DEL EVENTO:*\n` +
                     `📋 Bloque: *${bloqueTexto}*\n` +
@@ -1469,14 +1469,14 @@ ${grupoLink}
                     `Presentación detallada del Bloque de *${bloque}*, donde conocerás a fondo nuestras facultades y su oferta académica. 🧪🧬\n\n` +
                     `🔗 *ÚNETE A LA REUNIÓN AQUÍ:*\n` +
                     `👇👇👇\n` +
-                    `[INSERTAR_AQUÍ_LINK_DE_LA_REUNIÓN] 💻✨`
+                    `https://meet.google.com/jyw-kdiu-oxc 💻✨`
 
                 await bot.sendMessage(numero, texto, {})
                 await delayAleatorio(2000, 4000)
 
                 // Enviar imágenes según el bloque
                 for (const imagen of imagenes) {
-                    await bot.sendMessage(numero, '📸 Información del evento:', { media: imagen })
+                    await bot.sendMessage(numero, '📸 Información de los Programas:', { media: imagen })
                     await delayAleatorio(1500, 3000)
                 }
 

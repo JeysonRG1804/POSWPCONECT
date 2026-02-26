@@ -1440,11 +1440,11 @@ ${grupoLink}
             }
 
             try {
-                // Clasificar por bloque: Ingeniería (día 6) o Ciencias (día 9)
+                // Clasificar por bloque: Ciencias (día 6) o Ingeniería (día 9)
                 const bloqueNormalizado = bloque.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
                 const esIngenieria = bloqueNormalizado.includes('ingenieria')
 
-                const diaEvento = esIngenieria ? 'Viernes 6 de marzo' : 'Lunes 9 de marzo'
+                const diaEvento = esIngenieria ? 'Lunes 9 de marzo' : 'Viernes 6 de marzo'
                 const bloqueTexto = esIngenieria ? 'Ingeniería' : 'Ciencias'
 
                 // Imágenes por bloque (archivos locales)
@@ -1465,7 +1465,7 @@ ${grupoLink}
                     `📋 Bloque: *${bloqueTexto}*\n` +
                     `🗓️ Fecha: *${diaEvento}*\n` +
                     `🗓️ Hora: *7:00 PM*\n` +
-                    `💻 Modalidad: Virtual (Vía Zoom/Google Meet).\n\n` +
+                    `💻 Modalidad: Virtual (Google Meet).\n\n` +
                     `🚀 *BLOQUE ESPECIAL:*\n` +
                     `Presentación detallada del Bloque de *${bloque}*, donde conocerás a fondo nuestras facultades y su oferta académica. 🧪🧬\n\n` +
                     `🔗 *ÚNETE A LA REUNIÓN AQUÍ:*\n` +
@@ -1481,11 +1481,15 @@ ${grupoLink}
                     await delayAleatorio(1500, 3000)
                 }
 
-                // Mensaje de inscripción al grupo de WhatsApp
+                // Mensaje de inscripción al grupo de WhatsApp (diferente por bloque)
+                const grupoCharlaLink = esIngenieria
+                    ? 'https://chat.whatsapp.com/BnKr2DHdsGpC55mLfpw4cV?mode=hq1tcla'
+                    : 'https://chat.whatsapp.com/F58cPsahF6d4snEEkCmqOm?mode=hq1tcla'
+
                 const textoGrupo = `📢 *¡IMPORTANTE!*\n` +
                     `Para recibir todas las actualizaciones, materiales y recordatorios del evento, te pedimos que te inscribas en nuestro grupo de WhatsApp:\n\n` +
                     `👇👇👇\n` +
-                    `https://chat.whatsapp.com/BnKr2DHdsGpC55mLfpw4cV?mode=hq1tswa\n\n` +
+                    `${grupoCharlaLink}\n\n` +
                     `¡No te quedes fuera! Únete ahora para no perderte ningún detalle. 🙌`
 
                 await bot.sendMessage(numero, textoGrupo, {})
@@ -1494,7 +1498,7 @@ ${grupoLink}
                 const texto2 = `🌐 *EXPLORA NUESTROS PROGRAMAS:*\n` +
                     `Revisa las maestrías y doctorados disponibles aquí:\n` +
                     `🔗 https://posgrado.unac.edu.pe/programas.html\n\n` +
-                    `¡TE ESPERAMOS! No faltes, el que no se conecta... ¡no entra al sorteo! 🙌🔥`
+                    `¡TE ESPERAMOS! No faltes,conéctate... *¡PARTICIPA DE NUESTROS SORTEOS!* 🙌🔥`
 
                 await bot.sendMessage(numero, texto2, {})
 

@@ -1428,6 +1428,94 @@ ${grupoLink}
         })
     )
 
+    // Enviar mensaje para charla
+    adapterProvider.server.post(
+        '/v1/enviar-mensaje-charla',
+        handleCtx(async (bot, req, res) => {
+            const { numero, nombre, apellido, bloque } = req.body || {}
+
+            if (!numero || !nombre || !apellido || !bloque) {
+                res.writeHead(400, { 'Content-Type': 'application/json' })
+                return res.end(JSON.stringify({ error: 'Faltan datos: numero, nombre, apellido y bloque son requeridos' }))
+            }
+
+            try {
+                // Clasificar por bloque: Ingeniería (día 6) o Ciencias (día 9)
+                const bloqueNormalizado = bloque.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                const esIngenieria = bloqueNormalizado.includes('ingenieria')
+
+                const diaEvento = esIngenieria ? 'Jueves 6 de marzo' : 'Domingo 9 de marzo'
+                const bloqueTexto = esIngenieria ? 'Ingeniería' : 'Ciencias'
+
+                // Imágenes por bloque (archivos locales)
+                const imagenesIngenieria = [
+                    join(__dirname, 'img', 'Ingenieria.png')
+                ]
+                const imagenesCiencias = [
+                    join(__dirname, 'img', 'Ciencias1.png'),
+                    join(__dirname, 'img', 'Ciencias2.png')
+                ]
+
+                const imagenes = esIngenieria ? imagenesIngenieria : imagenesCiencias
+
+                const texto = `🎉 *Mensaje de Confirmación y Acceso: Taller ADN EPG UNAC*\n` +
+                    `¡Registro Exitoso! ✅ *BIENVENIDO(A) AL TALLER ADN EPG UNAC* 🏛️🎓\n\n` +
+                    `Ya tienes tu lugar asegurado para conocer todo sobre el Proceso de Admisión de la Universidad Nacional del Callao. Prepárate para resolver tus dudas y participar por los *PREMIOS* que sortearemos en vivo entre los asistentes. 🎁✨\n\n` +
+                    `📌 *DATOS DEL EVENTO:*\n` +
+                    `📋 Bloque: *${bloqueTexto}*\n` +
+                    `🗓️ Fecha: *${diaEvento}*\n` +
+                    `💻 Modalidad: Virtual (Vía Zoom/Google Meet).\n\n` +
+                    `🚀 *BLOQUE ESPECIAL:*\n` +
+                    `Presentación detallada del Bloque de *${bloque}*, donde conocerás a fondo nuestras facultades y su oferta académica. 🧪🧬\n\n` +
+                    `🔗 *ÚNETE A LA REUNIÓN AQUÍ:*\n` +
+                    `👇👇👇\n` +
+                    `[INSERTAR_AQUÍ_LINK_DE_LA_REUNIÓN] 💻✨`
+
+                await bot.sendMessage(numero, texto, {})
+                await delayAleatorio(2000, 4000)
+
+                // Enviar imágenes según el bloque
+                for (const imagen of imagenes) {
+                    await bot.sendMessage(numero, '📸 Información del evento:', { media: imagen })
+                    await delayAleatorio(1500, 3000)
+                }
+
+                // Mensaje de inscripción al grupo de WhatsApp
+                const textoGrupo = `📢 *¡IMPORTANTE!*\n` +
+                    `Para recibir todas las actualizaciones, materiales y recordatorios del evento, te pedimos que te inscribas en nuestro grupo de WhatsApp:\n\n` +
+                    `👇👇👇\n` +
+                    `https://chat.whatsapp.com/BnKr2DHdsGpC55mLfpw4cV?mode=hq1tswa\n\n` +
+                    `¡No te quedes fuera! Únete ahora para no perderte ningún detalle. 🙌`
+
+                await bot.sendMessage(numero, textoGrupo, {})
+                await delayAleatorio(2000, 4000)
+
+                const texto2 = `🌐 *EXPLORA NUESTROS PROGRAMAS:*\n` +
+                    `Revisa las maestrías y doctorados disponibles aquí:\n` +
+                    `🔗 https://posgrado.unac.edu.pe/programas.html\n\n` +
+                    `¡TE ESPERAMOS! No faltes, el que no se conecta... ¡no entra al sorteo! 🙌🔥`
+
+                await bot.sendMessage(numero, texto2, {})
+
+                res.writeHead(200, { 'Content-Type': 'application/json' })
+                return res.end(JSON.stringify({
+                    status: 'Mensaje de charla enviado',
+                    nombre,
+                    apellido,
+                    bloque,
+                    bloqueClasificado: bloqueTexto,
+                    diaEvento,
+                    imagenesEnviadas: imagenes.length
+                }))
+
+            } catch (err) {
+                console.error('❌ Error enviando mensaje de charla:', err)
+                res.writeHead(500, { 'Content-Type': 'application/json' })
+                return res.end(JSON.stringify({ error: 'Error interno al enviar mensaje de charla' }))
+            }
+        })
+    )
+
     httpServer(+PORT)
     console.log(`🚀 Bot iniciado en el puerto ${PORT}`)
 }

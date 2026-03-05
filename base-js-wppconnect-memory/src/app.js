@@ -1465,7 +1465,7 @@ ${grupoLink}
                     `📋 Bloque: *${bloqueTexto}*\n` +
                     `🗓️ Fecha: *${diaEvento}*\n` +
                     `🗓️ Hora: *7:00 PM*\n` +
-                    `💻 Modalidad: Virtual (Google Meet).\n\n` +
+                    `💻 Modalidad: Virtual vía Google Meet.\n\n` +
                     `🚀 *BLOQUE ESPECIAL:*\n` +
                     `Presentación detallada del Bloque de *${bloque}*, donde conocerás a fondo nuestras facultades y su oferta académica. 🧪🧬\n\n` +
                     `🔗 *ÚNETE A LA REUNIÓN AQUÍ:*\n` +

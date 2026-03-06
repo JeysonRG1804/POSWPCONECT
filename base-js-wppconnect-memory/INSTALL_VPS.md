@@ -106,3 +106,9 @@ sudo chown -R $USER:$USER ~/.cache
 ```bash
 pm2 logs chatbot-wppconnect --lines 100
 ```
+
+### Error: El código QR no se muestra en la terminal
+Si tienes problemas donde el entorno se queda esperando el QR y nunca aparece, actualiza la librería principal:
+```bash
+npm install @wppconnect-team/wppconnect@latest
+```

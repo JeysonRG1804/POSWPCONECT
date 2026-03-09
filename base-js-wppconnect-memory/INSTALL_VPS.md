@@ -37,8 +37,25 @@ cd CHATBOT-WPPCONECT/base-js-wppconnect-memory
 ```
 
 ### 5. Instalar dependencias del proyecto
+
 ```bash
+# 1. Dependencias base del proyecto
 npm install
+
+# 2. Instalar y configurar ESLint
+npm install --save-dev eslint
+chmod +x node_modules/.bin/eslint
+
+# 3. Instalar dependencias del sistema para Sharp (procesamiento de imágenes en Linux)
+sudo apt update	
+sudo apt install -y build-essential libvips libvips-dev libglib2.0-dev
+
+# 4. Configurar e instalar Sharp específicamente para Linux x64
+chmod +x ./node_modules/.bin/prebuild-install
+npm install --platform=linux --arch=x64 sharp
+
+# 5. Instalar servidor web Express y CORS
+npm install express cors --legacy-peer-deps
 ```
 
 ### 6. Ejecutar el bot (primera vez - para escanear QR)

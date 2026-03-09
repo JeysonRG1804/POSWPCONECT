@@ -1443,8 +1443,6 @@ ${grupoLink}
                 // Clasificar por bloque: Ciencias (día 6) o Ingeniería (día 9)
                 const bloqueNormalizado = bloque.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
                 const esIngenieria = bloqueNormalizado.includes('ingenieria')
-
-                const diaEvento = esIngenieria ? 'Lunes 9 de marzo' : 'Viernes 6 de marzo'
                 const bloqueTexto = esIngenieria ? 'Ingeniería' : 'Ciencias'
 
                 // Imágenes por bloque (archivos locales)
@@ -1463,7 +1461,7 @@ ${grupoLink}
                     `Ya tienes tu lugar asegurado para conocer todo sobre el Proceso de Admisión de la Universidad Nacional del Callao. Prepárate para resolver tus dudas y participar por los *PREMIOS* que sortearemos en vivo entre los asistentes. 🎁✨\n\n` +
                     `📌 *DATOS DEL EVENTO:*\n` +
                     `📋 Bloque: *${bloqueTexto}*\n` +
-                    `🗓️ Fecha: *${diaEvento}*\n` +
+                    `🗓️ Fecha: *Lunes 9 de marzo*\n` +
                     `🗓️ Hora: *7:00 PM*\n` +
                     `💻 Modalidad: Virtual vía Google Meet.\n\n` +
                     `🚀 *BLOQUE ESPECIAL:*\n` +

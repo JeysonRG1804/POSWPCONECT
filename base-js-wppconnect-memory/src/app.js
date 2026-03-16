@@ -1302,23 +1302,27 @@ const flowPrincipal = addKeyword(EVENTS.WELCOME)
         
         try {
             // Resolver el número real en caso de que venga como un @lid (Local Identity Domain)
+            let numeroTel = ctx.from.split('@')[0];
             let rawFrom = ctx.from;
-            let numeroTel = rawFrom.split('@')[0];
             
-            // Si es un LID interno de WhatsApp, sacamos el id real usando la instancia nativa del provider
+            // Alternativas nativas de extracción de número real para entornos MultiDevice
             if (rawFrom.includes('@lid')) {
-                try {
-                    console.log(`🔍 Resolviendo contacto LID: ${rawFrom}`);
-                    const client = provider.getInstance();
-                    const contacto = await client.getContact(rawFrom);
-                    // Si el contacto se resuelve, su ID real vendrá en contacto.id._serialized usualmente como "numero@c.us"
-                    if (contacto && contacto.id && contacto.id._serialized) {
-                        numeroTel = contacto.id._serialized.split('@')[0];
-                    } else if (contacto && contacto.id && contacto.id.user) {
-                        numeroTel = contacto.id.user;
-                    }
-                } catch (errLid) {
-                    console.error("⚠️ Error resolviendo el LID, se usará el hash directo (probablemente falle la búsqueda Sheets):", errLid.message);
+                // WppConnect/Baileys suelen almacenar el remitente original en author si from es un LID
+                if (ctx.author && ctx.author.includes('@c.us')) {
+                    numeroTel = ctx.author.split('@')[0];
+                    console.log(`✅ LID resuelto usando ctx.author: ${numeroTel}`);
+                } else if (ctx._data && ctx._data.author && ctx._data.author.includes('@c.us')) {
+                     numeroTel = ctx._data.author.split('@')[0];
+                     console.log(`✅ LID resuelto usando ctx._data.author: ${numeroTel}`);
+                } else if (ctx.sender && ctx.sender.id && typeof String(ctx.sender.id) === 'string' && String(ctx.sender.id).includes('@c.us')) {
+                     // Extraer "ID._serialized"
+                     numeroTel = String(ctx.sender.id).split('@')[0];
+                     console.log(`✅ LID resuelto usando ctx.sender.id: ${numeroTel}`);
+                } else if (ctx.key && ctx.key.participant) {
+                     numeroTel = ctx.key.participant.split('@')[0];
+                     console.log(`✅ LID resuelto usando ctx.key.participant: ${numeroTel}`);
+                } else {
+                     console.log('⚠️ No se encontró propiedad alternativa para lid:', rawFrom);
                 }
             }
             

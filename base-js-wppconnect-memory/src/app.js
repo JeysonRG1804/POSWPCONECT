@@ -1326,6 +1326,11 @@ const flowPrincipal = addKeyword(EVENTS.WELCOME)
                 }
             }
             
+            // Eliminar el código de país '51' si está presente (para que coincida con el Excel)
+            if (numeroTel.startsWith('51') && numeroTel.length > 9) {
+                numeroTel = numeroTel.substring(2);
+            }
+
             // RECOGE LA URL QUE DEBE COPIAR EL USUARIO
             const urlWebhook = `https://script.google.com/macros/s/AKfycby8j15X23p-6Z9_A_iB0WuhIFwxZkp8KkaVFG_CYyIc_mn593v5KQRqWLZ5BoPAVwmDBw/exec?telefono=${numeroTel}`;
             

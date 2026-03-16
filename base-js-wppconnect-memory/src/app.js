@@ -1301,11 +1301,31 @@ const flowPrincipal = addKeyword(EVENTS.WELCOME)
         console.log('================================')
         
         try {
-            const numeroTel = ctx.from.replace('@c.us', '');
+            // Resolver el número real en caso de que venga como un @lid (Local Identity Domain)
+            let rawFrom = ctx.from;
+            let numeroTel = rawFrom.split('@')[0];
+            
+            // Si es un LID interno de WhatsApp, sacamos el id real usando la instancia nativa del provider
+            if (rawFrom.includes('@lid')) {
+                try {
+                    console.log(`🔍 Resolviendo contacto LID: ${rawFrom}`);
+                    const client = provider.getInstance();
+                    const contacto = await client.getContact(rawFrom);
+                    // Si el contacto se resuelve, su ID real vendrá en contacto.id._serialized usualmente como "numero@c.us"
+                    if (contacto && contacto.id && contacto.id._serialized) {
+                        numeroTel = contacto.id._serialized.split('@')[0];
+                    } else if (contacto && contacto.id && contacto.id.user) {
+                        numeroTel = contacto.id.user;
+                    }
+                } catch (errLid) {
+                    console.error("⚠️ Error resolviendo el LID, se usará el hash directo (probablemente falle la búsqueda Sheets):", errLid.message);
+                }
+            }
+            
             // RECOGE LA URL QUE DEBE COPIAR EL USUARIO
             const urlWebhook = `https://script.google.com/macros/s/AKfycby8j15X23p-6Z9_A_iB0WuhIFwxZkp8KkaVFG_CYyIc_mn593v5KQRqWLZ5BoPAVwmDBw/exec?telefono=${numeroTel}`;
             
-            console.log(`🔍 Consultando Google Sheets para el número: ${numeroTel}`);
+            console.log(`🔍 Consultando Google Sheets para el número limpio: ${numeroTel} (Original Wpp: ${rawFrom})`);
             const response = await fetch(urlWebhook);
             const data = await response.json();
             

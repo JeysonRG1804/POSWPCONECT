@@ -945,187 +945,9 @@ const menuFlow = addKeyword(utils.setEvent('MENU_FLOW'))
         }
     )
 
-// Flujo Principal (Bienvenida) - Solo EVENTS.WELCOME
-const flowPrincipal = addKeyword(EVENTS.WELCOME)
-    .addAction(async (ctx) => {
-        console.log('=== DEBUG: Mensaje recibido ===')
-        console.log('De:', ctx.from)
-        console.log('Mensaje:', ctx.body)
-        console.log('Nombre:', ctx.pushName)
-        console.log('Timestamp:', new Date().toISOString())
-        console.log('================================')
-    })
-    .addAnswer([
-        '🌟 *BIENVENIDO A LA ESCUELA DE POSGRADO DE LA UNIVERSIDAD NACIONAL DEL CALLAO* 🌟',
-        'Aquí, la excelencia académica se combina con el compromiso y la vocación de servicio, formando líderes que impactan en la sociedad.',
-        '*Una universidad con un rostro humano*, donde cada estudiante es parte de una comunidad que inspira, acompaña y fortalece.',
-        '¡Es momento de crecer juntos!'
-    ])
-    .addAnswer('BIENVENIDOS', {
-        media: 'https://github.com/JeysonRG1804/brochure/raw/main/entrada.png'
-    })
-    .addAction(async (ctx, { gotoFlow }) => {
-        return gotoFlow(menuFlow)
-    })
-
-// ============= INICIALIZACIÓN DEL BOT =============
-
-const main = async () => {
-    const adapterFlow = createFlow([
-        flowPrincipal,
-        menuFlow,
-        programasFlow,
-        flowFacultadMaestrias,
-        flowSeleccionMaestria,
-        flowNuevaMaestria,
-        flowFacultadDoctorados,
-        flowSeleccionDoctorado,
-        flowNuevoDoctorado,
-        flowFacultadEspecialidades,
-        flowSeleccionEspecialidad,
-        flowNuevaEspecialidad,
-        flowAdmision,
-        flowRequisitos,
-        flowCostos,
-        flowFechasAdmision,
-        flowGuia,
-        masinfoadmision,
-        flowTallerTesis,
-        flowContacto,
-        flowCalendario,
-        flowExit
-    ])
-
-    const adapterProvider = createProvider(Provider, {
-        name: 'bot',
-        protocolTimeout: 180000, // 180 segundos de timeout para operaciones de WhatsApp
-        // Opciones de Puppeteer optimizadas para VPS con poca RAM (< 2GB)
-        puppeteerOptions: {
-            headless: true,
-            args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-dev-shm-usage',           // Evita usar /dev/shm limitado en VPS
-                '--disable-accelerated-2d-canvas',    // Reduce uso de GPU/memoria
-                '--disable-gpu',                      // No hay GPU en VPS
-                '--single-process',                   // Reduce procesos de Chrome
-                '--no-zygote',                        // Reduce uso de memoria
-                '--disable-extensions',               // Sin extensiones
-                '--disable-background-timer-throttling',
-                '--disable-backgrounding-occluded-windows',
-                '--disable-renderer-backgrounding',
-                '--disable-features=TranslateUI',
-                '--disable-ipc-flooding-protection',
-                '--memory-pressure-off',              // Desactiva vigilancia de memoria
-                '--max-old-space-size=512',           // Limita memoria de V8
-                '--js-flags=--max-old-space-size=512'
-            ]
-        },
-        // Opciones de WPPConnect para mejor estabilidad
-        session: 'bot-session',
-        autoClose: 0, // Nunca cerrar automáticamente
-        disableWelcome: true
-    })
-    const adapterDB = new Database()
-
-    const { handleCtx, httpServer } = await createBot({
-        flow: adapterFlow,
-        provider: adapterProvider,
-        database: adapterDB,
-    })
-
-    // Portal web para escanear QR
-    QRPortalWeb({ port: 3001 })
-
-    // ============= MIDDLEWARE CORS =============
-    // Permitir peticiones desde cualquier origen (para pruebas)
-    adapterProvider.server.use((req, res, next) => {
-        res.setHeader('Access-Control-Allow-Origin', '*')
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
-
-        // Manejar preflight requests
-        if (req.method === 'OPTIONS') {
-            res.writeHead(204)
-            return res.end()
-        }
-        next()
-    })
-
-    // ============= ENDPOINTS API =============
-
-    // Enviar mensaje
-    adapterProvider.server.post(
-        '/v1/messages',
-        handleCtx(async (bot, req, res) => {
-            const { number, message, urlMedia } = req.body
-            await bot.sendMessage(number, message, { media: urlMedia ?? null })
-            return res.end('sended')
-        })
-    )
-
-    // Disparar flujo de registro personalizado
-    adapterProvider.server.post(
-        '/v1/register',
-        handleCtx(async (bot, req, res) => {
-            const { number, name } = req.body
-            await bot.dispatch('CONTACTO_FLOW', { from: number, name })
-            return res.end('trigger')
-        })
-    )
-
-    // Disparar flujo de programas
-    adapterProvider.server.post(
-        '/v1/programas',
-        handleCtx(async (bot, req, res) => {
-            const { number } = req.body
-            await bot.dispatch('PROGRAMAS_FLOW', { from: number })
-            return res.end('trigger')
-        })
-    )
-
-    // Blacklist - Agregar/Quitar
-    adapterProvider.server.post(
-        '/v1/blacklist',
-        handleCtx(async (bot, req, res) => {
-            const { number, intent } = req.body
-            if (intent === 'remove') bot.blacklist.remove(number)
-            if (intent === 'add') bot.blacklist.add(number)
-
-            res.writeHead(200, { 'Content-Type': 'application/json' })
-            return res.end(JSON.stringify({ status: 'ok', number, intent }))
-        })
-    )
-
-    // Blacklist - Listar
-    adapterProvider.server.get(
-        '/v1/blacklist/list',
-        handleCtx(async (bot, req, res) => {
-            const blacklist = bot.blacklist.getList()
-            res.writeHead(200, { 'Content-Type': 'application/json' })
-            return res.end(JSON.stringify({ status: 'ok', blacklist }))
-        })
-    )
-
-    // Enviar mensaje con brochure
-    adapterProvider.server.post(
-        '/v1/enviar-mensaje',
-        handleCtx(async (bot, req, res) => {
-            const { numero, mensaje, facultad, programa } = req.body || {}
-
-            if (!numero || !mensaje || !facultad || !programa) {
-                res.writeHead(400, { 'Content-Type': 'application/json' })
-                return res.end(JSON.stringify({ error: 'Faltan datos' }))
-            }
-
-            // Responder rápido al cliente HTTP para no dejar la petición colgada
-            res.writeHead(200, { 'Content-Type': 'application/json' })
-            res.end(JSON.stringify({
-                status: 'Mensaje agregado a la cola',
-                programa
-            }))
-
-            colaMensajesGlobal.agregar(async () => {
+// ============= LÓGICA DE ENVÍO AUTOMATIZADO =============
+async function procesarEnvioMensaje(numero, mensaje, facultad, programa, bot) {
+    colaMensajesGlobal.agregar(async () => {
                 try {
                     // Texto inicial con 3 variaciones
                     const variantesInicio = [
@@ -1466,8 +1288,220 @@ N° Cta. Cte.: ${cuenta} (Scotiabank)
                     console.error('❌ Error enviando mensaje en cola:', err)
                 }
             })
+}
+
+// Flujo Principal (Bienvenida) - Solo EVENTS.WELCOME
+const flowPrincipal = addKeyword(EVENTS.WELCOME)
+    .addAction(async (ctx, { endFlow, provider }) => {
+        console.log('=== DEBUG: Mensaje recibido ===')
+        console.log('De:', ctx.from)
+        console.log('Mensaje:', ctx.body)
+        console.log('Nombre:', ctx.pushName)
+        console.log('Timestamp:', new Date().toISOString())
+        console.log('================================')
+        
+        try {
+            const numeroTel = ctx.from.replace('@c.us', '');
+            // RECOGE LA URL QUE DEBE COPIAR EL USUARIO
+            const urlWebhook = `https://script.google.com/macros/s/AKfycby8j15X23p-6Z9_A_iB0WuhIFwxZkp8KkaVFG_CYyIc_mn593v5KQRqWLZ5BoPAVwmDBw/exec?telefono=${numeroTel}`;
+            
+            console.log(`🔍 Consultando Google Sheets para el número: ${numeroTel}`);
+            const response = await fetch(urlWebhook);
+            const data = await response.json();
+            
+            if (data.encontrado) {
+                const estadoLocal = await obtenerEstado(ctx.from) || {};
+                
+                // Verificar si ya se le envió info automatizada anteriormente
+                if (estadoLocal.infoAutomatizadaEnviada) {
+                    console.log(`ℹ️ Usuario ${numeroTel} ya recibió la información automatizada anteriormente. Pasando a Bienvenida.`);
+                    return; // Sigue el flujo normal
+                }
+                
+                // Verificar regla de 15 minutos
+                if (data.fechaRegistro) {
+                    const fechaReg = new Date(data.fechaRegistro);
+                    const ahora = new Date();
+                    const diffMs = ahora - fechaReg;
+                    const diffMins = Math.floor(diffMs / 60000);
+                    
+                    console.log(`🕒 Tiempo desde registro: ${diffMins} minutos.`);
+                    
+                    if (diffMins <= 15) {
+                        console.log(`✅ Cumple regla de 15 mins. Enviando info automatizada a ${numeroTel}`);
+                        // Marcar como enviado en la bd local
+                        await guardarEstado(ctx.from, { infoAutomatizadaEnviada: true });
+                        
+                        // Llamar a la lógica de envío
+                        await procesarEnvioMensaje(ctx.from, data.nombre, data.facultad, data.programa, provider);
+                        
+                        return endFlow(); // Termina el flujo aquí para no mostrar Menú
+                    } else {
+                        console.log(`⏳ Pasaron más de 15 minutos (${diffMins} mins). Pasando a Bienvenida.`);
+                    }
+                } else {
+                     console.log(`⚠️ Usuario encontrado pero sin Fecha de Registro válida. Pasando a Bienvenida.`);
+                }
+            } else {
+                console.log(`❌ Número ${numeroTel} no encontrado en Google Sheets. Pasando a Bienvenida.`);
+            }
+        } catch (error) {
+           console.error(`❌ Error al consultar Google Sheets:`, error);
+        }
+    })
+    .addAnswer([
+        '🌟 *BIENVENIDO A LA ESCUELA DE POSGRADO DE LA UNIVERSIDAD NACIONAL DEL CALLAO* 🌟',
+        'Aquí, la excelencia académica se combina con el compromiso y la vocación de servicio, formando líderes que impactan en la sociedad.',
+        '*Una universidad con un rostro humano*, donde cada estudiante es parte de una comunidad que inspira, acompaña y fortalece.',
+        '¡Es momento de crecer juntos!'
+    ])
+    .addAnswer('BIENVENIDOS', {
+        media: 'https://github.com/JeysonRG1804/brochure/raw/main/entrada.png'
+    })
+    .addAction(async (ctx, { gotoFlow }) => {
+        return gotoFlow(menuFlow)
+    })
+
+// ============= INICIALIZACIÓN DEL BOT =============
+
+const main = async () => {
+    const adapterFlow = createFlow([
+        flowPrincipal,
+        menuFlow,
+        programasFlow,
+        flowFacultadMaestrias,
+        flowSeleccionMaestria,
+        flowNuevaMaestria,
+        flowFacultadDoctorados,
+        flowSeleccionDoctorado,
+        flowNuevoDoctorado,
+        flowFacultadEspecialidades,
+        flowSeleccionEspecialidad,
+        flowNuevaEspecialidad,
+        flowAdmision,
+        flowRequisitos,
+        flowCostos,
+        flowFechasAdmision,
+        flowGuia,
+        masinfoadmision,
+        flowTallerTesis,
+        flowContacto,
+        flowCalendario,
+        flowExit
+    ])
+
+    const adapterProvider = createProvider(Provider, {
+        name: 'bot',
+        protocolTimeout: 180000, // 180 segundos de timeout para operaciones de WhatsApp
+        // Opciones de Puppeteer optimizadas para VPS con poca RAM (< 2GB)
+        puppeteerOptions: {
+            headless: true,
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',           // Evita usar /dev/shm limitado en VPS
+                '--disable-accelerated-2d-canvas',    // Reduce uso de GPU/memoria
+                '--disable-gpu',                      // No hay GPU en VPS
+                '--single-process',                   // Reduce procesos de Chrome
+                '--no-zygote',                        // Reduce uso de memoria
+                '--disable-extensions',               // Sin extensiones
+                '--disable-background-timer-throttling',
+                '--disable-backgrounding-occluded-windows',
+                '--disable-renderer-backgrounding',
+                '--disable-features=TranslateUI',
+                '--disable-ipc-flooding-protection',
+                '--memory-pressure-off',              // Desactiva vigilancia de memoria
+                '--max-old-space-size=512',           // Limita memoria de V8
+                '--js-flags=--max-old-space-size=512'
+            ]
+        },
+        // Opciones de WPPConnect para mejor estabilidad
+        session: 'bot-session',
+        autoClose: 0, // Nunca cerrar automáticamente
+        disableWelcome: true
+    })
+    const adapterDB = new Database()
+
+    const { handleCtx, httpServer } = await createBot({
+        flow: adapterFlow,
+        provider: adapterProvider,
+        database: adapterDB,
+    })
+
+    // Portal web para escanear QR
+    QRPortalWeb({ port: 3001 })
+
+    // ============= MIDDLEWARE CORS =============
+    // Permitir peticiones desde cualquier origen (para pruebas)
+    adapterProvider.server.use((req, res, next) => {
+        res.setHeader('Access-Control-Allow-Origin', '*')
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+
+        // Manejar preflight requests
+        if (req.method === 'OPTIONS') {
+            res.writeHead(204)
+            return res.end()
+        }
+        next()
+    })
+
+    // ============= ENDPOINTS API =============
+
+    // Enviar mensaje
+    adapterProvider.server.post(
+        '/v1/messages',
+        handleCtx(async (bot, req, res) => {
+            const { number, message, urlMedia } = req.body
+            await bot.sendMessage(number, message, { media: urlMedia ?? null })
+            return res.end('sended')
         })
     )
+
+    // Disparar flujo de registro personalizado
+    adapterProvider.server.post(
+        '/v1/register',
+        handleCtx(async (bot, req, res) => {
+            const { number, name } = req.body
+            await bot.dispatch('CONTACTO_FLOW', { from: number, name })
+            return res.end('trigger')
+        })
+    )
+
+    // Disparar flujo de programas
+    adapterProvider.server.post(
+        '/v1/programas',
+        handleCtx(async (bot, req, res) => {
+            const { number } = req.body
+            await bot.dispatch('PROGRAMAS_FLOW', { from: number })
+            return res.end('trigger')
+        })
+    )
+
+    // Blacklist - Agregar/Quitar
+    adapterProvider.server.post(
+        '/v1/blacklist',
+        handleCtx(async (bot, req, res) => {
+            const { number, intent } = req.body
+            if (intent === 'remove') bot.blacklist.remove(number)
+            if (intent === 'add') bot.blacklist.add(number)
+
+            res.writeHead(200, { 'Content-Type': 'application/json' })
+            return res.end(JSON.stringify({ status: 'ok', number, intent }))
+        })
+    )
+
+    // Blacklist - Listar
+    adapterProvider.server.get(
+        '/v1/blacklist/list',
+        handleCtx(async (bot, req, res) => {
+            const blacklist = bot.blacklist.getList()
+            res.writeHead(200, { 'Content-Type': 'application/json' })
+            return res.end(JSON.stringify({ status: 'ok', blacklist }))
+        })
+    )
+
+    
 
     // Enviar mensaje para charla
     adapterProvider.server.post(

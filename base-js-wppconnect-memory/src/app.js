@@ -948,47 +948,47 @@ const menuFlow = addKeyword(utils.setEvent('MENU_FLOW'))
 // ============= LÓGICA DE ENVÍO AUTOMATIZADO =============
 async function procesarEnvioMensaje(numero, mensaje, facultad, programa, bot) {
     colaMensajesGlobal.agregar(async () => {
-                try {
-                    // Texto inicial con 3 variaciones
-                    const variantesInicio = [
-                        `👋 Felicidades ${mensaje}\n*Somos de la Escuela de Posgrado de la UNAC*\n🚀 Ya se encuentra registrado para nuestros programas de Posgrado!`,
-                        `🌟 ¡Hola ${mensaje}! Qué excelente noticia.\n*Te escribe la Escuela de Posgrado de la UNAC*\n🚀 ¡Tu registro ha sido exitoso para nuestra oferta académica!`,
-                        `🎓 Saludos ${mensaje}, es un gusto saludarte.\n*De parte de la EPG UNAC*\n🚀 Nos alegra confirmar que ya estás registrado(a) en nuestros posgrados!`
-                    ];
-                    const textoInicialElegido = variantesInicio[Math.floor(Math.random() * variantesInicio.length)];
-                    await bot.sendMessage(numero, textoInicialElegido, {})
-                    await delayAleatorio(2000, 4000) // Delay aleatorio de 2-4 segundos
+        try {
+            // Texto inicial con 3 variaciones
+            const variantesInicio = [
+                `👋 Felicidades ${mensaje}\n*Somos de la Escuela de Posgrado de la UNAC*\n🚀 Ya se encuentra registrado para nuestros programas de Posgrado!`,
+                `🌟 ¡Hola ${mensaje}! Qué excelente noticia.\n*Te escribe la Escuela de Posgrado de la UNAC*\n🚀 ¡Tu registro ha sido exitoso para nuestra oferta académica!`,
+                `🎓 Saludos ${mensaje}, es un gusto saludarte.\n*De parte de la EPG UNAC*\n🚀 Nos alegra confirmar que ya estás registrado(a) en nuestros posgrados!`
+            ];
+            const textoInicialElegido = variantesInicio[Math.floor(Math.random() * variantesInicio.length)];
+            await bot.sendMessage(numero, textoInicialElegido, {})
+            await delayAleatorio(2000, 4000) // Delay aleatorio de 2-4 segundos
 
-                    // Determinar precio y duración
-                    let precio = ''
-                    let duracion = ''
-                    let cuenta = ''
-                    let cci = ''
-                    let costo = ''
-                    let enlace = 'https://chat.whatsapp.com/IKNzlJiO6El6Ns8k4bixjF'
-                    const p = programa.toLowerCase()
+            // Determinar precio y duración
+            let precio = ''
+            let duracion = ''
+            let cuenta = ''
+            let cci = ''
+            let costo = ''
+            let enlace = 'https://chat.whatsapp.com/IKNzlJiO6El6Ns8k4bixjF'
+            const p = programa.toLowerCase()
 
-                    if (p.includes('maestría') || p.includes('maestria')) {
-                        precio = 'S/ 200'
-                        duracion = '3 semestres académicos'
-                        cuenta = '000-3747336'
-                        cci = '009-100-000003747336-90'
-                        costo = '~S/ 2500~ *S/ 2100*'
-                    } else if (p.includes('doctorado')) {
-                        precio = 'S/ 250'
-                        duracion = '6 semestres académicos'
-                        cuenta = '000-3747336'
-                        cci = '009-100-000003747336-90'
-                        costo = '~S/ 2500~ *S/ 2100*'
-                    } else if (p.includes('especialidad')) {
-                        precio = 'S/ 120'
-                        duracion = '2 semestres académicos'
-                        cuenta = '000-1797042'
-                        cci = '009-100-000001797042-97'
-                        costo = '~S/ 1500~ *S/ 1200*'
-                    }
+            if (p.includes('maestría') || p.includes('maestria')) {
+                precio = 'S/ 200'
+                duracion = '3 semestres académicos'
+                cuenta = '000-3747336'
+                cci = '009-100-000003747336-90'
+                costo = '~S/ 2500~ *S/ 2100*'
+            } else if (p.includes('doctorado')) {
+                precio = 'S/ 250'
+                duracion = '6 semestres académicos'
+                cuenta = '000-3747336'
+                cci = '009-100-000003747336-90'
+                costo = '~S/ 2500~ *S/ 2100*'
+            } else if (p.includes('especialidad')) {
+                precio = 'S/ 120'
+                duracion = '2 semestres académicos'
+                cuenta = '000-1797042'
+                cci = '009-100-000001797042-97'
+                costo = '~S/ 1500~ *S/ 1200*'
+            }
 
-                    const texto2 = `💥 ¡Quiero contarte sobre nuestro programa de posgrado y los increíbles beneficios que puedes obtener! 🎓
+            const texto2 = `💥 ¡Quiero contarte sobre nuestro programa de posgrado y los increíbles beneficios que puedes obtener! 🎓
 
 📌 Costo de Inscripción:
 Por solo ${precio} recibirás:
@@ -1000,9 +1000,9 @@ CCI: ${cci}
 N° Cta. Cte.: ${cuenta} (Scotiabank)
 
 📅 Fechas importantes:
-🖋 Inscripciones: Hasta el 18 de marzo del 2026
-📹 Entrevista virtual: última semana de Marzo del 2026
-📃 Resultados: 1-2 días después del examen
+🖋 Inscripciones: Hasta el 21 de marzo del 2026
+📹 Entrevista virtual: el 22 y 23 de Marzo del 2026
+📃 Resultados: 24 y 25 de marzo del 2026
 🎒 Inicio de clases: Primera semana de Abril
 
 ⏳ Duración del programa: ${duracion}
@@ -1012,282 +1012,282 @@ N° Cta. Cte.: ${cuenta} (Scotiabank)
 📩 posgrado.admision@unac.edu.pe
 📞 900969591`
 
-                    await bot.sendMessage(numero, texto2, {})
-                    await delayAleatorio(2000, 4000) // Delay aleatorio de 2-4 segundos
+            await bot.sendMessage(numero, texto2, {})
+            await delayAleatorio(2000, 4000) // Delay aleatorio de 2-4 segundos
 
-                    // Función para normalizar texto (quitar acentos, caracteres especiales y espacios extra)
-                    const normalizarTexto = (txt) => {
-                        if (!txt) return ''
-                        // Primero quitar acentos usando NFD
-                        let normalizado = txt.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-                        // Reemplazar caracteres corruptos comunes (encoding issues)
-                        normalizado = normalizado.replace(/[�]/g, '')
-                        // Convertir a minúsculas
-                        normalizado = normalizado.toLowerCase()
-                        // Reemplazar múltiples espacios por uno solo
-                        normalizado = normalizado.replace(/\s+/g, ' ').trim()
-                        return normalizado
-                    }
+            // Función para normalizar texto (quitar acentos, caracteres especiales y espacios extra)
+            const normalizarTexto = (txt) => {
+                if (!txt) return ''
+                // Primero quitar acentos usando NFD
+                let normalizado = txt.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                // Reemplazar caracteres corruptos comunes (encoding issues)
+                normalizado = normalizado.replace(/[�]/g, '')
+                // Convertir a minúsculas
+                normalizado = normalizado.toLowerCase()
+                // Reemplazar múltiples espacios por uno solo
+                normalizado = normalizado.replace(/\s+/g, ' ').trim()
+                return normalizado
+            }
 
-                    // Función para extraer palabras clave de un texto
-                    const extraerPalabrasClave = (txt) => {
-                        const normalizado = normalizarTexto(txt)
-                        // Palabras a ignorar
-                        const stopWords = ['en', 'de', 'del', 'la', 'el', 'con', 'y', 'para', 'los', 'las', 'por', 'mencion', 'mención']
-                        return normalizado.split(' ').filter(p => p.length > 2 && !stopWords.includes(p))
-                    }
+            // Función para extraer palabras clave de un texto
+            const extraerPalabrasClave = (txt) => {
+                const normalizado = normalizarTexto(txt)
+                // Palabras a ignorar
+                const stopWords = ['en', 'de', 'del', 'la', 'el', 'con', 'y', 'para', 'los', 'las', 'por', 'mencion', 'mención']
+                return normalizado.split(' ').filter(p => p.length > 2 && !stopWords.includes(p))
+            }
 
-                    // Cargar programas.json para obtener el brochure específico del programa
-                    let brochurePrograma = null
-                    const programaNormalizado = normalizarTexto(programa)
-                    const palabrasClaveBusqueda = extraerPalabrasClave(programa)
-                    console.log(`🔍 Buscando programa: "${programa}"`)
-                    console.log(`🔍 Programa normalizado: "${programaNormalizado}"`)
-                    console.log(`🔍 Palabras clave: [${palabrasClaveBusqueda.join(', ')}]`)
+            // Cargar programas.json para obtener el brochure específico del programa
+            let brochurePrograma = null
+            const programaNormalizado = normalizarTexto(programa)
+            const palabrasClaveBusqueda = extraerPalabrasClave(programa)
+            console.log(`🔍 Buscando programa: "${programa}"`)
+            console.log(`🔍 Programa normalizado: "${programaNormalizado}"`)
+            console.log(`🔍 Palabras clave: [${palabrasClaveBusqueda.join(', ')}]`)
 
-                    try {
-                        const programasPath = join(__dirname, 'programas.json')
+            try {
+                const programasPath = join(__dirname, 'programas.json')
 
-                        if (existsSync(programasPath)) {
-                            const programasData = JSON.parse(readFileSync(programasPath, 'utf-8'))
+                if (existsSync(programasPath)) {
+                    const programasData = JSON.parse(readFileSync(programasPath, 'utf-8'))
 
-                            // Buscar el programa en todas las facultades
-                            if (programasData.facultades) {
-                                let totalProgramasRevisados = 0
-                                let mejorCoincidencia = null
-                                let mejorPuntaje = 0
+                    // Buscar el programa en todas las facultades
+                    if (programasData.facultades) {
+                        let totalProgramasRevisados = 0
+                        let mejorCoincidencia = null
+                        let mejorPuntaje = 0
 
-                                for (const codigoFacultad of Object.keys(programasData.facultades)) {
-                                    const fac = programasData.facultades[codigoFacultad]
+                        for (const codigoFacultad of Object.keys(programasData.facultades)) {
+                            const fac = programasData.facultades[codigoFacultad]
 
-                                    if (fac.programas && Array.isArray(fac.programas)) {
-                                        for (const prog of fac.programas) {
-                                            totalProgramasRevisados++
-                                            if (!prog.nombre) continue
+                            if (fac.programas && Array.isArray(fac.programas)) {
+                                for (const prog of fac.programas) {
+                                    totalProgramasRevisados++
+                                    if (!prog.nombre) continue
 
-                                            const nombreNormalizado = normalizarTexto(prog.nombre)
-                                            const palabrasClavePrograma = extraerPalabrasClave(prog.nombre)
+                                    const nombreNormalizado = normalizarTexto(prog.nombre)
+                                    const palabrasClavePrograma = extraerPalabrasClave(prog.nombre)
 
-                                            // Verificar coincidencia exacta primero
-                                            if (nombreNormalizado === programaNormalizado) {
-                                                if (prog.brochure && prog.brochure.length > 0) {
-                                                    brochurePrograma = prog.brochure
-                                                    console.log(`✅ ¡Coincidencia exacta! Programa: "${prog.nombre}"`)
-                                                    console.log(`✅ Facultad: ${fac.nombre}`)
-                                                    console.log(`✅ Brochure: ${brochurePrograma}`)
-                                                    break
-                                                }
-                                            }
-
-                                            // Búsqueda por palabras clave
-                                            let puntaje = 0
-                                            for (const palabra of palabrasClaveBusqueda) {
-                                                if (palabrasClavePrograma.some(p => p.includes(palabra) || palabra.includes(p))) {
-                                                    puntaje++
-                                                }
-                                            }
-
-                                            // Si encuentra suficientes palabras clave (al menos 2 o el 50%)
-                                            const umbral = Math.max(2, Math.floor(palabrasClaveBusqueda.length * 0.5))
-                                            if (puntaje >= umbral && puntaje > mejorPuntaje && prog.brochure && prog.brochure.length > 0) {
-                                                mejorPuntaje = puntaje
-                                                mejorCoincidencia = { prog, fac }
-                                            }
-                                        }
-
-                                        if (brochurePrograma) break
-                                    }
-                                }
-
-                                // Si no hubo coincidencia exacta, usar la mejor por palabras clave
-                                if (!brochurePrograma && mejorCoincidencia) {
-                                    brochurePrograma = mejorCoincidencia.prog.brochure
-                                    console.log(`✅ ¡Encontrado por palabras clave! Programa: "${mejorCoincidencia.prog.nombre}"`)
-                                    console.log(`✅ Facultad: ${mejorCoincidencia.fac.nombre}`)
-                                    console.log(`✅ Puntaje: ${mejorPuntaje}/${palabrasClaveBusqueda.length}`)
-                                    console.log(`✅ Brochure: ${brochurePrograma}`)
-                                }
-
-                                // Si no se encontró programa específico, buscar brochure de la facultad en programas.json
-                                if (!brochurePrograma) {
-                                    console.log(`⚠️ Buscando brochure de facultad como fallback para: "${facultad}"`)
-                                    const facultadNorm = normalizarTexto(facultad)
-
-                                    for (const codigoFacultad of Object.keys(programasData.facultades)) {
-                                        const fac = programasData.facultades[codigoFacultad]
-                                        const facNombreNorm = normalizarTexto(fac.nombre || '')
-
-                                        // Buscar la facultad por nombre normalizado
-                                        if (facultadNorm.includes(facNombreNorm) || facNombreNorm.includes(facultadNorm)) {
-                                            // Buscar el primer programa con brochure válido
-                                            if (fac.programas && Array.isArray(fac.programas)) {
-                                                for (const prog of fac.programas) {
-                                                    if (prog.brochure && prog.brochure.length > 0) {
-                                                        brochurePrograma = prog.brochure
-                                                        console.log(`✅ Brochure de facultad encontrado: ${fac.nombre}`)
-                                                        console.log(`✅ Usando brochure de: ${prog.nombre}`)
-                                                        console.log(`✅ URL: ${brochurePrograma}`)
-                                                        break
-                                                    }
-                                                }
-                                            }
+                                    // Verificar coincidencia exacta primero
+                                    if (nombreNormalizado === programaNormalizado) {
+                                        if (prog.brochure && prog.brochure.length > 0) {
+                                            brochurePrograma = prog.brochure
+                                            console.log(`✅ ¡Coincidencia exacta! Programa: "${prog.nombre}"`)
+                                            console.log(`✅ Facultad: ${fac.nombre}`)
+                                            console.log(`✅ Brochure: ${brochurePrograma}`)
                                             break
                                         }
                                     }
+
+                                    // Búsqueda por palabras clave
+                                    let puntaje = 0
+                                    for (const palabra of palabrasClaveBusqueda) {
+                                        if (palabrasClavePrograma.some(p => p.includes(palabra) || palabra.includes(p))) {
+                                            puntaje++
+                                        }
+                                    }
+
+                                    // Si encuentra suficientes palabras clave (al menos 2 o el 50%)
+                                    const umbral = Math.max(2, Math.floor(palabrasClaveBusqueda.length * 0.5))
+                                    if (puntaje >= umbral && puntaje > mejorPuntaje && prog.brochure && prog.brochure.length > 0) {
+                                        mejorPuntaje = puntaje
+                                        mejorCoincidencia = { prog, fac }
+                                    }
                                 }
 
-                                console.log(`📊 Total programas revisados: ${totalProgramasRevisados}`)
-                            }
-
-                            if (!brochurePrograma) {
-                                console.log(`❌ No se encontró brochure para: "${programa}" ni para facultad "${facultad}"`)
-                            }
-                        } else {
-                            console.error('❌ Archivo programas.json no existe')
-                        }
-                    } catch (jsonError) {
-                        console.error('⚠️ Error al leer programas.json:', jsonError.message)
-                    }
-
-                    // Enviar el brochure encontrado (programa específico o de facultad)
-                    if (brochurePrograma) {
-                        const mensajeBrochure = `📄 Aquí está el brochure de *${programa}*:`
-                        // Extraer nombre del archivo y especificarlo para que WhatsApp lo reconozca como PDF
-                        const fileName = decodeURIComponent(brochurePrograma.split('/').pop())
-                        await bot.sendMessage(numero, mensajeBrochure, { media: brochurePrograma, fileName: fileName })
-                        await delayAleatorio(2000, 4000) // Delay aleatorio de 2-4 segundos
-                    } else {
-                        console.warn(`⚠️ No se encontró ningún brochure para programa "${programa}" ni facultad "${facultad}"`)
-                    }
-
-                    // Links de grupos de WhatsApp por facultad (REEMPLAZAR CON LINKS REALES)
-                    const gruposWhatsApp = {
-                        'Facultad de Ciencias Económicas': 'https://chat.whatsapp.com/GwqF5Qe5wGr5ueyI0k1Sxl',
-                        'Facultad de Ingeniería Industrial y de Sistemas': 'https://chat.whatsapp.com/EwRf65gMmwe9zyCrsM1gks',
-                        'Facultad de Ciencias Administrativas': 'https://chat.whatsapp.com/HNKqywmtrBLER8l8lvaoCM',
-                        'Facultad de Ciencias Contables': 'https://chat.whatsapp.com/IKDHLVEa6bS0ZQ0319d17x',
-                        'Facultad de Ingeniería Química': 'https://chat.whatsapp.com/C1cgM6wqzQrKZGPJiHYMvJ',
-                        'Facultad de Ciencias Naturales y Matemática': 'https://chat.whatsapp.com/HW7YC2eFeEx6K7tFL9Kf04',
-                        'Facultad de Ingeniería Pesquera y de Alimentos': 'https://chat.whatsapp.com/IKNzlJiO6El6Ns8k4bixjF',
-                        'Facultad de Ingeniería Mecánica y Energía': 'https://chat.whatsapp.com/IAAsZWNRocL5pOv6tJQqZY',
-                        'Facultad de Ingeniería Eléctrica y Electrónica': 'https://chat.whatsapp.com/DkrzEJ6uV6nBfYUvraebzC',
-                        'Facultad de Ingeniería Ambiental y de Recursos Naturales': 'https://chat.whatsapp.com/BKySJFFEKNeK40LZ4tAxOv',
-                        'Facultad de Ciencias de la Educación': 'https://chat.whatsapp.com/JAKU1zp1U6ZIuDLUAas7Xp'
-                    }
-
-
-                    // Links de grupos de WhatsApp por PROGRAMA para FIEE (REEMPLAZAR CON LINKS REALES)
-                    const gruposProgramasFIEE = {
-                        // Maestrías
-                        'Maestría en Ingeniería Eléctrica con Mención en Gestión de Sistemas de Energía Eléctrica': 'https://chat.whatsapp.com/EnAssprLnsW6AcLa6DkTu5',
-                        'Maestría en Ingeniería Eléctrica con Mención en Gerencia de Proyectos de Ingeniería': 'https://chat.whatsapp.com/HCYIX2KS7MmIm0YxOWKwxK',
-                        'Maestría en Ciencias de Electrónica con Mención en Telecomunicaciones': 'https://chat.whatsapp.com/BeiBgdH4c3PLNE2dgPj4jq',
-                        'Maestría en Ciencias de Electrónica con Mención en Ingeniería Biomédica': 'https://chat.whatsapp.com/LDJglqpAxQ3HOZMMObnk8p',
-                        'Maestría en Ciencias de Electrónica con Mención en Control y Automatización': 'https://chat.whatsapp.com/Cqq9GRvHIq8FWEMGz10coY',
-                        // Doctorado
-                        'Doctorado en Ingeniería Eléctrica': 'https://chat.whatsapp.com/LvTWe7G5F4hLZbFdgnPkRv'
-                    }
-
-                    // Determinar el link del grupo de WhatsApp (prioridad: programa FIEE > facultad > general)
-                    let grupoLink = null
-                    let grupoNombre = facultad
-
-                    // Links especiales para Facultad de Ciencias de la Salud (REEMPLAZAR CON LINKS REALES)
-                    const gruposFCS = {
-                        especialidades: 'https://chat.whatsapp.com/Dq2jT7AzCsO660QtCbV0bG',
-                        maestriasDoctorados: 'https://chat.whatsapp.com/KoTYdWaGPFu7Onzu1UlXmj'
-                    }
-
-                    // Si es Facultad de Ciencias de la Salud, diferenciar entre especialidades y maestrías/doctorados
-                    if (facultad === 'Facultad de Ciencias de la Salud') {
-                        const programaLower = programa.toLowerCase()
-                        if (programaLower.includes('especialidad') || programaLower.includes('especialización')) {
-                            grupoLink = gruposFCS.especialidades
-                            grupoNombre = 'Especialidades - Facultad de Ciencias de la Salud'
-                            console.log('✅ Link de grupo FCS: Especialidades')
-                        } else {
-                            grupoLink = gruposFCS.maestriasDoctorados
-                            grupoNombre = 'Maestrías y Doctorados - Facultad de Ciencias de la Salud'
-                            console.log('✅ Link de grupo FCS: Maestrías y Doctorados')
-                        }
-                    }
-                    // Si es FIEE, buscar primero el link específico del programa
-                    else if (facultad === 'Facultad de Ingeniería Eléctrica y Electrónica') {
-                        // Buscar coincidencia por programa usando palabras clave
-                        const programaNorm = normalizarTexto(programa)
-                        console.log(`🔍 Buscando grupo FIEE para: "${programa}"`)
-                        console.log(`🔍 Programa normalizado: "${programaNorm}"`)
-
-                        let mejorCoincidenciaGrupo = null
-                        let mejorPuntajeGrupo = 0
-
-                        for (const [nombreProg, link] of Object.entries(gruposProgramasFIEE)) {
-                            const nombreProgNorm = normalizarTexto(nombreProg)
-
-                            // Coincidencia exacta
-                            if (nombreProgNorm === programaNorm) {
-                                grupoLink = link
-                                grupoNombre = nombreProg
-                                console.log(`✅ Coincidencia exacta de grupo FIEE: ${nombreProg}`)
-                                break
-                            }
-
-                            // Búsqueda por palabras clave
-                            const palabrasPrograma = programaNorm.split(' ').filter(p => p.length > 3)
-                            const palabrasNombreProg = nombreProgNorm.split(' ').filter(p => p.length > 3)
-
-                            let puntaje = 0
-                            for (const palabra of palabrasPrograma) {
-                                if (palabrasNombreProg.some(p => p.includes(palabra) || palabra.includes(p))) {
-                                    puntaje++
-                                }
-                            }
-
-                            // Al menos 3 palabras en común o 50% de coincidencia
-                            const umbral = Math.max(3, Math.floor(palabrasPrograma.length * 0.5))
-                            if (puntaje >= umbral && puntaje > mejorPuntajeGrupo) {
-                                mejorPuntajeGrupo = puntaje
-                                mejorCoincidenciaGrupo = { nombre: nombreProg, link }
+                                if (brochurePrograma) break
                             }
                         }
 
                         // Si no hubo coincidencia exacta, usar la mejor por palabras clave
-                        if (!grupoLink && mejorCoincidenciaGrupo) {
-                            grupoLink = mejorCoincidenciaGrupo.link
-                            grupoNombre = mejorCoincidenciaGrupo.nombre
-                            console.log(`✅ Grupo FIEE por palabras clave: ${grupoNombre} (puntaje: ${mejorPuntajeGrupo})`)
+                        if (!brochurePrograma && mejorCoincidencia) {
+                            brochurePrograma = mejorCoincidencia.prog.brochure
+                            console.log(`✅ ¡Encontrado por palabras clave! Programa: "${mejorCoincidencia.prog.nombre}"`)
+                            console.log(`✅ Facultad: ${mejorCoincidencia.fac.nombre}`)
+                            console.log(`✅ Puntaje: ${mejorPuntaje}/${palabrasClaveBusqueda.length}`)
+                            console.log(`✅ Brochure: ${brochurePrograma}`)
                         }
 
-                        // Si aún no se encontró, usar el link general de FIEE
-                        if (!grupoLink) {
-                            grupoLink = gruposWhatsApp[facultad]
-                            grupoNombre = facultad
-                            console.log(`⚠️ Usando grupo general FIEE: ${grupoLink}`)
+                        // Si no se encontró programa específico, buscar brochure de la facultad en programas.json
+                        if (!brochurePrograma) {
+                            console.log(`⚠️ Buscando brochure de facultad como fallback para: "${facultad}"`)
+                            const facultadNorm = normalizarTexto(facultad)
+
+                            for (const codigoFacultad of Object.keys(programasData.facultades)) {
+                                const fac = programasData.facultades[codigoFacultad]
+                                const facNombreNorm = normalizarTexto(fac.nombre || '')
+
+                                // Buscar la facultad por nombre normalizado
+                                if (facultadNorm.includes(facNombreNorm) || facNombreNorm.includes(facultadNorm)) {
+                                    // Buscar el primer programa con brochure válido
+                                    if (fac.programas && Array.isArray(fac.programas)) {
+                                        for (const prog of fac.programas) {
+                                            if (prog.brochure && prog.brochure.length > 0) {
+                                                brochurePrograma = prog.brochure
+                                                console.log(`✅ Brochure de facultad encontrado: ${fac.nombre}`)
+                                                console.log(`✅ Usando brochure de: ${prog.nombre}`)
+                                                console.log(`✅ URL: ${brochurePrograma}`)
+                                                break
+                                            }
+                                        }
+                                    }
+                                    break
+                                }
+                            }
+                        }
+
+                        console.log(`📊 Total programas revisados: ${totalProgramasRevisados}`)
+                    }
+
+                    if (!brochurePrograma) {
+                        console.log(`❌ No se encontró brochure para: "${programa}" ni para facultad "${facultad}"`)
+                    }
+                } else {
+                    console.error('❌ Archivo programas.json no existe')
+                }
+            } catch (jsonError) {
+                console.error('⚠️ Error al leer programas.json:', jsonError.message)
+            }
+
+            // Enviar el brochure encontrado (programa específico o de facultad)
+            if (brochurePrograma) {
+                const mensajeBrochure = `📄 Aquí está el brochure de *${programa}*:`
+                // Extraer nombre del archivo y especificarlo para que WhatsApp lo reconozca como PDF
+                const fileName = decodeURIComponent(brochurePrograma.split('/').pop())
+                await bot.sendMessage(numero, mensajeBrochure, { media: brochurePrograma, fileName: fileName })
+                await delayAleatorio(2000, 4000) // Delay aleatorio de 2-4 segundos
+            } else {
+                console.warn(`⚠️ No se encontró ningún brochure para programa "${programa}" ni facultad "${facultad}"`)
+            }
+
+            // Links de grupos de WhatsApp por facultad (REEMPLAZAR CON LINKS REALES)
+            const gruposWhatsApp = {
+                'Facultad de Ciencias Económicas': 'https://chat.whatsapp.com/GwqF5Qe5wGr5ueyI0k1Sxl',
+                'Facultad de Ingeniería Industrial y de Sistemas': 'https://chat.whatsapp.com/EwRf65gMmwe9zyCrsM1gks',
+                'Facultad de Ciencias Administrativas': 'https://chat.whatsapp.com/HNKqywmtrBLER8l8lvaoCM',
+                'Facultad de Ciencias Contables': 'https://chat.whatsapp.com/IKDHLVEa6bS0ZQ0319d17x',
+                'Facultad de Ingeniería Química': 'https://chat.whatsapp.com/C1cgM6wqzQrKZGPJiHYMvJ',
+                'Facultad de Ciencias Naturales y Matemática': 'https://chat.whatsapp.com/HW7YC2eFeEx6K7tFL9Kf04',
+                'Facultad de Ingeniería Pesquera y de Alimentos': 'https://chat.whatsapp.com/IKNzlJiO6El6Ns8k4bixjF',
+                'Facultad de Ingeniería Mecánica y Energía': 'https://chat.whatsapp.com/IAAsZWNRocL5pOv6tJQqZY',
+                'Facultad de Ingeniería Eléctrica y Electrónica': 'https://chat.whatsapp.com/DkrzEJ6uV6nBfYUvraebzC',
+                'Facultad de Ingeniería Ambiental y de Recursos Naturales': 'https://chat.whatsapp.com/BKySJFFEKNeK40LZ4tAxOv',
+                'Facultad de Ciencias de la Educación': 'https://chat.whatsapp.com/JAKU1zp1U6ZIuDLUAas7Xp'
+            }
+
+
+            // Links de grupos de WhatsApp por PROGRAMA para FIEE (REEMPLAZAR CON LINKS REALES)
+            const gruposProgramasFIEE = {
+                // Maestrías
+                'Maestría en Ingeniería Eléctrica con Mención en Gestión de Sistemas de Energía Eléctrica': 'https://chat.whatsapp.com/EnAssprLnsW6AcLa6DkTu5',
+                'Maestría en Ingeniería Eléctrica con Mención en Gerencia de Proyectos de Ingeniería': 'https://chat.whatsapp.com/HCYIX2KS7MmIm0YxOWKwxK',
+                'Maestría en Ciencias de Electrónica con Mención en Telecomunicaciones': 'https://chat.whatsapp.com/BeiBgdH4c3PLNE2dgPj4jq',
+                'Maestría en Ciencias de Electrónica con Mención en Ingeniería Biomédica': 'https://chat.whatsapp.com/LDJglqpAxQ3HOZMMObnk8p',
+                'Maestría en Ciencias de Electrónica con Mención en Control y Automatización': 'https://chat.whatsapp.com/Cqq9GRvHIq8FWEMGz10coY',
+                // Doctorado
+                'Doctorado en Ingeniería Eléctrica': 'https://chat.whatsapp.com/LvTWe7G5F4hLZbFdgnPkRv'
+            }
+
+            // Determinar el link del grupo de WhatsApp (prioridad: programa FIEE > facultad > general)
+            let grupoLink = null
+            let grupoNombre = facultad
+
+            // Links especiales para Facultad de Ciencias de la Salud (REEMPLAZAR CON LINKS REALES)
+            const gruposFCS = {
+                especialidades: 'https://chat.whatsapp.com/Dq2jT7AzCsO660QtCbV0bG',
+                maestriasDoctorados: 'https://chat.whatsapp.com/KoTYdWaGPFu7Onzu1UlXmj'
+            }
+
+            // Si es Facultad de Ciencias de la Salud, diferenciar entre especialidades y maestrías/doctorados
+            if (facultad === 'Facultad de Ciencias de la Salud') {
+                const programaLower = programa.toLowerCase()
+                if (programaLower.includes('especialidad') || programaLower.includes('especialización')) {
+                    grupoLink = gruposFCS.especialidades
+                    grupoNombre = 'Especialidades - Facultad de Ciencias de la Salud'
+                    console.log('✅ Link de grupo FCS: Especialidades')
+                } else {
+                    grupoLink = gruposFCS.maestriasDoctorados
+                    grupoNombre = 'Maestrías y Doctorados - Facultad de Ciencias de la Salud'
+                    console.log('✅ Link de grupo FCS: Maestrías y Doctorados')
+                }
+            }
+            // Si es FIEE, buscar primero el link específico del programa
+            else if (facultad === 'Facultad de Ingeniería Eléctrica y Electrónica') {
+                // Buscar coincidencia por programa usando palabras clave
+                const programaNorm = normalizarTexto(programa)
+                console.log(`🔍 Buscando grupo FIEE para: "${programa}"`)
+                console.log(`🔍 Programa normalizado: "${programaNorm}"`)
+
+                let mejorCoincidenciaGrupo = null
+                let mejorPuntajeGrupo = 0
+
+                for (const [nombreProg, link] of Object.entries(gruposProgramasFIEE)) {
+                    const nombreProgNorm = normalizarTexto(nombreProg)
+
+                    // Coincidencia exacta
+                    if (nombreProgNorm === programaNorm) {
+                        grupoLink = link
+                        grupoNombre = nombreProg
+                        console.log(`✅ Coincidencia exacta de grupo FIEE: ${nombreProg}`)
+                        break
+                    }
+
+                    // Búsqueda por palabras clave
+                    const palabrasPrograma = programaNorm.split(' ').filter(p => p.length > 3)
+                    const palabrasNombreProg = nombreProgNorm.split(' ').filter(p => p.length > 3)
+
+                    let puntaje = 0
+                    for (const palabra of palabrasPrograma) {
+                        if (palabrasNombreProg.some(p => p.includes(palabra) || palabra.includes(p))) {
+                            puntaje++
                         }
                     }
 
-                    // Si no se encontró link de programa, usar el de facultad
-                    if (!grupoLink) {
-                        grupoLink = gruposWhatsApp[facultad] || enlace
+                    // Al menos 3 palabras en común o 50% de coincidencia
+                    const umbral = Math.max(3, Math.floor(palabrasPrograma.length * 0.5))
+                    if (puntaje >= umbral && puntaje > mejorPuntajeGrupo) {
+                        mejorPuntajeGrupo = puntaje
+                        mejorCoincidenciaGrupo = { nombre: nombreProg, link }
                     }
-                    const text3 = `📌 Recuerda ahora debes seguir los pasos de nuestra pagina web para que puedas llenar tu carpeta de postulante y concluir con el proceso.
+                }
+
+                // Si no hubo coincidencia exacta, usar la mejor por palabras clave
+                if (!grupoLink && mejorCoincidenciaGrupo) {
+                    grupoLink = mejorCoincidenciaGrupo.link
+                    grupoNombre = mejorCoincidenciaGrupo.nombre
+                    console.log(`✅ Grupo FIEE por palabras clave: ${grupoNombre} (puntaje: ${mejorPuntajeGrupo})`)
+                }
+
+                // Si aún no se encontró, usar el link general de FIEE
+                if (!grupoLink) {
+                    grupoLink = gruposWhatsApp[facultad]
+                    grupoNombre = facultad
+                    console.log(`⚠️ Usando grupo general FIEE: ${grupoLink}`)
+                }
+            }
+
+            // Si no se encontró link de programa, usar el de facultad
+            if (!grupoLink) {
+                grupoLink = gruposWhatsApp[facultad] || enlace
+            }
+            const text3 = `📌 Recuerda ahora debes seguir los pasos de nuestra pagina web para que puedas llenar tu carpeta de postulante y concluir con el proceso.
                 Este es el link por el cual puedes acceder a la pagina web: 
                 https://posgrado.unac.edu.pe/admision/Proceso_admision.html`
-                    await bot.sendMessage(numero, text3, {})
-                    // Último mensaje con 3 variaciones
-                    const variantesCierre = [
-                        `📌 Estoy disponible para resolver cualquier duda y acompañarte en tu proceso de inscripción.\nO puedes unirte al grupo de WhatsApp de *${grupoNombre}*:\n${grupoLink}\n\n📩 Correo: posgrado.admision@unac.edu.pe\n📞 WhatsApp: 900969591\n\n🚀 ¡Escríbeme ahora y asegura tu cupo en la maestría!`,
-                        `📌 Si tienes alguna pregunta, aquí estaré para asesorarte paso a paso.\nTambién puedes integrarte a nuestro grupo oficial de *${grupoNombre}* aquí:\n${grupoLink}\n\n📩 E-mail: posgrado.admision@unac.edu.pe\n📞 Celular/WhatsApp: 900969591\n\n🚀 ¡Escríbeme cuando desees y garantiza tu vacante!`,
-                        `📌 Quedo a tu disposición para ayudarte con cualquier detalle de tu matrícula.\nNo olvides unirte a la comunidad en WhatsApp de *${grupoNombre}*:\n${grupoLink}\n\n📩 Nuestro correo: posgrado.admision@unac.edu.pe\n📞 Contacto WhatsApp: 900969591\n\n🚀 ¡Asegura tu participación y da el siguiente paso profesional!`
-                    ];
-                    const textoCierreElegido = variantesCierre[Math.floor(Math.random() * variantesCierre.length)];
+            await bot.sendMessage(numero, text3, {})
+            // Último mensaje con 3 variaciones
+            const variantesCierre = [
+                `📌 Estoy disponible para resolver cualquier duda y acompañarte en tu proceso de inscripción.\nO puedes unirte al grupo de WhatsApp de *${grupoNombre}*:\n${grupoLink}\n\n📩 Correo: posgrado.admision@unac.edu.pe\n📞 WhatsApp: 900969591\n\n🚀 ¡Escríbeme ahora y asegura tu cupo en la maestría!`,
+                `📌 Si tienes alguna pregunta, aquí estaré para asesorarte paso a paso.\nTambién puedes integrarte a nuestro grupo oficial de *${grupoNombre}* aquí:\n${grupoLink}\n\n📩 E-mail: posgrado.admision@unac.edu.pe\n📞 Celular/WhatsApp: 900969591\n\n🚀 ¡Escríbeme cuando desees y garantiza tu vacante!`,
+                `📌 Quedo a tu disposición para ayudarte con cualquier detalle de tu matrícula.\nNo olvides unirte a la comunidad en WhatsApp de *${grupoNombre}*:\n${grupoLink}\n\n📩 Nuestro correo: posgrado.admision@unac.edu.pe\n📞 Contacto WhatsApp: 900969591\n\n🚀 ¡Asegura tu participación y da el siguiente paso profesional!`
+            ];
+            const textoCierreElegido = variantesCierre[Math.floor(Math.random() * variantesCierre.length)];
 
-                    await bot.sendMessage(numero, textoCierreElegido, {})
+            await bot.sendMessage(numero, textoCierreElegido, {})
 
-                } catch (err) {
-                    console.error('❌ Error enviando mensaje en cola:', err)
-                }
-            })
+        } catch (err) {
+            console.error('❌ Error enviando mensaje en cola:', err)
+        }
+    })
 }
 
 // Flujo Principal (Bienvenida) - Solo EVENTS.WELCOME
@@ -1299,12 +1299,12 @@ const flowPrincipal = addKeyword(EVENTS.WELCOME)
         console.log('Nombre:', ctx.pushName)
         console.log('Timestamp:', new Date().toISOString())
         console.log('================================')
-        
+
         try {
             // Resolver el número real en caso de que venga como un @lid (Local Identity Domain)
             let numeroTel = ctx.from.split('@')[0];
             let rawFrom = ctx.from;
-            
+
             // Alternativas nativas de extracción de número real para entornos MultiDevice
             if (rawFrom.includes('@lid')) {
                 // WppConnect/Baileys suelen almacenar el remitente original en author si from es un LID
@@ -1312,20 +1312,20 @@ const flowPrincipal = addKeyword(EVENTS.WELCOME)
                     numeroTel = ctx.author.split('@')[0];
                     console.log(`✅ LID resuelto usando ctx.author: ${numeroTel}`);
                 } else if (ctx._data && ctx._data.author && ctx._data.author.includes('@c.us')) {
-                     numeroTel = ctx._data.author.split('@')[0];
-                     console.log(`✅ LID resuelto usando ctx._data.author: ${numeroTel}`);
+                    numeroTel = ctx._data.author.split('@')[0];
+                    console.log(`✅ LID resuelto usando ctx._data.author: ${numeroTel}`);
                 } else if (ctx.sender && ctx.sender.id && typeof String(ctx.sender.id) === 'string' && String(ctx.sender.id).includes('@c.us')) {
-                     // Extraer "ID._serialized"
-                     numeroTel = String(ctx.sender.id).split('@')[0];
-                     console.log(`✅ LID resuelto usando ctx.sender.id: ${numeroTel}`);
+                    // Extraer "ID._serialized"
+                    numeroTel = String(ctx.sender.id).split('@')[0];
+                    console.log(`✅ LID resuelto usando ctx.sender.id: ${numeroTel}`);
                 } else if (ctx.key && ctx.key.participant) {
-                     numeroTel = ctx.key.participant.split('@')[0];
-                     console.log(`✅ LID resuelto usando ctx.key.participant: ${numeroTel}`);
+                    numeroTel = ctx.key.participant.split('@')[0];
+                    console.log(`✅ LID resuelto usando ctx.key.participant: ${numeroTel}`);
                 } else {
-                     console.log('⚠️ No se encontró propiedad alternativa para lid:', rawFrom);
+                    console.log('⚠️ No se encontró propiedad alternativa para lid:', rawFrom);
                 }
             }
-            
+
             // Eliminar el código de país '51' si está presente (para que coincida con el Excel)
             if (numeroTel.startsWith('51') && numeroTel.length > 9) {
                 numeroTel = numeroTel.substring(2);
@@ -1333,49 +1333,49 @@ const flowPrincipal = addKeyword(EVENTS.WELCOME)
 
             // RECOGE LA URL QUE DEBE COPIAR EL USUARIO
             const urlWebhook = `https://script.google.com/macros/s/AKfycby8j15X23p-6Z9_A_iB0WuhIFwxZkp8KkaVFG_CYyIc_mn593v5KQRqWLZ5BoPAVwmDBw/exec?telefono=${numeroTel}`;
-            
+
             console.log(`🔍 Consultando Google Sheets para el número limpio: ${numeroTel} (Original Wpp: ${rawFrom})`);
             const response = await fetch(urlWebhook);
             const data = await response.json();
-            
+
             if (data.encontrado) {
                 const estadoLocal = await obtenerEstado(ctx.from) || {};
-                
+
                 // Verificar si ya se le envió info automatizada anteriormente
                 if (estadoLocal.infoAutomatizadaEnviada) {
                     console.log(`ℹ️ Usuario ${numeroTel} ya recibió la información automatizada anteriormente. Pasando a Bienvenida.`);
                     return; // Sigue el flujo normal
                 }
-                
+
                 // Verificar regla de 15 minutos
                 if (data.fechaRegistro) {
                     const fechaReg = new Date(data.fechaRegistro);
                     const ahora = new Date();
                     const diffMs = ahora - fechaReg;
                     const diffMins = Math.floor(diffMs / 60000);
-                    
+
                     console.log(`🕒 Tiempo desde registro: ${diffMins} minutos.`);
-                    
+
                     if (diffMins <= 15) {
                         console.log(`✅ Cumple regla de 15 mins. Enviando info automatizada a ${numeroTel}`);
                         // Marcar como enviado en la bd local
                         await guardarEstado(ctx.from, { infoAutomatizadaEnviada: true });
-                        
+
                         // Llamar a la lógica de envío
                         await procesarEnvioMensaje(ctx.from, data.nombre, data.facultad, data.programa, provider);
-                        
+
                         return endFlow(); // Termina el flujo aquí para no mostrar Menú
                     } else {
                         console.log(`⏳ Pasaron más de 15 minutos (${diffMins} mins). Pasando a Bienvenida.`);
                     }
                 } else {
-                     console.log(`⚠️ Usuario encontrado pero sin Fecha de Registro válida. Pasando a Bienvenida.`);
+                    console.log(`⚠️ Usuario encontrado pero sin Fecha de Registro válida. Pasando a Bienvenida.`);
                 }
             } else {
                 console.log(`❌ Número ${numeroTel} no encontrado en Google Sheets. Pasando a Bienvenida.`);
             }
         } catch (error) {
-           console.error(`❌ Error al consultar Google Sheets:`, error);
+            console.error(`❌ Error al consultar Google Sheets:`, error);
         }
     })
     .addAnswer([
@@ -1530,7 +1530,7 @@ const main = async () => {
         })
     )
 
-    
+
 
     // Enviar mensaje para charla
     adapterProvider.server.post(

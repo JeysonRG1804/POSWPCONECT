@@ -1321,8 +1321,26 @@ const flowPrincipal = addKeyword(EVENTS.WELCOME)
                 } else if (ctx.key && ctx.key.participant) {
                     numeroTel = ctx.key.participant.split('@')[0];
                     console.log(`✅ LID resuelto usando ctx.key.participant: ${numeroTel}`);
+                } else if (ctx.key && ctx.key.remoteJid && ctx.key.remoteJid.includes('@c.us')) {
+                    // A veces Baileys envía la info real en remoteJid o en participant dentro de key
+                    numeroTel = ctx.key.remoteJid.split('@')[0];
+                    console.log(`✅ LID resuelto usando ctx.key.remoteJid: ${numeroTel}`);
                 } else {
-                    console.log('⚠️ No se encontró propiedad alternativa para lid:', rawFrom);
+                    console.log('⚠️ No se encontró propiedad nativa alternativa para lid:', rawFrom);
+                    
+                    // FALLBACK: Intentar cazar cualquier número de 9+ dígitos que se parezca a un teléfono en el objeto ctx completo
+                    try {
+                        const ctxStr = JSON.stringify(ctx);
+                        const posibleNumero = ctxStr.match(/"?([0-9]{9,15})@c\.us"?/);
+                        if (posibleNumero && posibleNumero[1]) {
+                            numeroTel = posibleNumero[1];
+                            console.log(`✅ LID resuelto usando REGEX fallback: ${numeroTel}`);
+                        } else {
+                            console.log('🔴 Imposible resolver el LID. El bot podría no encontrar al usuario en Google Sheets.');
+                        }
+                    } catch (e) {
+                        console.log('🔴 Error ejecutando regex fallback para LID:', e.message);
+                    }
                 }
             }
 

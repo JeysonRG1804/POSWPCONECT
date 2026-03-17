@@ -240,10 +240,6 @@ async function enviarMediaSeguro(flowDynamic, texto, mediaUrl, maxReintentos = 3
 const menu = leerArchivo('mensajes/menu.txt')
 const programas = leerArchivo('mensajes/programas.txt')
 const admision = leerArchivo('mensajes/admision.txt')
-const requisitos = leerArchivo('mensajes/requisitos.txt')
-const costos = leerArchivo('mensajes/costos.txt')
-// eslint-disable-next-line no-unused-vars
-const fechasadmision = leerArchivo('mensajes/fechasadmision.txt')
 const infoplus = leerArchivo('desc/info.txt')
 
 // ============= FACULTADES =============

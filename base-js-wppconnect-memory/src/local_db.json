@@ -1,5 +1,18 @@
 {
-  "user_state": {},
+  "user_state": {
+    "233800974000228@lid": {
+      "infoAutomatizadaEnviada": true,
+      "updatedAt": "2026-03-17T01:30:27.948Z"
+    },
+    "254657788149855@lid": {
+      "infoAutomatizadaEnviada": true,
+      "updatedAt": "2026-03-17T01:33:52.561Z"
+    },
+    "249743791939594@lid": {
+      "infoAutomatizadaEnviada": true,
+      "updatedAt": "2026-03-17T01:41:54.765Z"
+    }
+  },
   "solicitudes_contacto": [
     {
       "usuarioId": "51927953033",
@@ -10,6 +23,16 @@
       "telefono": "927953033",
       "mensaje": "suidasoidhasdaioh sdoiasndoias oiasndoaisn .asd 2 222\"\"\"@@@@adas oidasd.com",
       "createdAt": "2026-01-12T01:26:33.705Z"
+    },
+    {
+      "usuarioId": "2903431458926@lid",
+      "tipoConsulta": "1",
+      "canal": "3",
+      "nombre": "Cinthia Liliana Arias Quispe De Guzman",
+      "correo": "cinthiaariasquispe@gmail.com",
+      "telefono": "937704727",
+      "mensaje": "Quisiera información para poder realizar la segunda especialidad en centro Quirúrgico",
+      "createdAt": "2026-03-17T01:30:48.298Z"
     }
   ]
 }

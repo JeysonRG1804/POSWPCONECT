@@ -111,27 +111,27 @@ function enviarMensajeWhatsApp(nombre, unidad, programa, telefono) {
 
 function doGet(e) {
     try {
-        // 1. SI EL BOT PIDE UN TELÉFONO -> BUSCAR Y DEVOLVER JSON
-        if (e.parameter && e.parameter.telefono) {
+        // 1. SI EL BOT PIDE UN DNI -> BUSCAR Y DEVOLVER JSON
+        if (e.parameter && e.parameter.dni) {
             var salidaJson = ContentService.createTextOutput();
             salidaJson.setMimeType(ContentService.MimeType.JSON);
 
-            var telefonoBuscado = String(e.parameter.telefono).replace(/\D/g, '');
+            var dniBuscado = String(e.parameter.dni).replace(/\s/g, ''); // Quitar espacios
             var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Inscripciones");
             var data = sheet.getDataRange().getValues();
 
             var indexFechaRegistro = 0;
+            var indexDNI = 2;          // <-- Columna C (DNI)
             var indexNombre = 3;
             var indexApellidos = 4;
             var indexUnidad = 5;       
             var indexProgramaBase = 6;
             var indexDetallePrograma = 7;
-            var indexTelefono = 10;
 
             for (var i = 1; i < data.length; i++) {
-                var telefonoFila = String(data[i][indexTelefono]).replace(/\D/g, '');
+                var dniFila = String(data[i][indexDNI]).replace(/\s/g, '');
 
-                if (telefonoFila !== "" && telefonoBuscado.endsWith(telefonoFila)) {
+                if (dniFila !== "" && dniFila === dniBuscado) {
                     var programaFinal = data[i][indexDetallePrograma] ? data[i][indexDetallePrograma] : data[i][indexProgramaBase];
                     var fechaCelda = data[i][indexFechaRegistro];
                     var fechaIso = (fechaCelda instanceof Date && !isNaN(fechaCelda.valueOf())) ? fechaCelda.toISOString() : String(fechaCelda);
@@ -151,12 +151,12 @@ function doGet(e) {
                 }
             }
 
-            // Si enviaron telefono pero no se encontró
+            // Si enviaron DNI pero no se encontró
             salidaJson.setContent(JSON.stringify({ encontrado: false }));
             return salidaJson;
         }
 
-        // 2. SI NO HAY PARÁMETRO DE TELÉFONO -> DEVOLVER CSV (COMPORTAMIENTO ORIGINAL)
+        // 2. SI NO HAY PARÁMETRO DE DNI -> DEVOLVER CSV (COMPORTAMIENTO ORIGINAL)
         else {
             const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Inscripciones");
             const data = sheet.getDataRange().getValues();

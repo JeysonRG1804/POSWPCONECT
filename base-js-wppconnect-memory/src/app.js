@@ -839,30 +839,62 @@ const programasFlow = addKeyword(utils.setEvent('PROGRAMAS_FLOW'))
 // ============= FLUJOS DE ADMISIÓN =============
 
 const flowRequisitos = addKeyword(utils.setEvent('REQUISITOS_FLOW'))
-    .addAnswer([requisitos || 'Requisitos no disponibles.'])
+    .addAnswer('📄 Puedes revisar los requisitos en el siguiente enlace:\nhttps://posgrado.unac.edu.pe/admision/requisitos_costos.html')
     .addAction(async (ctx, { gotoFlow }) => {
         return gotoFlow(masinfoadmision)
     })
 
 const flowCostos = addKeyword(utils.setEvent('COSTOS_FLOW'))
-    .addAnswer([costos || 'Costos no disponibles.'])
+    .addAnswer('💰 Puedes revisar los costos en el siguiente enlace:\nhttps://posgrado.unac.edu.pe/admision/requisitos_costos.html')
     .addAction(async (ctx, { gotoFlow }) => {
         return gotoFlow(masinfoadmision)
     })
 
 const flowFechasAdmision = addKeyword(utils.setEvent('FECHAS_ADMISION_FLOW'))
-    .addAnswer('Estas son nuestras fechas', {
-        media: 'https://github.com/JeysonRG1804/brochure/raw/main/fechasadmision.png'
-    })
+    .addAnswer('📅 Puedes revisar el cronograma de fechas de admisión en el siguiente enlace:\nhttps://posgrado.unac.edu.pe/admision/cronograma.html')
     .addAction(async (ctx, { gotoFlow }) => {
         return gotoFlow(masinfoadmision)
     })
 
 const flowGuia = addKeyword(utils.setEvent('GUIA_FLOW'))
-    .addAnswer('Encuentra toda la información necesaria para postular con éxito:\n ✔️ Requisitos generales y específicos\n ✔️ Cronograma del proceso de admisión\n ✔️ Procedimiento de inscripción paso a paso\n✔️ Contactos y enlaces útiles')
-    .addAnswer('Este es nuestra guía de admisión:',
-        { media: 'https://posgrado.unac.edu.pe/CHATBOT/Guia_de_Postulante.pdf' },
-    )
+    .addAnswer(`El proceso de admisión es 100% virtual.
+
+🚀 *Paso 1: Inscripción*
+Este paso es obligatorio, ya que sin el registro no tendrás acceso a la plataforma de admisión para subir tu documentación.
+📝 Completa tus datos en el formulario oficial.
+🔗 Formulario de inscripción: https://posgrado.unac.edu.pe/inscripcion.html
+
+📄 *Paso 2: Requisitos y costos*
+Puedes revisar esta información en el siguiente enlace:
+https://posgrado.unac.edu.pe/admision/requisitos_costos.html
+
+💰 *Paso 3: Realizar el pago*
+Cuentas Scotiabank autorizadas:
+*Maestría y Doctorado*
+CCI: 009-100-000003747336-90
+Cuenta Corriente: 000-3747336
+*Segunda Especialidad*
+CCI: 009-100-000001797042-97
+Cuenta Corriente: 000-1797042
+📌 Guarda tu voucher, ya que deberás subirlo a la plataforma.
+
+📂 *Paso 4: Subir documentación*
+Ingresa a la plataforma de admisión: https://posgrado.unac.edu.pe/GED/login.php
+Carga todos los documentos solicitados.
+🔐 *Credenciales*:
+Usuario: correo registrado en tu inscripción
+Contraseña: DNI
+
+✅ *Paso 5: Revisión y verificación*
+El equipo de admisión revisará tu expediente.
+Si hay observaciones, se te informará para que puedas corregirlas.
+Si todo está conforme, la verificación quedará completada.
+Podrás hacer seguimiento a tu estado desde la misma plataforma.
+
+💡 *Guía de apoyo para tu postulación*:
+🎥 https://posgrado.unac.edu.pe/videos/VIDEO-GUIA-CARPETA-POSTULANTES-EPG-UNAC.mp4
+
+🤝 Quedamos atentos a tu registro para darte la bienvenida 😊`)
     .addAction(async (ctx, { gotoFlow }) => {
         return gotoFlow(masinfoadmision)
     })
@@ -923,10 +955,10 @@ const flowTallerTesis = addKeyword(utils.setEvent('TALLER_TESIS_FLOW'))
 // Flujo Menú Principal
 const menuFlow = addKeyword(utils.setEvent('MENU_FLOW'))
     .addAnswer(
-        [menu || '📋 *MENÚ PRINCIPAL*\n1️⃣ Programas de Posgrado\n2️⃣ Admisión\n3️⃣ Calendario Académico\n4️⃣ Taller de Tesis\n5️⃣ Contacto'],
+        [menu || '📋 *MENÚ PRINCIPAL*\n1️⃣ Programas de Posgrado\n2️⃣ Admisión\n3️⃣ Calendario Académico\n4️⃣ Taller de Tesis\n5️⃣ Contacto\n6️⃣ Verificar mi inscripción'],
         { capture: true },
         async (ctx, { flowDynamic, gotoFlow }) => {
-            if (!['1', '2', '3', '4', '5'].includes(ctx.body)) {
+            if (!['1', '2', '3', '4', '5', '6'].includes(ctx.body)) {
                 await flowDynamic('❌ Respuesta no válida, selecciona una de las opciones.')
                 return gotoFlow(menuFlow)
             }
@@ -941,6 +973,63 @@ const menuFlow = addKeyword(utils.setEvent('MENU_FLOW'))
                     return gotoFlow(flowTallerTesis)
                 case '5':
                     return gotoFlow(flowContacto)
+                case '6':
+                    return gotoFlow(flowVerificacion)
+            }
+        }
+    )
+
+// Flujo Verificación por DNI
+const flowVerificacion = addKeyword(['hola quiero verificar mi inscripcion', 'verificar', 'inscripción', 'inscripcion', 'verificacion'])
+    .addAnswer(
+        '🔍 *VERIFICACIÓN DE INSCRIPCIÓN*\n\nPor favor, escribe tu número de *DNI* para verificar tu registro:',
+        { capture: true },
+        async (ctx, { flowDynamic, endFlow, provider, gotoFlow }) => {
+            const dniIngresado = ctx.body.trim().replace(/\s+/g, '')
+
+            // Validación básica de DNI
+            if (!/^[0-9A-Za-z]{8,15}$/.test(dniIngresado)) {
+                await flowDynamic('❌ El documento ingresado no parece válido. Por favor, asegúrate de escribir solo números/letras sin espacios.')
+                return gotoFlow(flowVerificacion)
+            }
+
+            try {
+                await flowDynamic('⏳ Consultando nuestra base de datos... un momento por favor.')
+
+                // Endpoint apuntando al Google Apps Script (pasando el DNI en la query)
+                const urlWebhook = `https://script.google.com/macros/s/AKfycbyzVrMTPYmhKTIWoCl4uQAFsZvihTh-7Cxxq9pK9ppglX5fuyVeogs_mbX5Ah0r0rgooQ/exec?dni=${dniIngresado}`
+
+                console.log(`🔍 Búsqueda de verificación por DNI: ${dniIngresado}`)
+                const response = await fetch(urlWebhook)
+                const data = await response.json()
+
+                if (data.encontrado) {
+                    const estadoLocal = await obtenerEstado(ctx.from) || {}
+
+                    if (estadoLocal.infoAutomatizadaEnviada) {
+                        await flowDynamic(`✅ ¡Hola ${data.nombre}! Hemos confirmado que tu inscripción para *${data.programa}* está registrada.\n\nYa te hemos enviado la información detallada anteriormente. ¿En qué más podemos ayudarte?`)
+                        return gotoFlow(menuFlow)
+                    }
+
+                    // Verificar regla de tiempo si aplica o enviar directo
+                    console.log(`✅ DNI ${dniIngresado} cumple reglas. Enviando info de programa a ${ctx.from}`)
+                    await guardarEstado(ctx.from, { infoAutomatizadaEnviada: true })
+
+                    // Aseguramos contestar al usuario de inmediato que fue encontrado antes del delay de la cola
+                    await flowDynamic(`✅ ¡Excelente ${data.nombre}! Encontramos tu registro para *${data.programa}* en la *${data.facultad}*.\nEn breve te enviaremos la información del programa...`)
+
+                    // Llamar a la lógica automatizada de envío de brochures y texto
+                    await procesarEnvioMensaje(ctx.from, data.nombre, data.facultad, data.programa, provider)
+
+                    return endFlow()
+                } else {
+                    await flowDynamic('❌ Lo sentimos, no hemos podido encontrar tu inscripción con ese DNI.\nPor favor, verifica el número y vuelve a intentarlo, o comunícate con un asesor desde el Menú Principal.')
+                    return gotoFlow(menuFlow)
+                }
+            } catch (error) {
+                console.error(`❌ Error al consultar Google Sheets en flowVerificacion:`, error.message)
+                await flowDynamic('⚠️ Ocurrió un error temporal en el sistema de verificación. Inténtalo más tarde.')
+                return gotoFlow(menuFlow)
             }
         }
     )
@@ -1270,14 +1359,50 @@ N° Cta. Cte.: ${cuenta} (Scotiabank)
             if (!grupoLink) {
                 grupoLink = gruposWhatsApp[facultad] || enlace
             }
-            const text3 = `📌 Recuerda ahora debes seguir los pasos de nuestra pagina web para que puedas llenar tu carpeta de postulante y concluir con el proceso.
-                Este es el link por el cual puedes acceder a la pagina web: 
-                https://posgrado.unac.edu.pe/admision/Proceso_admision.html`
+            const text3 = `El proceso de admisión es 100% virtual.
+
+🚀 *Paso 1: Inscripción*
+Este paso es obligatorio, ya que sin el registro no tendrás acceso a la plataforma de admisión para subir tu documentación.
+📝 Completa tus datos en el formulario oficial.
+🔗 Formulario de inscripción: https://posgrado.unac.edu.pe/inscripcion.html
+
+📄 *Paso 2: Requisitos y costos*
+Puedes revisar esta información en el siguiente enlace:
+https://posgrado.unac.edu.pe/admision/requisitos_costos.html
+
+💰 *Paso 3: Realizar el pago*
+Cuentas Scotiabank autorizadas:
+*Maestría y Doctorado*
+CCI: 009-100-000003747336-90
+Cuenta Corriente: 000-3747336
+*Segunda Especialidad*
+CCI: 009-100-000001797042-97
+Cuenta Corriente: 000-1797042
+📌 Guarda tu voucher, ya que deberás subirlo a la plataforma.
+
+📂 *Paso 4: Subir documentación*
+Ingresa a la plataforma de admisión: https://posgrado.unac.edu.pe/GED/login.php
+Carga todos los documentos solicitados.
+🔐 *Credenciales*:
+Usuario: correo registrado en tu inscripción
+Contraseña: DNI
+
+✅ *Paso 5: Revisión y verificación*
+El equipo de admisión revisará tu expediente.
+Si hay observaciones, se te informará para que puedas corregirlas.
+Si todo está conforme, la verificación quedará completada.
+Podrás hacer seguimiento a tu estado desde la misma plataforma.
+
+💡 *Guía de apoyo para tu postulación*:
+🎥 https://posgrado.unac.edu.pe/videos/VIDEO-GUIA-CARPETA-POSTULANTES-EPG-UNAC.mp4
+
+🤝 Quedamos atentos a tu registro para darte la bienvenida 😊`
             await bot.sendMessage(numero, text3, {})
+
             // Último mensaje con 3 variaciones
             const variantesCierre = [
                 `📌 Estoy disponible para resolver cualquier duda y acompañarte en tu proceso de inscripción.\nO puedes unirte al grupo de WhatsApp de *${grupoNombre}*:\n${grupoLink}\n\n📩 Correo: posgrado.admision@unac.edu.pe\n📞 WhatsApp: 900969591\n\n🚀 ¡Escríbeme ahora y asegura tu cupo en la maestría!`,
-                `📌 Si tienes alguna pregunta, aquí estaré para asesorarte paso a paso.\nTambién puedes integrarte a nuestro grupo oficial de *${grupoNombre}* aquí:\n${grupoLink}\n\n📩 E-mail: posgrado.admision@unac.edu.pe\n📞 Celular/WhatsApp: 900969591\n\n🚀 ¡Escríbeme cuando desees y garantiza tu vacante!`,
+                `📌 Si tienes alguna pregunta, aquí estaré para asesorarte paso a paso.\nTambién puedes integrarte a nuestro grupo oficial de *${grupoNombre}*:\n${grupoLink}\n\n📩 E-mail: posgrado.admision@unac.edu.pe\n📞 Celular/WhatsApp: 900969591\n\n🚀 ¡Escríbeme cuando desees y garantiza tu vacante!`,
                 `📌 Quedo a tu disposición para ayudarte con cualquier detalle de tu matrícula.\nNo olvides unirte a la comunidad en WhatsApp de *${grupoNombre}*:\n${grupoLink}\n\n📩 Nuestro correo: posgrado.admision@unac.edu.pe\n📞 Contacto WhatsApp: 900969591\n\n🚀 ¡Asegura tu participación y da el siguiente paso profesional!`
             ];
             const textoCierreElegido = variantesCierre[Math.floor(Math.random() * variantesCierre.length)];
@@ -1292,95 +1417,11 @@ N° Cta. Cte.: ${cuenta} (Scotiabank)
 
 // Flujo Principal (Bienvenida) - Solo EVENTS.WELCOME
 const flowPrincipal = addKeyword(EVENTS.WELCOME)
-    .addAction(async (ctx, { endFlow, provider }) => {
-        console.log('=== DEBUG: Mensaje recibido ===')
+    .addAction(async (ctx) => {
+        console.log('=== DEBUG: Nueva conversación iniciada ===')
         console.log('De:', ctx.from)
-        console.log('Mensaje:', ctx.body)
-        console.log('Nombre:', ctx.pushName)
         console.log('Timestamp:', new Date().toISOString())
-        console.log('================================')
-
-        try {
-            // Resolver el número real en caso de que venga como un @lid (Local Identity Domain)
-            let numeroTel = ctx.from.split('@')[0];
-            let rawFrom = ctx.from;
-
-            // Alternativas nativas de extracción de número real para entornos MultiDevice
-            if (rawFrom.includes('@lid')) {
-                const numeroBotFromTo = (ctx.to && ctx.to.includes('@c.us')) ? ctx.to.split('@')[0] : '';
-                // Tus dos números de bot probables (con y sin 51 por si acaso)
-                const numerosBotConocidos = ['900970371', '51900970371', numeroBotFromTo];
-
-                // Buscar CUALQUIER número telefónico en el objeto completo del mensaje
-                const ctxStr = JSON.stringify(ctx);
-                const matches = [...ctxStr.matchAll(/"?([0-9]{9,15})@(?:c\.us|s\.whatsapp\.net)"?/g)].map(m => m[1]);
-                
-                // Obtener valores únicos y filtrar el número del bot para encontrar al remitente original
-                const numerosUnicos = [...new Set(matches)];
-                const numeroRealRemitente = numerosUnicos.find(num => !numerosBotConocidos.includes(num));
-
-                if (numeroRealRemitente) {
-                    numeroTel = numeroRealRemitente;
-                    console.log(`✅ LID resuelto descartando el número del bot: ${numeroTel}`);
-                } else if (ctx.sender && ctx.sender.id && typeof String(ctx.sender.id) === 'string' && String(ctx.sender.id).includes('@c.us') && !numerosBotConocidos.includes(String(ctx.sender.id).split('@')[0])) {
-                    numeroTel = String(ctx.sender.id).split('@')[0];
-                    console.log(`✅ LID resuelto vía ctx.sender.id (fallback): ${numeroTel}`);
-                } else {
-                    console.log(`🔴 Imposible resolver el LID de forma segura. Nros detectados: ${numerosUnicos.join(', ')}`);
-                }
-            }
-
-            // Eliminar el código de país '51' si está presente (para que coincida con el Excel)
-            if (numeroTel.startsWith('51') && numeroTel.length > 9) {
-                numeroTel = numeroTel.substring(2);
-            }
-
-            // RECOGE LA URL QUE DEBE COPIAR EL USUARIO
-            const urlWebhook = `https://script.google.com/macros/s/AKfycby8j15X23p-6Z9_A_iB0WuhIFwxZkp8KkaVFG_CYyIc_mn593v5KQRqWLZ5BoPAVwmDBw/exec?telefono=${numeroTel}`;
-
-            console.log(`🔍 Consultando Google Sheets para el número limpio: ${numeroTel} (Original Wpp: ${rawFrom})`);
-            const response = await fetch(urlWebhook);
-            const data = await response.json();
-
-            if (data.encontrado) {
-                const estadoLocal = await obtenerEstado(ctx.from) || {};
-
-                // Verificar si ya se le envió info automatizada anteriormente
-                if (estadoLocal.infoAutomatizadaEnviada) {
-                    console.log(`ℹ️ Usuario ${numeroTel} ya recibió la información automatizada anteriormente. Pasando a Bienvenida.`);
-                    return; // Sigue el flujo normal
-                }
-
-                // Verificar regla de 15 minutos
-                if (data.fechaRegistro) {
-                    const fechaReg = new Date(data.fechaRegistro);
-                    const ahora = new Date();
-                    const diffMs = ahora - fechaReg;
-                    const diffMins = Math.floor(diffMs / 60000);
-
-                    console.log(`🕒 Tiempo desde registro: ${diffMins} minutos.`);
-
-                    if (diffMins <= 15) {
-                        console.log(`✅ Cumple regla de 15 mins. Enviando info automatizada a ${numeroTel}`);
-                        // Marcar como enviado en la bd local
-                        await guardarEstado(ctx.from, { infoAutomatizadaEnviada: true });
-
-                        // Llamar a la lógica de envío
-                        await procesarEnvioMensaje(ctx.from, data.nombre, data.facultad, data.programa, provider);
-
-                        return endFlow(); // Termina el flujo aquí para no mostrar Menú
-                    } else {
-                        console.log(`⏳ Pasaron más de 15 minutos (${diffMins} mins). Pasando a Bienvenida.`);
-                    }
-                } else {
-                    console.log(`⚠️ Usuario encontrado pero sin Fecha de Registro válida. Pasando a Bienvenida.`);
-                }
-            } else {
-                console.log(`❌ Número ${numeroTel} no encontrado en Google Sheets. Pasando a Bienvenida.`);
-            }
-        } catch (error) {
-            console.error(`❌ Error al consultar Google Sheets:`, error);
-        }
+        console.log('====================================')
     })
     .addAnswer([
         '🌟 *BIENVENIDO A LA ESCUELA DE POSGRADO DE LA UNIVERSIDAD NACIONAL DEL CALLAO* 🌟',
@@ -1420,6 +1461,7 @@ const main = async () => {
         flowTallerTesis,
         flowContacto,
         flowCalendario,
+        flowVerificacion,
         flowExit
     ])
 

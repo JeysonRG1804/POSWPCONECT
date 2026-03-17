@@ -1307,40 +1307,26 @@ const flowPrincipal = addKeyword(EVENTS.WELCOME)
 
             // Alternativas nativas de extracción de número real para entornos MultiDevice
             if (rawFrom.includes('@lid')) {
-                // WppConnect/Baileys suelen almacenar el remitente original en author si from es un LID
-                if (ctx.author && ctx.author.includes('@c.us')) {
-                    numeroTel = ctx.author.split('@')[0];
-                    console.log(`✅ LID resuelto usando ctx.author: ${numeroTel}`);
-                } else if (ctx._data && ctx._data.author && ctx._data.author.includes('@c.us')) {
-                    numeroTel = ctx._data.author.split('@')[0];
-                    console.log(`✅ LID resuelto usando ctx._data.author: ${numeroTel}`);
-                } else if (ctx.sender && ctx.sender.id && typeof String(ctx.sender.id) === 'string' && String(ctx.sender.id).includes('@c.us')) {
-                    // Extraer "ID._serialized"
+                const numeroBotFromTo = (ctx.to && ctx.to.includes('@c.us')) ? ctx.to.split('@')[0] : '';
+                // Tus dos números de bot probables (con y sin 51 por si acaso)
+                const numerosBotConocidos = ['900970371', '51900970371', numeroBotFromTo];
+
+                // Buscar CUALQUIER número telefónico en el objeto completo del mensaje
+                const ctxStr = JSON.stringify(ctx);
+                const matches = [...ctxStr.matchAll(/"?([0-9]{9,15})@(?:c\.us|s\.whatsapp\.net)"?/g)].map(m => m[1]);
+                
+                // Obtener valores únicos y filtrar el número del bot para encontrar al remitente original
+                const numerosUnicos = [...new Set(matches)];
+                const numeroRealRemitente = numerosUnicos.find(num => !numerosBotConocidos.includes(num));
+
+                if (numeroRealRemitente) {
+                    numeroTel = numeroRealRemitente;
+                    console.log(`✅ LID resuelto descartando el número del bot: ${numeroTel}`);
+                } else if (ctx.sender && ctx.sender.id && typeof String(ctx.sender.id) === 'string' && String(ctx.sender.id).includes('@c.us') && !numerosBotConocidos.includes(String(ctx.sender.id).split('@')[0])) {
                     numeroTel = String(ctx.sender.id).split('@')[0];
-                    console.log(`✅ LID resuelto usando ctx.sender.id: ${numeroTel}`);
-                } else if (ctx.key && ctx.key.participant) {
-                    numeroTel = ctx.key.participant.split('@')[0];
-                    console.log(`✅ LID resuelto usando ctx.key.participant: ${numeroTel}`);
-                } else if (ctx.key && ctx.key.remoteJid && ctx.key.remoteJid.includes('@c.us')) {
-                    // A veces Baileys envía la info real en remoteJid o en participant dentro de key
-                    numeroTel = ctx.key.remoteJid.split('@')[0];
-                    console.log(`✅ LID resuelto usando ctx.key.remoteJid: ${numeroTel}`);
+                    console.log(`✅ LID resuelto vía ctx.sender.id (fallback): ${numeroTel}`);
                 } else {
-                    console.log('⚠️ No se encontró propiedad nativa alternativa para lid:', rawFrom);
-                    
-                    // FALLBACK: Intentar cazar cualquier número de 9+ dígitos que se parezca a un teléfono en el objeto ctx completo
-                    try {
-                        const ctxStr = JSON.stringify(ctx);
-                        const posibleNumero = ctxStr.match(/"?([0-9]{9,15})@c\.us"?/);
-                        if (posibleNumero && posibleNumero[1]) {
-                            numeroTel = posibleNumero[1];
-                            console.log(`✅ LID resuelto usando REGEX fallback: ${numeroTel}`);
-                        } else {
-                            console.log('🔴 Imposible resolver el LID. El bot podría no encontrar al usuario en Google Sheets.');
-                        }
-                    } catch (e) {
-                        console.log('🔴 Error ejecutando regex fallback para LID:', e.message);
-                    }
+                    console.log(`🔴 Imposible resolver el LID de forma segura. Nros detectados: ${numerosUnicos.join(', ')}`);
                 }
             }
 
